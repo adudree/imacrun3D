@@ -6,3 +6,8 @@
 - cmake ../IMACRUN
 - make 
 - ./bin/IMACRUN
+
+
+### random 
+
+sdl 1 : SD_EnableKeyRepeat(1, 1); 

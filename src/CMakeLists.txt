@@ -12,7 +12,7 @@ foreach(SRC_FILE ${SRC_FILES})
     add_executable(${OUTPUT} ${SRC_FILE} ${HEADER_FILES} ${SHADER_FILES})
     target_link_libraries(${OUTPUT} ${ALL_LIBRARIES})
 	target_compile_features(${OUTPUT} PRIVATE cxx_std_11) # use at least c++ 11
-	target_compile_options(${OUTPUT} PRIVATE -Wall -O2)   # specify some compilation flags
+	target_compile_options(${OUTPUT} PRIVATE -W -Wall -Werror -O2)   # specify some compilation flags
 endforeach()
 
 file(COPY shaders DESTINATION ${CMAKE_CURRENT_BINARY_DIR})

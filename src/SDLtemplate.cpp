@@ -4,7 +4,7 @@
 
 using namespace glimac;
 
-int main(int argc, char** argv) {
+int main(/*int argc, char** argv*/) {
     // Initialize SDL and open a window
     SDLWindowManager windowManager(800, 600, "GLImac");
 
