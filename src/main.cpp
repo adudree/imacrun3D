@@ -1,8 +1,11 @@
 #include <glimac/SDLWindowManager.hpp>
 #include <GL/glew.h>
 #include <iostream>
+#include <vector>
+
 #include <glimac/Image.hpp>
 #include <glimac/Surcouche.hpp>
+#include <glimac/Map.hpp>
 
 using namespace glimac;
 
@@ -36,6 +39,10 @@ int main(/*int argc, char** argv*/) {
 
     std::cout << "OpenGL Version : " << glGetString(GL_VERSION) << std::endl;
     std::cout << "GLEW Version : " << glewGetString(GLEW_VERSION) << std::endl;
+
+    std::string bla = "maps/map1.imac";
+
+    //std::vector<std::vector<char>> map = readMap(bla);
 
     // ============ INITIALIZATION =========== //
     
