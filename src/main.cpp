@@ -1,16 +1,20 @@
 #include <glimac/SDLWindowManager.hpp>
 #include <GL/glew.h>
 #include <iostream>
+#include <glimac/Program.hpp>
+#include <glimac/FilePath.hpp>
 #include <vector>
 
 #include <glimac/Image.hpp>
 #include <glimac/Surcouche.hpp>
-#include <glimac/Map.hpp>
+#include <glimac/Tile.hpp>
+#include <glimac/Sphere.hpp>
+// #include <glimac/Map.hpp>
 
 using namespace glimac;
 
 /* ======= surcouche sdl =======
-- chargement shader       : -
+- chargement shader       : [OK]
 - vao                     : [OK]
 - chargement textures     : [OK] 
 - dessin d'un élément ?   : -
@@ -18,50 +22,98 @@ using namespace glimac;
 - events clavier / souris : [OK]
 */
 
+int main(int argc, char** argv) {
 
-// on est d'accord, on multitexture pas hein ? ça a l'air chiant à gérer
+    // ============ INITIALIZATION =========== //
 
-
-int main(/*int argc, char** argv*/) {
-
-    // Initialize SDL and open a window
+    // window
     GLint WIDTH = 800;
     GLint HEIGHT = 800;
-
     SDLWindowManager windowManager(WIDTH, HEIGHT, "IMAC RUN 3D");
 
-    // Initialize glew for OpenGL3+ support
+    // glew : mettre un catch try par ici 
     GLenum glewInitError = glewInit();
     if(GLEW_OK != glewInitError) {
         std::cerr << glewGetErrorString(glewInitError) << std::endl;
         return EXIT_FAILURE;
     }
 
-    std::cout << "OpenGL Version : " << glGetString(GL_VERSION) << std::endl;
-    std::cout << "GLEW Version : " << glewGetString(GLEW_VERSION) << std::endl;
+    // program
+    FilePath applicationPath(argv[0]);
+    Program program;
+    loadShader(program, argc, argv);
+    program.use();
 
-    std::string bla = "maps/map1.imac";
+    glEnable(GL_DEPTH_TEST);
 
-    //std::vector<std::vector<char>> map = readMap(bla);
 
-    // ============ INITIALIZATION =========== //
+    // ================ MATRIX ================ //
+
+    GLint locMVPMatrix = glGetUniformLocation(program.getGLId(), "uMVPMatrix");
+    GLint locMVMatrix = glGetUniformLocation(program.getGLId(), "uMVMatrix");
+    GLint locNormalMatrix = glGetUniformLocation(program.getGLId(), "uNormalMatrix");
+    GLint locTexture = glGetUniformLocation(program.getGLId(), "uTexture");
+
+    glm::mat4 ProjMatrix; 
+    glm::mat4 MVMatrix;
+    glm::mat4 NormalMatrix;
+
+    ProjMatrix = glm::perspective(70.f, float(WIDTH/HEIGHT), 0.1f, 100.0f);
+
+    // std::string bla = "maps/map1.imac";
+    // Map myMap(bla); 
+
+
+    // ================ CAMERA ================ //
+
+
+    // ================ TILES ================= //
+
+    Tile myFloor = Tile(0., 0., 2., 2.);
+    int nbSommets = myFloor.getVertexCount(); 
+    const ShapeVertex *tabSommets = myFloor.getDataPointer();
+
+    std::cout << "nb sommets  " << nbSommets << std::endl;
+    std::cout << "tab sommets " << tabSommets << std::endl;
+
+
+    // ============ IBO, VBO, VAO ============= //
+
+    GLuint vbo; 
+    GLuint ibo;
+    GLuint vao; 
     
-    // Test de profondeur du GPU
-    glEnable(GL_DEPTH_TEST);    
+    glGenBuffers(1, &vbo);
+    glGenBuffers(1, &ibo);
+    glGenVertexArrays(1, &vao);
 
-    // Chargement des images 
+    // vbo
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    glBufferData(GL_ARRAY_BUFFER, nbSommets * sizeof(ShapeVertex), tabSommets, GL_STATIC_DRAW);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-    // Chargement caméra
+    // ibo
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
+    uint32_t indicesRectangle[] = {0, 1, 2, 0, 2, 3};
+    // 6 = taille de indicesRectangles 
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * sizeof(uint32_t), indicesRectangle, GL_STATIC_DRAW);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
-    // init objets + nb sommets blabla 
+    // vao
+    createVAO(vbo, vao, ibo);
 
-    // VBO 
 
-    // VAO 
+    // =============== TEXTURES =============== //
 
-    // textures
+    GLuint texTest;
 
-    // Application loop:
+    std::unique_ptr<Image> test = loadImage("./src/assets/textures/cardinale.jpg");
+
+    createTexture(texTest, test);
+
+
+    // ================= LOOP ================= //
+
     bool done = false;
     while(!done) {
 
@@ -72,23 +124,31 @@ int main(/*int argc, char** argv*/) {
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         
-        // glBindVertexArray(vao);
+        glBindVertexArray(vao);
 
-        // liens avec shaders (variables uniformes)
+        MVMatrix = glm::translate(glm::mat4(1), glm::vec3(0, 0, -5));
+        MVMatrix = glm::rotate(MVMatrix, glm::radians(10.f), glm::vec3(1, 0, 0));
+        NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
 
-        // bind textures
 
-        // gl draw arrays
+        glUniformMatrix4fv(locMVPMatrix, 1, GL_FALSE, glm::value_ptr(ProjMatrix*MVMatrix));
+        glUniformMatrix4fv(locMVMatrix, 1, GL_FALSE, glm::value_ptr(MVMatrix));
+        glUniformMatrix4fv(locNormalMatrix, 1, GL_FALSE, glm::value_ptr(NormalMatrix));
+        glUniform1i(locTexture, 0);
 
-        // debind 
 
+        glBindTexture(GL_TEXTURE_2D, texTest);
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0); 
+        glBindTexture(GL_TEXTURE_2D, 0);
+        
         glBindVertexArray(0);
-
-        // Update the display
         windowManager.swapBuffers();
     }
 
     // delete buffers arrays et cie 
+    glDeleteBuffers(1, &vbo);
+    glDeleteVertexArrays(1, &vao);
+    glDeleteTextures(1, &texTest);
 
     return EXIT_SUCCESS;
 }

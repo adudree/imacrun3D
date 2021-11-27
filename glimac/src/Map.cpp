@@ -2,7 +2,7 @@
 
 namespace glimac {
 
-std::vector<std::vector<char>> readMap(std::string filename)
+Map::Map(std::string &filename)
 { 
     std::ifstream fichier (filename,  std::ios::in); 
     std::string ligne;
@@ -25,6 +25,10 @@ std::vector<std::vector<char>> readMap(std::string filename)
             j++;
         }
     } 
-    return tab;
+    
+    coords = tab;
+    nbLines = ligne.length(); 
+    nbCols = coords.size();
 }
+
 }
