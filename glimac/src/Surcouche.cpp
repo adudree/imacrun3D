@@ -28,65 +28,19 @@ void createTexture(GLuint &texture, std::unique_ptr<Image> &imagePointer)
     glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-void createVAO(GLuint &vbo, GLuint &vao) 
-{
-    glGenVertexArrays(1, &vao);
-    glBindVertexArray(vao);
-
-    const GLuint VERTEX_ATTR_POSITION = 0;
-    const GLuint VERTEX_ATTR_NORMAL = 1;
-    const GLuint VERTEX_ATTR_TEX_COORD = 2;
-
-    glEnableVertexAttribArray(VERTEX_ATTR_POSITION);
-    glEnableVertexAttribArray(VERTEX_ATTR_NORMAL);
-    glEnableVertexAttribArray(VERTEX_ATTR_TEX_COORD);
-
-    glBindBuffer(GL_ARRAY_BUFFER, vbo);
-
-    glVertexAttribPointer(VERTEX_ATTR_POSITION, 3, GL_FLOAT, GL_FALSE, 8*sizeof(GLfloat), 0);
-    glVertexAttribPointer(VERTEX_ATTR_NORMAL, 3, GL_FLOAT, GL_FALSE, 8*sizeof(GLfloat), (GLvoid*) (3 * sizeof(GLfloat)));
-    glVertexAttribPointer(VERTEX_ATTR_TEX_COORD, 2, GL_FLOAT, GL_FALSE, 8*sizeof(GLfloat), (GLvoid*) (6 * sizeof(GLfloat)));
-
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindVertexArray(0);
-}
-
-void createVAO(GLuint &vbo, GLuint &vao, GLuint &ibo) 
-{
-    glBindVertexArray(vao);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
-
-    const GLuint VERTEX_ATTR_POSITION = 0;
-    const GLuint VERTEX_ATTR_NORMAL = 1;
-    const GLuint VERTEX_ATTR_TEX_COORD = 2;
-
-    glEnableVertexAttribArray(VERTEX_ATTR_POSITION);
-    glEnableVertexAttribArray(VERTEX_ATTR_NORMAL);
-    glEnableVertexAttribArray(VERTEX_ATTR_TEX_COORD);
-
-    glBindBuffer(GL_ARRAY_BUFFER, vbo);
-
-    glVertexAttribPointer(VERTEX_ATTR_POSITION, 3, GL_FLOAT, GL_FALSE, 8*sizeof(GLfloat), 0);
-    glVertexAttribPointer(VERTEX_ATTR_NORMAL, 3, GL_FLOAT, GL_FALSE, 8*sizeof(GLfloat), (GLvoid*) (3 * sizeof(GLfloat)));
-    glVertexAttribPointer(VERTEX_ATTR_TEX_COORD, 2, GL_FLOAT, GL_FALSE, 8*sizeof(GLfloat), (GLvoid*) (6 * sizeof(GLfloat)));
-
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindVertexArray(0);
-}
-
-
 
 void gestionEvent(bool &done, SDLWindowManager &windowManager) 
 {
     SDL_Event e;
     while(windowManager.pollEvent(e)) {
-        if (e.type == SDL_QUIT) {
+        if (e.type == SDL_QUIT || e.key.keysym.sym == SDLK_ESCAPE) {
             done = true;
         }
     }
 
 }
 
+// voir si on peut pas grouper avec fichier shader
 void loadShader(Program &program, int &argc, char** &argv)
 {
     std::string vs, fs; 
@@ -100,7 +54,7 @@ void loadShader(Program &program, int &argc, char** &argv)
         std::cout << "Vertex shader : ";
         std::cin >> vs;
         std::cout << "Fragment shader :";
-        std::cin >> vs;
+        std::cin >> fs;
     }
 
     program = loadProgram( "./src/shaders/" + vs, "./src/shaders/" + fs);

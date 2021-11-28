@@ -9,7 +9,12 @@
 #include <glimac/Surcouche.hpp>
 #include <glimac/Tile.hpp>
 #include <glimac/Sphere.hpp>
-// #include <glimac/Map.hpp>
+#include <glimac/Map.hpp>
+
+#include <fstream> 
+#include <string> 
+#include <glimac/glm.hpp>
+
 
 using namespace glimac;
 
@@ -60,47 +65,33 @@ int main(int argc, char** argv) {
 
     ProjMatrix = glm::perspective(70.f, float(WIDTH/HEIGHT), 0.1f, 100.0f);
 
-    // std::string bla = "maps/map1.imac";
-    // Map myMap(bla); 
+
+    // ================= MAP ================== //
 
 
-    // ================ CAMERA ================ //
+    std::string bla = "./src/maps/map1.imac";
+    Map myMap(bla); 
 
-
-    // ================ TILES ================= //
-
-    Tile myFloor = Tile(0., 0., 2., 2.);
-    int nbSommets = myFloor.getVertexCount(); 
-    const ShapeVertex *tabSommets = myFloor.getDataPointer();
-
-    std::cout << "nb sommets  " << nbSommets << std::endl;
-    std::cout << "tab sommets " << tabSommets << std::endl;
+    std::cout << myMap.getTypeTile(0, 0) << std::endl;
 
 
     // ============ IBO, VBO, VAO ============= //
 
-    GLuint vbo; 
-    GLuint ibo;
-    GLuint vao; 
+    GLuint vbo[2]; 
+    GLuint ibo[2];
+    GLuint vao[2]; 
     
-    glGenBuffers(1, &vbo);
-    glGenBuffers(1, &ibo);
-    glGenVertexArrays(1, &vao);
+    glGenBuffers(2, vbo);
+    glGenBuffers(2, ibo);
+    glGenVertexArrays(2, vao);
 
-    // vbo
-    glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    glBufferData(GL_ARRAY_BUFFER, nbSommets * sizeof(ShapeVertex), tabSommets, GL_STATIC_DRAW);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    // ================ TILES ================= //
 
-    // ibo
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
-    uint32_t indicesRectangle[] = {0, 1, 2, 0, 2, 3};
-    // 6 = taille de indicesRectangles 
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * sizeof(uint32_t), indicesRectangle, GL_STATIC_DRAW);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    Tile myFloor = Tile(0., 0., 2., 2., vbo[0], ibo[0], vao[0]);
 
-    // vao
-    createVAO(vbo, vao, ibo);
+    myFloor.mainVBO(); 
+    myFloor.mainIBO();
+    myFloor.mainVAO();
 
 
     // =============== TEXTURES =============== //
@@ -124,7 +115,7 @@ int main(int argc, char** argv) {
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         
-        glBindVertexArray(vao);
+        glBindVertexArray(myFloor.getVAO());
 
         MVMatrix = glm::translate(glm::mat4(1), glm::vec3(0, 0, -5));
         MVMatrix = glm::rotate(MVMatrix, glm::radians(10.f), glm::vec3(1, 0, 0));
@@ -142,12 +133,13 @@ int main(int argc, char** argv) {
         glBindTexture(GL_TEXTURE_2D, 0);
         
         glBindVertexArray(0);
+
         windowManager.swapBuffers();
     }
 
     // delete buffers arrays et cie 
-    glDeleteBuffers(1, &vbo);
-    glDeleteVertexArrays(1, &vao);
+    glDeleteBuffers(1, vbo);
+    glDeleteVertexArrays(1, vao);
     glDeleteTextures(1, &texTest);
 
     return EXIT_SUCCESS;

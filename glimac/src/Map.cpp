@@ -10,25 +10,28 @@ Map::Map(std::string &filename)
     std::vector<std::vector<char>> tab; 
 
     int j = 0;
-    while (!fichier.eof())
-    { 
-        getline(fichier,ligne); 
 
+    while (getline(fichier,ligne))
+    { 
         if (ligne.find("#")) {
-                std::vector<char> v; 
+            std::vector<char> v; 
+
             for(int i = 0; i < ligne.length();i++) 
             { 
                 v.push_back(ligne[i]);
-                
             } 
+
             tab.push_back(v);
             j++;
         }
     } 
-    
-    coords = tab;
-    nbLines = ligne.length(); 
-    nbCols = coords.size();
+
+    m_coords = tab;
+    m_nbCols = ligne.length(); 
+    m_nbLines = m_coords.size();
+    fichier.close();
+
+
 }
 
 }
