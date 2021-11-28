@@ -69,11 +69,61 @@ int main(int argc, char** argv) {
     // ================= MAP ================== //
 
 
-    std::string bla = "./src/maps/map1.imac";
-    Map myMap(bla); 
+    // ---------- Parcours de la map 
 
-    std::cout << myMap.getTypeTile(0, 0) << std::endl;
+    std::string fichierMap = "./src/maps/map1.imac";
+    Map myMap(fichierMap); 
 
+    // ---------- Parcours de la map ---------- //
+    // faudra mettre ça dans une fonction 
+    
+    for (int i = 0; i < myMap.getDimensions()[0] ; i++)
+    {
+        for (int j = 0; j < myMap.getDimensions()[1]; j++)
+        {
+            switch (myMap.getTypeTile(i, j))
+            {
+            case 'P':
+                std::cout << "P : " << i << " " << j << std::endl;
+                // position initiale du player 
+                // créer une tuile normale [Tile]
+                break;
+
+            case 'M':
+                std::cout << "M : " << i << " " << j << std::endl;
+                // créer une tuile "mur" [A FAIRE]
+                break;
+
+            case 'S':
+                std::cout << "S : " << i << " " << j << std::endl;
+                // créer une tuile normale [Tile]
+                break;
+
+            case 'A':
+                std::cout << "A : " << i << " " << j << std::endl;
+                // créer une tuile "arch" [A FAIRE]
+                break;
+
+            case 'H':
+                std::cout << "H : " << i << " " << j << std::endl;
+                // créer une tuile "hole" [A FAIRE]
+                break;
+
+            case 'L':
+                std::cout << "L : " << i << " " << j << std::endl;
+                // créer une tuile "leftHole" [A FAIRE]
+                break;
+
+            case 'R':
+                std::cout << "R : " << i << " " << j << std::endl;
+                // créer une tuile "rightHole" [A FAIRE]
+                break;
+
+            default:
+                break;
+            }
+        }
+    }
 
     // ============ IBO, VBO, VAO ============= //
 
