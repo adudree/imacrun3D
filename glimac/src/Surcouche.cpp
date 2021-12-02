@@ -1,5 +1,7 @@
 #include "glimac/Surcouche.hpp"
 
+// IMPORTANT : les fonctions dans ce fichier sont à trier //
+
 
 namespace glimac {
 
@@ -33,7 +35,7 @@ void gestionEvent(bool &done, SDLWindowManager &windowManager)
 {
     SDL_Event e;
     while(windowManager.pollEvent(e)) {
-        if (e.type == SDL_QUIT || e.key.keysym.sym == SDLK_ESCAPE) {
+        if (e.type == SDL_QUIT || e.key.keysym.sym == SDLK_x) {
             done = true;
         }
     }

@@ -22,9 +22,9 @@ using namespace glimac;
 - chargement shader       : [OK]
 - vao                     : [OK]
 - chargement textures     : [OK] 
-- dessin d'un élément ?   : -
-- void initialisation     : -
+- dessin d'un élément     : [OK]
 - events clavier / souris : [OK]
+- void initialisation     : -
 */
 
 int main(int argc, char** argv) {
@@ -68,14 +68,19 @@ int main(int argc, char** argv) {
 
     // ================= MAP ================== //
 
-
-    // ---------- Parcours de la map 
-
     std::string fichierMap = "./src/maps/map1.imac";
     Map myMap(fichierMap); 
 
-    // ---------- Parcours de la map ---------- //
+
+    // -------- Récup infos de la map --------- //
     // faudra mettre ça dans une fonction 
+
+    std::vector<Tile> tiles;
+    
+    // A FAIRE : adapter le switch pour d'autres valeurs de w et h
+    GLfloat w, h;
+    w = 1;
+    h = 1; 
     
     for (int i = 0; i < myMap.getDimensions()[0] ; i++)
     {
@@ -84,38 +89,32 @@ int main(int argc, char** argv) {
             switch (myMap.getTypeTile(i, j))
             {
             case 'P':
-                std::cout << "P : " << i << " " << j << std::endl;
-                // position initiale du player 
-                // créer une tuile normale [Tile]
+                // position initiale du player on simple tile
+                tiles.push_back(Tile(i, j, w, h));
                 break;
 
-            case 'M':
-                std::cout << "M : " << i << " " << j << std::endl;
-                // créer une tuile "mur" [A FAIRE]
+            case 'W':
+                // créer une tuile "wall" [A FAIRE]
                 break;
 
             case 'S':
-                std::cout << "S : " << i << " " << j << std::endl;
-                // créer une tuile normale [Tile]
+                // simple tile
+                tiles.push_back(Tile(i, j, w, h));
                 break;
 
             case 'A':
-                std::cout << "A : " << i << " " << j << std::endl;
                 // créer une tuile "arch" [A FAIRE]
                 break;
 
             case 'H':
-                std::cout << "H : " << i << " " << j << std::endl;
                 // créer une tuile "hole" [A FAIRE]
                 break;
 
             case 'L':
-                std::cout << "L : " << i << " " << j << std::endl;
                 // créer une tuile "leftHole" [A FAIRE]
                 break;
 
             case 'R':
-                std::cout << "R : " << i << " " << j << std::endl;
                 // créer une tuile "rightHole" [A FAIRE]
                 break;
 
@@ -125,25 +124,6 @@ int main(int argc, char** argv) {
         }
     }
 
-    // ============ IBO, VBO, VAO ============= //
-
-    GLuint vbo[2]; 
-    GLuint ibo[2];
-    GLuint vao[2]; 
-    
-    glGenBuffers(2, vbo);
-    glGenBuffers(2, ibo);
-    glGenVertexArrays(2, vao);
-
-    // ================ TILES ================= //
-
-    Tile myFloor = Tile(0., 0., 2., 2., vbo[0], ibo[0], vao[0]);
-
-    myFloor.mainVBO(); 
-    myFloor.mainIBO();
-    myFloor.mainVAO();
-
-
     // =============== TEXTURES =============== //
 
     GLuint texTest;
@@ -151,7 +131,6 @@ int main(int argc, char** argv) {
     std::unique_ptr<Image> test = loadImage("./src/assets/textures/cardinale.jpg");
 
     createTexture(texTest, test);
-
 
     // ================= LOOP ================= //
 
@@ -165,31 +144,32 @@ int main(int argc, char** argv) {
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         
-        glBindVertexArray(myFloor.getVAO());
+        // matrices et compagnie
 
-        MVMatrix = glm::translate(glm::mat4(1), glm::vec3(0, 0, -5));
+        MVMatrix = glm::translate(glm::mat4(1), glm::vec3(-1, 0, -5));
         MVMatrix = glm::rotate(MVMatrix, glm::radians(10.f), glm::vec3(1, 0, 0));
         NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
 
+        // valeurs uniformes 
 
         glUniformMatrix4fv(locMVPMatrix, 1, GL_FALSE, glm::value_ptr(ProjMatrix*MVMatrix));
         glUniformMatrix4fv(locMVMatrix, 1, GL_FALSE, glm::value_ptr(MVMatrix));
         glUniformMatrix4fv(locNormalMatrix, 1, GL_FALSE, glm::value_ptr(NormalMatrix));
         glUniform1i(locTexture, 0);
 
-
-        glBindTexture(GL_TEXTURE_2D, texTest);
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0); 
-        glBindTexture(GL_TEXTURE_2D, 0);
+        // dessin des tuiles 
         
-        glBindVertexArray(0);
+        for (size_t i = 0; i < tiles.size(); i++) {
+            tiles[i].drawTile(texTest);
+        }
 
         windowManager.swapBuffers();
     }
 
+
     // delete buffers arrays et cie 
-    glDeleteBuffers(1, vbo);
-    glDeleteVertexArrays(1, vao);
+    // glDeleteBuffers(1, vbo);
+    // glDeleteVertexArrays(1, vao);
     glDeleteTextures(1, &texTest);
 
     return EXIT_SUCCESS;

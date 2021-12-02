@@ -1,7 +1,5 @@
-# LEGENDE 
-# M : Murs | S : Sol | - : Vide | P : position player initiale
---------------------
-1MMMMMMMMMMMMMMMMMMM
-2SSSSSSSSSSSSSSSSSSS
-3MMMMMMMMMMMMMMMMMMM 
---------------------
+# LEGEND
+# W : Walls | S : simple | - : empty | P :  initial player position
+WSSWWWWWWWWWWWWWWWW
+PS SS   SSSSSSSSSSSS
+WWWWWWWWWWWWWWWWWWW

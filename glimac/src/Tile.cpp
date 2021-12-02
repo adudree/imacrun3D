@@ -6,19 +6,19 @@
 
 namespace glimac {
 
-void Tile::build(GLfloat posX, GLfloat posY, GLsizei width, GLsizei height) {
+void Tile::build(GLfloat width, GLfloat height) {
 
     ShapeVertex NO, NE, SO, SE; 
 
-    NE.position = glm::vec3(posX + width/2, 0, posY + height/2);
-    SO.position = glm::vec3(posX - width/2, 0, posY - height/2);
-    NO.position = glm::vec3(posX - width/2, 0, posY + height/2);
-    SE.position = glm::vec3(posX + width/2, 0, posY - height/2);
+    NE.position = glm::vec3(m_posX + width/2, 0, m_posY + height/2);
+    SO.position = glm::vec3(m_posX - width/2, 0, m_posY - height/2);
+    NO.position = glm::vec3(m_posX - width/2, 0, m_posY + height/2);
+    SE.position = glm::vec3(m_posX + width/2, 0, m_posY - height/2);
 
-    SO.texCoords = glm::vec2(0, 0);
-    SE.texCoords = glm::vec2(1, 0);
-    NO.texCoords = glm::vec2(0, 1);
-    NE.texCoords = glm::vec2(1, 1);
+    SO.texCoords = glm::vec2(0, 1);
+    SE.texCoords = glm::vec2(1, 1);
+    NO.texCoords = glm::vec2(0, 0);
+    NE.texCoords = glm::vec2(1, 0);
 
     NO.normal = glm::vec3(0, 1, 0);
     NE.normal = glm::vec3(0, 1, 0);
@@ -35,6 +35,8 @@ void Tile::build(GLfloat posX, GLfloat posY, GLsizei width, GLsizei height) {
 
 void Tile::mainVBO()
 {
+    glGenBuffers(1, &m_vbo);
+
     glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
     glBufferData(GL_ARRAY_BUFFER, m_nVertexCount * sizeof(ShapeVertex), &m_Vertices[0], GL_STATIC_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -42,6 +44,7 @@ void Tile::mainVBO()
 
 void Tile::mainIBO()
 {
+    glGenBuffers(1, &m_ibo);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ibo);
     uint32_t indicesRectangle[] = {0, 1, 2, 0, 2, 3};
     // 6 = taille de indicesRectangles 
@@ -51,6 +54,7 @@ void Tile::mainIBO()
 
 void Tile::mainVAO() 
 {
+    glGenVertexArrays(1, &m_vao);
     glBindVertexArray(m_vao);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ibo);
 
@@ -69,6 +73,16 @@ void Tile::mainVAO()
     glVertexAttribPointer(VERTEX_ATTR_TEX_COORD, 2, GL_FLOAT, GL_FALSE, 8*sizeof(GLfloat), (GLvoid*) (6 * sizeof(GLfloat)));
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
+}
+
+void Tile::drawTile(GLuint texture) {
+    glBindVertexArray(m_vao);
+
+    glBindTexture(GL_TEXTURE_2D, texture);
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0); 
+    glBindTexture(GL_TEXTURE_2D, 0);
+    
     glBindVertexArray(0);
 }
 
