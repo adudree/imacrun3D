@@ -125,12 +125,14 @@ int main(int argc, char** argv) {
     }
 
     // =============== TEXTURES =============== //
+    // créer toutes les textures nécessaires ici 
 
     GLuint texTest;
 
     std::unique_ptr<Image> test = loadImage("./src/assets/textures/cardinale.jpg");
 
     createTexture(texTest, test);
+
 
     // ================= LOOP ================= //
 
@@ -158,7 +160,7 @@ int main(int argc, char** argv) {
         glUniform1i(locTexture, 0);
 
         // dessin des tuiles 
-        
+
         for (size_t i = 0; i < tiles.size(); i++) {
             tiles[i].drawTile(texTest);
         }
@@ -167,7 +169,7 @@ int main(int argc, char** argv) {
     }
 
 
-    // delete buffers arrays et cie 
+    // delete buffers arrays et cie : trouver moyen de le faire izi 
     // glDeleteBuffers(1, vbo);
     // glDeleteVertexArrays(1, vao);
     glDeleteTextures(1, &texTest);
