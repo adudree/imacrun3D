@@ -10,6 +10,7 @@
 #include <glimac/Tile.hpp>
 #include <glimac/Sphere.hpp>
 #include <glimac/Map.hpp>
+#include <glimac/Event.hpp>
 
 #include <fstream> 
 #include <string> 
@@ -18,16 +19,7 @@
 
 using namespace glimac;
 
-/* ======= surcouche sdl =======
-- chargement shader       : [OK]
-- vao                     : [OK]
-- chargement textures     : [OK] 
-- dessin d'un élément     : [OK]
-- events clavier / souris : [OK]
-- void initialisation     : -
-*/
-
-int main(/*int argc, char** argv*/) {
+int main() {
 
     // ============ INITIALIZATION =========== //
 
@@ -44,8 +36,7 @@ int main(/*int argc, char** argv*/) {
     }
 
     // program + shaders 
-    //FilePath applicationPath(argv[0]);
-    //loadShader(program, argc, argv);
+    // 
     Program program;
     program = loadProgram( "./src/shaders/3D.vs.glsl", "./src/shaders/tex3D.fs.glsl");
     program.use();
@@ -71,15 +62,10 @@ int main(/*int argc, char** argv*/) {
 
     std::string fichierMap = "./src/maps/map1.imac";
     Map myMap(fichierMap); 
-
-
-    // -------- Récup infos de la map --------- //
-
     std::vector<Tile> tiles;
-    createTiles(myMap, tiles, 1, 3); 
+    createTiles(myMap, tiles, 1, 3); // 1 & 3 w & h de chaque tuile
 
     // =============== TEXTURES =============== //
-    // créer toutes les textures nécessaires ici 
 
     GLuint texTest;
 

@@ -31,37 +31,6 @@ void createTexture(GLuint &texture, std::unique_ptr<Image> &imagePointer)
 }
 
 
-void gestionEvent(bool &done, SDLWindowManager &windowManager) 
-{
-    SDL_Event e;
-    while(windowManager.pollEvent(e)) {
-        if (e.type == SDL_QUIT || e.key.keysym.sym == SDLK_x) {
-            done = true;
-        }
-    }
-
-}
-
-// voir si on peut pas grouper avec fichier shader
-void loadShader(Program &program, int &argc, char** &argv)
-{
-    std::string vs, fs; 
-    if (argc == 3) {
-        vs = std::string(argv[1]);
-        fs = std::string(argv[2]);
-        std::cout << "Shaders chargés." << std::endl;
-    }
-    else {
-        std::cout << "Merci de charger les shaders :" <<  std::endl;
-        std::cout << "Vertex shader : ";
-        std::cin >> vs;
-        std::cout << "Fragment shader :";
-        std::cin >> fs;
-    }
-
-    program = loadProgram( "./src/shaders/" + vs, "./src/shaders/" + fs);
-}
-
 
 void createTiles(const Map &map, std::vector<Tile> &tiles, const GLfloat &w, const GLfloat &h)
 {

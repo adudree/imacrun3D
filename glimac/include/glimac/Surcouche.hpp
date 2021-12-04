@@ -15,7 +15,5 @@ void createTexture(GLuint &texture, std::unique_ptr<Image> &imagePointer);
 void createVAO(GLuint &vbo, GLuint &vao);
 void createVAO(GLuint &vbo, GLuint &vao, GLuint &ibo);
 
-void gestionEvent(bool &done, SDLWindowManager &windowManager);
-void loadShader(Program &program, int &argc, char** &argv);
 void createTiles(const Map &map, std::vector<Tile> &tiles, const GLfloat &w, const GLfloat &h);
 }
