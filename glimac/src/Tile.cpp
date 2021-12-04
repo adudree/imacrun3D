@@ -1,10 +1,13 @@
-#include <cmath>
-#include <vector>
-#include <iostream>
-#include "glimac/common.hpp"
+
 #include "glimac/Tile.hpp"
 
 namespace glimac {
+
+void Tile::setTexture()
+{
+    std::unique_ptr<Image> image = loadImage("./src/assets/textures/cardinale.jpg");
+    createTexture(m_texture, image);
+}
 
 void Tile::build(GLfloat width, GLfloat height) {
 
@@ -47,8 +50,10 @@ void Tile::mainIBO()
     glGenBuffers(1, &m_ibo);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ibo);
     uint32_t indicesRectangle[] = {0, 1, 2, 0, 2, 3};
-    // 6 = taille de indicesRectangles 
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * sizeof(uint32_t), indicesRectangle, GL_STATIC_DRAW);
+    
+    int sizeTabIBO = sizeof(indicesRectangle)/sizeof(indicesRectangle[0]); 
+
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeTabIBO * sizeof(uint32_t), indicesRectangle, GL_STATIC_DRAW);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
@@ -76,10 +81,10 @@ void Tile::mainVAO()
     glBindVertexArray(0);
 }
 
-void Tile::drawTile(GLuint texture) {
+void Tile::drawTile() {
     glBindVertexArray(m_vao);
 
-    glBindTexture(GL_TEXTURE_2D, texture);
+    glBindTexture(GL_TEXTURE_2D, m_texture);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0); 
     glBindTexture(GL_TEXTURE_2D, 0);
     

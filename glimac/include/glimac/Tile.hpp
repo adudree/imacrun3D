@@ -1,11 +1,19 @@
 #pragma once
 
+#include <cmath>
+#include <vector>
+#include <string>
+#include <iostream>
+
 #include "common.hpp"
+#include "Image.hpp"
+#include "Texture.hpp"
 
 namespace glimac {
 
 class Tile {
-    private:
+    protected:
+
         std::vector<ShapeVertex> m_Vertices;    // Sommets
         GLsizei m_nVertexCount;                 // Nombre de sommets
 
@@ -16,14 +24,19 @@ class Tile {
         GLfloat m_posX;
         GLfloat m_posY; 
 
+        GLuint m_texture; 
+
         void build(GLfloat width, GLfloat height);
         void mainVBO();
         void mainIBO();
         void mainVAO();
 
+        void setTexture();
+
+
     public:
-        Tile(GLfloat posX, GLfloat posY, GLfloat width, GLfloat height)
-        : m_nVertexCount(0), m_posX(posX), m_posY(posY) 
+        Tile(GLfloat posX, GLfloat posY, GLfloat width, GLfloat height, GLuint &texture)
+        : m_nVertexCount(0), m_posX(posX), m_posY(posY), m_texture(texture)
         {
 
             build(width, height);   // Construction (voir le .cpp)
@@ -47,7 +60,7 @@ class Tile {
 
         }
         ~Tile() = default;
-        void drawTile(GLuint texture);     
+        void drawTile();     
         
         inline const ShapeVertex* getDataPointer() const {return &m_Vertices[0];}
         inline GLsizei getVertexCount() const {return m_nVertexCount;}
@@ -59,5 +72,6 @@ class Tile {
         inline glm::vec2 getPosition() const {return glm::vec2(m_posX, m_posY);}
         
 };
-    
+
+
 }
