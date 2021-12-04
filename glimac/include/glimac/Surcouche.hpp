@@ -6,6 +6,8 @@
 #include "Program.hpp"
 #include "glimac/common.hpp"
 #include <iostream>
+#include "Tile.hpp"
+#include "Map.hpp"
 
 namespace glimac {
 
@@ -15,5 +17,5 @@ void createVAO(GLuint &vbo, GLuint &vao, GLuint &ibo);
 
 void gestionEvent(bool &done, SDLWindowManager &windowManager);
 void loadShader(Program &program, int &argc, char** &argv);
-
+void createTiles(const Map &map, std::vector<Tile> &tiles, const GLfloat &w, const GLfloat &h);
 }

@@ -27,7 +27,7 @@ using namespace glimac;
 - void initialisation     : -
 */
 
-int main(int argc, char** argv) {
+int main(/*int argc, char** argv*/) {
 
     // ============ INITIALIZATION =========== //
 
@@ -43,10 +43,11 @@ int main(int argc, char** argv) {
         return EXIT_FAILURE;
     }
 
-    // program
-    FilePath applicationPath(argv[0]);
+    // program + shaders 
+    //FilePath applicationPath(argv[0]);
+    //loadShader(program, argc, argv);
     Program program;
-    loadShader(program, argc, argv);
+    program = loadProgram( "./src/shaders/3D.vs.glsl", "./src/shaders/tex3D.fs.glsl");
     program.use();
 
     glEnable(GL_DEPTH_TEST);
@@ -73,56 +74,9 @@ int main(int argc, char** argv) {
 
 
     // -------- Récup infos de la map --------- //
-    // faudra mettre ça dans une fonction 
 
     std::vector<Tile> tiles;
-    
-    // A FAIRE : adapter le switch pour d'autres valeurs de w et h
-    GLfloat w, h;
-    w = 1;
-    h = 1; 
-    
-    for (int i = 0; i < myMap.getDimensions()[0] ; i++)
-    {
-        for (int j = 0; j < myMap.getDimensions()[1]; j++)
-        {
-            switch (myMap.getTypeTile(i, j))
-            {
-            case 'P':
-                // position initiale du player on simple tile
-                tiles.push_back(Tile(i, j, w, h));
-                break;
-
-            case 'W':
-                // créer une tuile "wall" [A FAIRE]
-                break;
-
-            case 'S':
-                // simple tile
-                tiles.push_back(Tile(i, j, w, h));
-                break;
-
-            case 'A':
-                // créer une tuile "arch" [A FAIRE]
-                break;
-
-            case 'H':
-                // créer une tuile "hole" [A FAIRE]
-                break;
-
-            case 'L':
-                // créer une tuile "leftHole" [A FAIRE]
-                break;
-
-            case 'R':
-                // créer une tuile "rightHole" [A FAIRE]
-                break;
-
-            default:
-                break;
-            }
-        }
-    }
+    createTiles(myMap, tiles, 1, 3); 
 
     // =============== TEXTURES =============== //
     // créer toutes les textures nécessaires ici 
