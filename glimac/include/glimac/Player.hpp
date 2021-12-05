@@ -13,7 +13,9 @@ class Player
         // nom
         // score 
         // position 
-        // direction 
+        // isJumping        // test si est en train de sauter 
+        // isLowed          // test si est baissé 
+        // isMovingForward  // test si peut avancer
         // model 
         // texture 
 
@@ -27,12 +29,19 @@ class Player
         ~Player() = default;
 
         //draw() // chargement + affichage obj 3D 
+
         //inline void moveForward() { m_position[2] ++; }
-        //inline void moveLeft() { m_position[0] --; }
-        //inline void moveRight() { m_position[0] ++; }
-        //inline void jump() { /* ici fonction LAMBDA pour sauter (mouvement parabolique) */ }
+
+        //inline void moveSide() { tant qu'on est sur la portion passageOk de la case, 
+        // m_position[0] ++ ou --; (valeur <0 si décale à gauche) }
+
+
+        //inline void jump() { /* ici fonction LAMBDA pour sauter (mouvement parabolique) : le saut doit être + long que la tuile */ }
+
         //inline void squat() { /* ici  */ }
+
         //collision(Obstacle)
+
         //collision(Coin)
 };
 

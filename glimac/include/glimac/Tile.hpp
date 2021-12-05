@@ -24,6 +24,18 @@ class Tile {
         GLfloat m_posX;
         GLfloat m_posY; 
 
+        // positions entre lesquelles le joueur peut circuler
+        // généralement les bords de la tuile  
+        // changent lorsque obstacle (objet ou trou) sur la tuile
+        // ex : trou à gauche de la tuile 
+        // si ymin est dépassé, le joueur tombe dans le trou
+        // idem si ymax est dépassé pour trou à droite de la tuile
+        // pour tuile hole (toute la tuile est un trou) : différent 
+        // pas de y min ou max, le joueur est obligé de sauter 
+        GLfloat m_posPlayerYMin;
+        GLfloat m_posPlayerYMax; 
+
+
         GLuint m_texture; 
 
         void build(GLfloat width, GLfloat height);
