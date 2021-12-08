@@ -36,7 +36,6 @@ class Tile {
         GLfloat m_posPlayerYMin;
         GLfloat m_posPlayerYMax; 
 
-
         GLuint m_texture; 
 
         void build(GLfloat &width, GLfloat &height);

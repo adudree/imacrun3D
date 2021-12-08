@@ -30,6 +30,7 @@ class Player
 
         inline const glm::vec3 getPosition() const {return m_position;}
 
+        inline const void setPosition(glm::vec3 pos) { m_position = pos;}
         //draw() // chargement + affichage obj 3D 
 
         //inline void moveForward() { m_position[2] ++; }
