@@ -36,7 +36,6 @@ int main() {
     }
 
     // program + shaders 
-    // 
     Program program;
     program = loadProgram( "./src/shaders/3D.vs.glsl", "./src/shaders/tex3D.fs.glsl");
     program.use();
@@ -107,7 +106,7 @@ int main() {
     // delete buffers arrays et cie : trouver moyen de le faire izi 
     // glDeleteBuffers(1, vbo);
     // glDeleteVertexArrays(1, vao);
-    //glDeleteTextures(1, &texTest);
+    // glDeleteTextures(1, &texTest);
 
     return EXIT_SUCCESS;
 }

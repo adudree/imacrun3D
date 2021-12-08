@@ -1,5 +1,5 @@
 # LEGEND
-# W : Walls | S : simple | - : empty | P :  initial player position
-HS WWWWWWWWWWWWWWWW
-PHSHS   SSSSSSSSSSSS
+# W : Walls | S : simple | H - hole | P :  initial player position
+WWWWWWWWWWWWWWWWWWW
+PHSHS  SSSSSSSSSSSS
 WWWWWWWWWWWWWWWWWWW

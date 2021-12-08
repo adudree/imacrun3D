@@ -28,6 +28,8 @@ class Player
         Player() : m_nom("John Doe"), m_score(0), m_position(glm::vec3(0)) {}
         ~Player() = default;
 
+        inline const glm::vec3 getPosition() const {return m_position;}
+
         //draw() // chargement + affichage obj 3D 
 
         //inline void moveForward() { m_position[2] ++; }

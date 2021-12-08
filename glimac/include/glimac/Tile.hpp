@@ -8,6 +8,7 @@
 #include "common.hpp"
 #include "Image.hpp"
 #include "Texture.hpp"
+#include "Player.hpp"
 
 namespace glimac {
 
@@ -38,7 +39,7 @@ class Tile {
 
         GLuint m_texture; 
 
-        void build(GLfloat width, GLfloat height);
+        void build(GLfloat &width, GLfloat &height);
         void mainVBO();
         void mainIBO();
         void mainVAO();
@@ -83,6 +84,10 @@ class Tile {
         
         inline glm::vec2 getPosition() const {return glm::vec2(m_posX, m_posY);}
         
+        // PassageOK : si le joueur respecte certaines conditions
+        // ex : est baissé et/ou est en train de sauter
+        // et/ou est compris entre ymin et ymax 
+        bool PassageOK(Player &player);
 };
 
 

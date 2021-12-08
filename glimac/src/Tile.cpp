@@ -9,7 +9,7 @@ void Tile::setTexture()
     createTexture(m_texture, image);
 }
 
-void Tile::build(GLfloat width, GLfloat height) {
+void Tile::build(GLfloat &width, GLfloat &height) {
 
     ShapeVertex NO, NE, SO, SE; 
 
@@ -89,6 +89,16 @@ void Tile::drawTile() {
     glBindTexture(GL_TEXTURE_2D, 0);
     
     glBindVertexArray(0);
+}
+
+bool Tile::PassageOK(Player &p) {
+    
+    if (p.getPosition().y > m_posPlayerYMin && p.getPosition().y < m_posPlayerYMax) 
+    {
+        return true;
+    }
+
+    return false;
 }
 
 }
