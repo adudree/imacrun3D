@@ -55,8 +55,6 @@ void createTiles(const Map &map, std::vector<Tile> &tiles, Player &p, const GLfl
             }
         }
     }
-
-
 }
 
 }

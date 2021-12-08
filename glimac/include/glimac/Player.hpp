@@ -31,13 +31,13 @@ class Player
         inline const glm::vec3 getPosition() const {return m_position;}
 
         inline void setPosition(glm::vec3 pos) { m_position = pos;}
+
         //draw() // chargement + affichage obj 3D 
 
         //inline void moveForward() { m_position[2] ++; }
 
         //inline void moveSide() { tant qu'on est sur la portion passageOk de la case, 
         // m_position[0] ++ ou --; (valeur <0 si décale à gauche) }
-
 
         //inline void jump() { /* ici fonction LAMBDA pour sauter (mouvement parabolique) : le saut doit être + long que la tuile */ }
 

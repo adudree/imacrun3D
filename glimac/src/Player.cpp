@@ -28,5 +28,13 @@ void Player::collision(Arch &Obstacle)
     // A TESTER AILLEURS : si sa position = celle des singes, c perdu 
 }
 
+
+    y = - g / (2 * v0*v0 * cos(alpha)*cos(alpha)) * (x - 1)*(x-1) + tan(alpha)*(x-1) + x0
+
+    g = 9.81 
+    v0 = vitesse initiale (?)
+    alpha : angle (degré)
+    y0 : hauteur initiale 
+
 */
 }
