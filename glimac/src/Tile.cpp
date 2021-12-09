@@ -9,14 +9,14 @@ void Tile::setTexture()
     createTexture(m_texture, image);
 }
 
-void Tile::build(GLfloat &width, GLfloat &height) {
+void Tile::build() {
 
     ShapeVertex NO, NE, SO, SE; 
 
-    NE.position = glm::vec3(m_posX + width/2, 0, m_posY + height/2);
-    SO.position = glm::vec3(m_posX - width/2, 0, m_posY - height/2);
-    NO.position = glm::vec3(m_posX - width/2, 0, m_posY + height/2);
-    SE.position = glm::vec3(m_posX + width/2, 0, m_posY - height/2);
+    NE.position = glm::vec3(m_posX + m_width/2, 0, m_posY + m_height/2);
+    SO.position = glm::vec3(m_posX - m_width/2, 0, m_posY - m_height/2);
+    NO.position = glm::vec3(m_posX - m_width/2, 0, m_posY + m_height/2);
+    SE.position = glm::vec3(m_posX + m_width/2, 0, m_posY - m_height/2);
 
     SO.texCoords = glm::vec2(0, 1);
     SE.texCoords = glm::vec2(1, 1);
@@ -91,14 +91,14 @@ void Tile::drawTile() {
     glBindVertexArray(0);
 }
 
-bool Tile::PassageOK(Player &p) {
+// bool Tile::PassageOK(Player &p) {
     
-    if (p.getPosition().y > m_posPlayerYMin && p.getPosition().y < m_posPlayerYMax) 
-    {
-        return true;
-    }
+//     if (p.getPosition().y > m_posPlayerXMin && p.getPosition().y < m_posPlayerXMax) 
+//     {
+//         return true;
+//     }
 
-    return false;
-}
+//     return false;
+// }
 
 }

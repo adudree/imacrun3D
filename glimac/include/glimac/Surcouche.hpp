@@ -7,6 +7,7 @@
 #include "Image.hpp"
 #include "Program.hpp"
 
+#include "Player.hpp"
 #include "Tile.hpp"
 #include "Hole.hpp"
 #include "Map.hpp"

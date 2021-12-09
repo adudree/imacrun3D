@@ -3,25 +3,28 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <cmath>
+
 #include "common.hpp"
+#include "Tile.hpp"
+#include "Hole.hpp"
+
 
 namespace glimac {
 
 class Player 
 {
     private:
-        // nom
-        // score 
-        // position 
-        // isJumping        // test si est en train de sauter 
-        // isLowed          // test si est baissé 
-        // isMovingForward  // test si peut avancer
         // model 
         // texture 
 
         std::string m_nom; 
         int m_score;
         glm::vec3 m_position; 
+
+        bool isJumping;
+        bool isLowed;
+        bool isMovingForward;
 
 
     public: 
@@ -34,18 +37,18 @@ class Player
 
         //draw() // chargement + affichage obj 3D 
 
-        //inline void moveForward() { m_position[2] ++; }
+        inline void moveForward() { m_position.z ++; }
+        void moveSide(const float &indice);
+        void jump();
 
-        //inline void moveSide() { tant qu'on est sur la portion passageOk de la case, 
-        // m_position[0] ++ ou --; (valeur <0 si décale à gauche) }
 
-        //inline void jump() { /* ici fonction LAMBDA pour sauter (mouvement parabolique) : le saut doit être + long que la tuile */ }
+        //inline void squat() { /* height objet/2  */ }
 
-        //inline void squat() { /* ici  */ }
-
-        //collision(Obstacle)
-
+        void collision(Hole &hole);
         //collision(Coin)
+
+        bool isOnTile(Tile &tile);
+        bool isFalling();
 };
 
 }
