@@ -196,32 +196,32 @@ uninstall/fast:
 	$(MAKE) -f third-party/glimac/third-party/glm/CMakeFiles/uninstall.dir/build.make third-party/glimac/third-party/glm/CMakeFiles/uninstall.dir/build
 .PHONY : uninstall/fast
 
-src/Camera.o: src/Camera.cpp.o
+src/CameraThirdPerson.o: src/CameraThirdPerson.cpp.o
 
-.PHONY : src/Camera.o
+.PHONY : src/CameraThirdPerson.o
 
 # target to build an object file
-src/Camera.cpp.o:
-	$(MAKE) -f CMakeFiles/IMACRUN.dir/build.make CMakeFiles/IMACRUN.dir/src/Camera.cpp.o
-.PHONY : src/Camera.cpp.o
+src/CameraThirdPerson.cpp.o:
+	$(MAKE) -f CMakeFiles/IMACRUN.dir/build.make CMakeFiles/IMACRUN.dir/src/CameraThirdPerson.cpp.o
+.PHONY : src/CameraThirdPerson.cpp.o
 
-src/Camera.i: src/Camera.cpp.i
+src/CameraThirdPerson.i: src/CameraThirdPerson.cpp.i
 
-.PHONY : src/Camera.i
+.PHONY : src/CameraThirdPerson.i
 
 # target to preprocess a source file
-src/Camera.cpp.i:
-	$(MAKE) -f CMakeFiles/IMACRUN.dir/build.make CMakeFiles/IMACRUN.dir/src/Camera.cpp.i
-.PHONY : src/Camera.cpp.i
+src/CameraThirdPerson.cpp.i:
+	$(MAKE) -f CMakeFiles/IMACRUN.dir/build.make CMakeFiles/IMACRUN.dir/src/CameraThirdPerson.cpp.i
+.PHONY : src/CameraThirdPerson.cpp.i
 
-src/Camera.s: src/Camera.cpp.s
+src/CameraThirdPerson.s: src/CameraThirdPerson.cpp.s
 
-.PHONY : src/Camera.s
+.PHONY : src/CameraThirdPerson.s
 
 # target to generate assembly for a file
-src/Camera.cpp.s:
-	$(MAKE) -f CMakeFiles/IMACRUN.dir/build.make CMakeFiles/IMACRUN.dir/src/Camera.cpp.s
-.PHONY : src/Camera.cpp.s
+src/CameraThirdPerson.cpp.s:
+	$(MAKE) -f CMakeFiles/IMACRUN.dir/build.make CMakeFiles/IMACRUN.dir/src/CameraThirdPerson.cpp.s
+.PHONY : src/CameraThirdPerson.cpp.s
 
 src/Event.o: src/Event.cpp.o
 
@@ -481,9 +481,9 @@ help:
 	@echo "... IMACRUN"
 	@echo "... glimac"
 	@echo "... uninstall"
-	@echo "... src/Camera.o"
-	@echo "... src/Camera.i"
-	@echo "... src/Camera.s"
+	@echo "... src/CameraThirdPerson.o"
+	@echo "... src/CameraThirdPerson.i"
+	@echo "... src/CameraThirdPerson.s"
 	@echo "... src/Event.o"
 	@echo "... src/Event.i"
 	@echo "... src/Event.s"

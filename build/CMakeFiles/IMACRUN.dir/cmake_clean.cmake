@@ -1,5 +1,5 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/IMACRUN.dir/src/Camera.cpp.o"
+  "CMakeFiles/IMACRUN.dir/src/CameraThirdPerson.cpp.o"
   "CMakeFiles/IMACRUN.dir/src/Event.cpp.o"
   "CMakeFiles/IMACRUN.dir/src/Hole.cpp.o"
   "CMakeFiles/IMACRUN.dir/src/Map.cpp.o"

@@ -1,6 +1,6 @@
 #include "Event.hpp"
 
-void gestionEvent(bool &done, glimac::SDLWindowManager &windowManager, Camera &camera) 
+void gestionEvent(bool &done, glimac::SDLWindowManager &windowManager, CameraThirdPerson &camera) 
 {
     SDL_Event e;
     
@@ -17,31 +17,31 @@ void gestionEvent(bool &done, glimac::SDLWindowManager &windowManager, Camera &c
                 
                 // ========= MOUVEMENT ========== //
 
-                if (e.key.keysym.sym == SDLK_d)
+                if (e.key.keysym.sym == SDLK_d){}
                     // si on est sur une case "virage" : on tourne
                     // sinon : perso.posX ++;  
-                    camera.avance_droite();
+                    //player.avance_droite();
 
-                if (e.key.keysym.sym == SDLK_q)
+                if (e.key.keysym.sym == SDLK_q){}
                     // si on est sur une case "virage" : on tourne
                     // sinon : perso.posX --;  
-                    camera.avance_gauche();
+                    //player.avance_gauche();
 
-                if (e.key.keysym.sym == SDLK_z)
+                if (e.key.keysym.sym == SDLK_z){}
                     // le perso saute
-                    camera.avance_tout_droit();
+                    //player.avance_tout_droit();
 
-                if (e.key.keysym.sym == SDLK_s)
+                if (e.key.keysym.sym == SDLK_s){}
                     // le perso se baisse
-                    camera.avance_en_arriere();
+                    //player.avance_en_arriere();
 
-                if (e.key.keysym.sym == SDLK_e)
+                if (e.key.keysym.sym == SDLK_e){}
                     // le perso se baisse
-                    camera.avance_haut();
+                    //player.avance_haut();
 
-                if (e.key.keysym.sym == SDLK_f)
+                if (e.key.keysym.sym == SDLK_f){}
                     // le perso se baisse
-                    camera.avance_bas();
+                    //player.avance_bas();
 
 
                 // =========== CAMERA =========== //
@@ -49,13 +49,10 @@ void gestionEvent(bool &done, glimac::SDLWindowManager &windowManager, Camera &c
                 if (e.key.keysym.sym == SDLK_c)
                     // change vue caméra
 
-                if (e.key.keysym.sym == SDLK_l)
-                    // lock vue caméra
+                if (e.key.keysym.sym == SDLK_l){
 
-                if (e.key.keysym.sym == SDLK_r){
-                    // Retour au centre de la map
-                    camera.reinitialise_position();
                 }
+                    // lock vue caméra
                 
                     // Rotations
                 if (e.key.keysym.sym == SDLK_LEFT){
@@ -77,7 +74,7 @@ void gestionEvent(bool &done, glimac::SDLWindowManager &windowManager, Camera &c
 
                 // =========== MENU ============ //
 
-                if (e.key.keysym.sym == SDLK_ESCAPE)
+                if (e.key.keysym.sym == SDLK_ESCAPE){}
                     // le menu s'ouvre
 
                 break;

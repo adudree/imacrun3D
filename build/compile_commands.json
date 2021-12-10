@@ -1,8 +1,8 @@
 [
 {
   "directory": "/home/clemence/Bureau/Projet/imacrun3D/build",
-  "command": "/bin/c++   -I/usr/include/SDL -I/home/clemence/Bureau/Projet/imacrun3D/third-party/glimac/include -I/home/clemence/Bureau/Projet/imacrun3D/third-party/glimac/third-party/glm  -g   -W -Wall -Werror -O2 -o CMakeFiles/IMACRUN.dir/src/Camera.cpp.o -c /home/clemence/Bureau/Projet/imacrun3D/src/Camera.cpp",
-  "file": "/home/clemence/Bureau/Projet/imacrun3D/src/Camera.cpp"
+  "command": "/bin/c++   -I/usr/include/SDL -I/home/clemence/Bureau/Projet/imacrun3D/third-party/glimac/include -I/home/clemence/Bureau/Projet/imacrun3D/third-party/glimac/third-party/glm  -g   -W -Wall -Werror -O2 -o CMakeFiles/IMACRUN.dir/src/CameraThirdPerson.cpp.o -c /home/clemence/Bureau/Projet/imacrun3D/src/CameraThirdPerson.cpp",
+  "file": "/home/clemence/Bureau/Projet/imacrun3D/src/CameraThirdPerson.cpp"
 },
 {
   "directory": "/home/clemence/Bureau/Projet/imacrun3D/build",

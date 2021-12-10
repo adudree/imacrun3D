@@ -27,6 +27,7 @@ int main() {
     GLint WIDTH = 800;
     GLint HEIGHT = 800;
     SDLWindowManager windowManager(WIDTH, HEIGHT, "IMAC RUN 3D");
+    SDL_EnableKeyRepeat(100, 10);
 
     // glew : mettre un catch try par ici 
     GLenum glewInitError = glewInit();
@@ -69,12 +70,7 @@ int main() {
 
     // ================ CAMERA ================ //
 
-    Camera camera;
-
-    camera.applique_rotation();
-    camera.applique_translation();
-
-    // glm::vec3 cam_position = camera.position();
+    CameraThirdPerson camera;
 
 
     // ================= LOOP ================= //
@@ -91,8 +87,7 @@ int main() {
         
         // matrices et compagnie
 
-        MVMatrix = glm::translate(glm::mat4(1), glm::vec3(-1, 0, -5));
-        MVMatrix = glm::rotate(MVMatrix, glm::radians(10.f), glm::vec3(1, 0, 0));
+        MVMatrix = camera.computeMatrix({0.f, 0.f, 0.f}); // TODO remplacer par la position du joueur
         NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
 
         // valeurs uniformes 

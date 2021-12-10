@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/clemence/Bureau/Projet/imacrun3D/src/Camera.cpp" "/home/clemence/Bureau/Projet/imacrun3D/build/CMakeFiles/IMACRUN.dir/src/Camera.cpp.o"
+  "/home/clemence/Bureau/Projet/imacrun3D/src/CameraThirdPerson.cpp" "/home/clemence/Bureau/Projet/imacrun3D/build/CMakeFiles/IMACRUN.dir/src/CameraThirdPerson.cpp.o"
   "/home/clemence/Bureau/Projet/imacrun3D/src/Event.cpp" "/home/clemence/Bureau/Projet/imacrun3D/build/CMakeFiles/IMACRUN.dir/src/Event.cpp.o"
   "/home/clemence/Bureau/Projet/imacrun3D/src/Hole.cpp" "/home/clemence/Bureau/Projet/imacrun3D/build/CMakeFiles/IMACRUN.dir/src/Hole.cpp.o"
   "/home/clemence/Bureau/Projet/imacrun3D/src/Map.cpp" "/home/clemence/Bureau/Projet/imacrun3D/build/CMakeFiles/IMACRUN.dir/src/Map.cpp.o"

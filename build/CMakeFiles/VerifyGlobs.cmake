@@ -4,7 +4,7 @@
 # SRC_FILES at CMakeLists.txt:22 (file)
 file(GLOB_RECURSE NEW_GLOB LIST_DIRECTORIES false "/home/clemence/Bureau/Projet/imacrun3D/src/*.cpp")
 set(OLD_GLOB
-  "/home/clemence/Bureau/Projet/imacrun3D/src/Camera.cpp"
+  "/home/clemence/Bureau/Projet/imacrun3D/src/CameraThirdPerson.cpp"
   "/home/clemence/Bureau/Projet/imacrun3D/src/Event.cpp"
   "/home/clemence/Bureau/Projet/imacrun3D/src/Hole.cpp"
   "/home/clemence/Bureau/Projet/imacrun3D/src/Map.cpp"

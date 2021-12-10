@@ -1,6 +1,6 @@
 #pragma once
 
 #include "glimac/SDLWindowManager.hpp"
-#include "Camera.hpp"
+#include "CameraThirdPerson.hpp"
 
-void gestionEvent(bool &done, glimac::SDLWindowManager &windowManager, Camera &camera);
+void gestionEvent(bool &done, glimac::SDLWindowManager &windowManager, CameraThirdPerson &camera);

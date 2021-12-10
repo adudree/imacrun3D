@@ -57,18 +57,18 @@ include CMakeFiles/IMACRUN.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/IMACRUN.dir/flags.make
 
-CMakeFiles/IMACRUN.dir/src/Camera.cpp.o: CMakeFiles/IMACRUN.dir/flags.make
-CMakeFiles/IMACRUN.dir/src/Camera.cpp.o: ../src/Camera.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/clemence/Bureau/Projet/imacrun3D/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/IMACRUN.dir/src/Camera.cpp.o"
-	/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/IMACRUN.dir/src/Camera.cpp.o -c /home/clemence/Bureau/Projet/imacrun3D/src/Camera.cpp
+CMakeFiles/IMACRUN.dir/src/CameraThirdPerson.cpp.o: CMakeFiles/IMACRUN.dir/flags.make
+CMakeFiles/IMACRUN.dir/src/CameraThirdPerson.cpp.o: ../src/CameraThirdPerson.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/clemence/Bureau/Projet/imacrun3D/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/IMACRUN.dir/src/CameraThirdPerson.cpp.o"
+	/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/IMACRUN.dir/src/CameraThirdPerson.cpp.o -c /home/clemence/Bureau/Projet/imacrun3D/src/CameraThirdPerson.cpp
 
-CMakeFiles/IMACRUN.dir/src/Camera.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/IMACRUN.dir/src/Camera.cpp.i"
-	/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/clemence/Bureau/Projet/imacrun3D/src/Camera.cpp > CMakeFiles/IMACRUN.dir/src/Camera.cpp.i
+CMakeFiles/IMACRUN.dir/src/CameraThirdPerson.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/IMACRUN.dir/src/CameraThirdPerson.cpp.i"
+	/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/clemence/Bureau/Projet/imacrun3D/src/CameraThirdPerson.cpp > CMakeFiles/IMACRUN.dir/src/CameraThirdPerson.cpp.i
 
-CMakeFiles/IMACRUN.dir/src/Camera.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/IMACRUN.dir/src/Camera.cpp.s"
-	/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/clemence/Bureau/Projet/imacrun3D/src/Camera.cpp -o CMakeFiles/IMACRUN.dir/src/Camera.cpp.s
+CMakeFiles/IMACRUN.dir/src/CameraThirdPerson.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/IMACRUN.dir/src/CameraThirdPerson.cpp.s"
+	/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/clemence/Bureau/Projet/imacrun3D/src/CameraThirdPerson.cpp -o CMakeFiles/IMACRUN.dir/src/CameraThirdPerson.cpp.s
 
 CMakeFiles/IMACRUN.dir/src/Event.cpp.o: CMakeFiles/IMACRUN.dir/flags.make
 CMakeFiles/IMACRUN.dir/src/Event.cpp.o: ../src/Event.cpp
@@ -189,7 +189,7 @@ CMakeFiles/IMACRUN.dir/src/main.cpp.s: cmake_force
 
 # Object files for target IMACRUN
 IMACRUN_OBJECTS = \
-"CMakeFiles/IMACRUN.dir/src/Camera.cpp.o" \
+"CMakeFiles/IMACRUN.dir/src/CameraThirdPerson.cpp.o" \
 "CMakeFiles/IMACRUN.dir/src/Event.cpp.o" \
 "CMakeFiles/IMACRUN.dir/src/Hole.cpp.o" \
 "CMakeFiles/IMACRUN.dir/src/Map.cpp.o" \
@@ -203,7 +203,7 @@ IMACRUN_OBJECTS = \
 # External object files for target IMACRUN
 IMACRUN_EXTERNAL_OBJECTS =
 
-bin/IMACRUN: CMakeFiles/IMACRUN.dir/src/Camera.cpp.o
+bin/IMACRUN: CMakeFiles/IMACRUN.dir/src/CameraThirdPerson.cpp.o
 bin/IMACRUN: CMakeFiles/IMACRUN.dir/src/Event.cpp.o
 bin/IMACRUN: CMakeFiles/IMACRUN.dir/src/Hole.cpp.o
 bin/IMACRUN: CMakeFiles/IMACRUN.dir/src/Map.cpp.o

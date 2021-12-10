@@ -6,27 +6,9 @@
 
 #IncludeRegexTransform: 
 
-../third-party/glimac/include/glimac/BBox.hpp
-glm.hpp
-../third-party/glimac/include/glimac/glm.hpp
-
 ../third-party/glimac/include/glimac/FilePath.hpp
 string
 -
-
-../third-party/glimac/include/glimac/Geometry.hpp
-glm/glm.hpp
--
-vector
--
-string
--
-Image.hpp
-../third-party/glimac/include/glimac/Image.hpp
-FilePath.hpp
-../third-party/glimac/include/glimac/FilePath.hpp
-BBox.hpp
-../third-party/glimac/include/glimac/BBox.hpp
 
 ../third-party/glimac/include/glimac/Image.hpp
 vector
@@ -1334,6 +1316,14 @@ norm.inl
 ../detail/qualifier.hpp
 ../third-party/glimac/third-party/glm/glm/detail/qualifier.hpp
 
+../third-party/glimac/third-party/glm/glm/gtx/polar_coordinates.hpp
+../glm.hpp
+../third-party/glimac/third-party/glm/glm/glm.hpp
+polar_coordinates.inl
+../third-party/glimac/third-party/glm/glm/gtx/polar_coordinates.inl
+
+../third-party/glimac/third-party/glm/glm/gtx/polar_coordinates.inl
+
 ../third-party/glimac/third-party/glm/glm/gtx/quaternion.hpp
 ../glm.hpp
 ../third-party/glimac/third-party/glm/glm/glm.hpp
@@ -1628,21 +1618,27 @@ detail/setup.hpp
 detail/func_vector_relational.inl
 ../third-party/glimac/third-party/glm/glm/detail/func_vector_relational.inl
 
-/home/clemence/Bureau/Projet/imacrun3D/src/Camera.hpp
-glimac/Geometry.hpp
-/home/clemence/Bureau/Projet/imacrun3D/src/glimac/Geometry.hpp
-glm/glm.hpp
+/home/clemence/Bureau/Projet/imacrun3D/src/CameraThirdPerson.cpp
+cmath
 -
+CameraThirdPerson.hpp
+/home/clemence/Bureau/Projet/imacrun3D/src/CameraThirdPerson.hpp
+glm/gtx/polar_coordinates.hpp
+/home/clemence/Bureau/Projet/imacrun3D/src/glm/gtx/polar_coordinates.hpp
+
+/home/clemence/Bureau/Projet/imacrun3D/src/CameraThirdPerson.hpp
+glimac/glm.hpp
+-
+
+/home/clemence/Bureau/Projet/imacrun3D/src/Event.cpp
+Event.hpp
+/home/clemence/Bureau/Projet/imacrun3D/src/Event.hpp
 
 /home/clemence/Bureau/Projet/imacrun3D/src/Event.hpp
 glimac/SDLWindowManager.hpp
 /home/clemence/Bureau/Projet/imacrun3D/src/glimac/SDLWindowManager.hpp
-Camera.hpp
-/home/clemence/Bureau/Projet/imacrun3D/src/Camera.hpp
-
-/home/clemence/Bureau/Projet/imacrun3D/src/Hole.hpp
-Tile.hpp
-/home/clemence/Bureau/Projet/imacrun3D/src/Tile.hpp
+CameraThirdPerson.hpp
+/home/clemence/Bureau/Projet/imacrun3D/src/CameraThirdPerson.hpp
 
 /home/clemence/Bureau/Projet/imacrun3D/src/Map.hpp
 iostream
@@ -1667,12 +1663,6 @@ vector
 -
 ShapeVertex.hpp
 /home/clemence/Bureau/Projet/imacrun3D/src/ShapeVertex.hpp
-
-/home/clemence/Bureau/Projet/imacrun3D/src/Surcouche.cpp
-Surcouche.hpp
-/home/clemence/Bureau/Projet/imacrun3D/src/Surcouche.hpp
-Hole.hpp
-/home/clemence/Bureau/Projet/imacrun3D/src/Hole.hpp
 
 /home/clemence/Bureau/Projet/imacrun3D/src/Surcouche.hpp
 Tile.hpp
