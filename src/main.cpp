@@ -6,11 +6,11 @@
 #include <vector>
 
 #include <glimac/Image.hpp>
-#include <glimac/Surcouche.hpp>
-#include <glimac/Tile.hpp>
-#include <glimac/Sphere.hpp>
-#include <glimac/Map.hpp>
-#include <glimac/Event.hpp>
+#include "Surcouche.hpp"
+#include "Tile.hpp"
+#include "Sphere.hpp"
+#include "Map.hpp"
+#include "Event.hpp"
 
 #include <fstream> 
 #include <string> 
@@ -38,7 +38,7 @@ int main() {
     // program + shaders 
     // 
     Program program;
-    program = loadProgram( "./src/shaders/3D.vs.glsl", "./src/shaders/tex3D.fs.glsl");
+    program = loadProgram( "assets/shaders/3D.vs.glsl", "assets/shaders/tex3D.fs.glsl");
     program.use();
 
     glEnable(GL_DEPTH_TEST);
@@ -62,11 +62,19 @@ int main() {
 
     // ================= MAP ================== //
 
-    std::string fichierMap = "./src/maps/map1.imac";
+    std::string fichierMap = "assets/maps/map1.imac";
     Map myMap(fichierMap); 
     std::vector<Tile> tiles;
     createTiles(myMap, tiles, 1, 1); // 1 & 3 w & h de chaque tuile
 
+    // ================ CAMERA ================ //
+
+    Camera camera;
+
+    camera.applique_rotation();
+    camera.applique_translation();
+
+    // glm::vec3 cam_position = camera.position();
 
 
     // ================= LOOP ================= //
@@ -75,7 +83,7 @@ int main() {
     while(!done) {
 
         // events
-        gestionEvent(done, windowManager); 
+        gestionEvent(done, windowManager, camera); 
 
         // ============ RENDERING CODE =========== //
 
