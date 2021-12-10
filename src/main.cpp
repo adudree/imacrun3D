@@ -10,11 +10,12 @@
 #include "Tile.hpp"
 #include "Sphere.hpp"
 #include "Map.hpp"
-#include "Event.hpp"
 
 #include <fstream> 
 #include <string> 
 #include <glimac/glm.hpp>
+#include "CameraFirstPerson.hpp"
+#include "CameraThirdPerson.hpp"
 
 
 using namespace glimac;
@@ -27,7 +28,7 @@ int main() {
     GLint WIDTH = 800;
     GLint HEIGHT = 800;
     SDLWindowManager windowManager(WIDTH, HEIGHT, "IMAC RUN 3D");
-    SDL_EnableKeyRepeat(100, 10);
+    SDL_EnableKeyRepeat(1000, 10);
 
     // glew : mettre un catch try par ici 
     GLenum glewInitError = glewInit();
@@ -70,7 +71,9 @@ int main() {
 
     // ================ CAMERA ================ //
 
-    CameraThirdPerson camera;
+    CameraThirdPerson cameraThirdPerson;
+    CameraFirstPerson cameraFirstPerson;
+    ICamera* camera = &cameraThirdPerson;
 
 
     // ================= LOOP ================= //
@@ -78,16 +81,13 @@ int main() {
     bool done = false;
     while(!done) {
 
-        // events
-        gestionEvent(done, windowManager, camera); 
-
         // ============ RENDERING CODE =========== //
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         
         // matrices et compagnie
 
-        MVMatrix = camera.computeMatrix({0.f, 0.f, 0.f}); // TODO remplacer par la position du joueur
+        MVMatrix = camera->computeMatrix({0.f, -0.3f, 0.f}); // TODO remplacer par la position du joueur
         NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
 
         // valeurs uniformes 
@@ -104,6 +104,95 @@ int main() {
         }
 
         windowManager.swapBuffers();
+
+    SDL_Event e;
+    
+    while(windowManager.pollEvent(e)) {
+        switch (e.type)
+        {
+            case SDL_QUIT:
+                done = true;
+                break;
+            
+            case SDL_KEYDOWN:
+                if (e.key.keysym.sym == SDLK_x)
+                    done = true;
+                
+                // ========= MOUVEMENT ========== //
+
+                if (e.key.keysym.sym == SDLK_d){}
+                    // si on est sur une case "virage" : on tourne
+                    // sinon : perso.posX ++;  
+                    //player.avance_droite();
+
+                if (e.key.keysym.sym == SDLK_q){}
+                    // si on est sur une case "virage" : on tourne
+                    // sinon : perso.posX --;  
+                    //player.avance_gauche();
+
+                if (e.key.keysym.sym == SDLK_z){}
+                    // le perso saute
+                    //player.avance_tout_droit();
+
+                if (e.key.keysym.sym == SDLK_s){}
+                    // le perso se baisse
+                    //player.avance_en_arriere();
+
+                if (e.key.keysym.sym == SDLK_e){}
+                    // le perso se baisse
+                    //player.avance_haut();
+
+                if (e.key.keysym.sym == SDLK_f){}
+                    // le perso se baisse
+                    //player.avance_bas();
+
+
+                // =========== CAMERA =========== //
+
+                if (e.key.keysym.sym == SDLK_c) {
+                    if (camera == &cameraFirstPerson) {
+                        camera = &cameraThirdPerson;
+                    }
+                    else {
+                        camera = &cameraFirstPerson;
+                    }
+                }
+
+                if (e.key.keysym.sym == SDLK_l){
+
+                }
+                    // lock vue caméra
+                
+                    // Rotations
+                if (e.key.keysym.sym == SDLK_LEFT){
+                    camera->tourne_gauche();
+                } 
+
+                if (e.key.keysym.sym == SDLK_RIGHT){
+                    camera->tourne_droite();
+                } 
+
+                if (e.key.keysym.sym == SDLK_UP){
+                    camera->tourne_haut();
+                } 
+
+                if (e.key.keysym.sym == SDLK_DOWN){
+                    camera->tourne_bas();
+                } 
+
+
+                // =========== MENU ============ //
+
+                if (e.key.keysym.sym == SDLK_ESCAPE){}
+                    // le menu s'ouvre
+
+                break;
+            
+            default:
+                break;
+        }
+
+    }
     }
 
 
