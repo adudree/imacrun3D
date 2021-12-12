@@ -3,7 +3,7 @@
 
 // IMPORTANT : les fonctions dans ce fichier sont à trier //
 
-void createTiles(const Map& map, std::vector<Tile>& tiles, const GLfloat& w, const GLfloat& h)
+void createTiles(const Map& map, std::vector<Tile>& tiles, Player& p, const GLfloat& w, const GLfloat& h)
 {
     std::vector<GLuint> texturesMap(2); // 2 = nb textures
 
@@ -17,7 +17,7 @@ void createTiles(const Map& map, std::vector<Tile>& tiles, const GLfloat& w, con
         for (int j = 0; j < map.getDimensions()[1]; j++) {
             switch (map.getTypeTile(i, j)) {
             case 'P':
-                // initial player position on simple tile
+                p.setPosition(glm::vec3(i * w, 0, j * h));
                 tiles.push_back(Tile(i * w, j * h, w, h, texturesMap[0]));
                 break;
 

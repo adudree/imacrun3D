@@ -20,6 +20,9 @@ protected:
     GLfloat m_posX;
     GLfloat m_posY;
 
+    GLfloat m_width;
+    GLfloat m_height;
+
     // positions entre lesquelles le joueur peut circuler
     // généralement les bords de la tuile
     // changent lorsque obstacle (objet ou trou) sur la tuile
@@ -28,12 +31,12 @@ protected:
     // idem si ymax est dépassé pour trou à droite de la tuile
     // pour tuile hole (toute la tuile est un trou) : différent
     // pas de y min ou max, le joueur est obligé de sauter
-    GLfloat m_posPlayerYMin;
-    GLfloat m_posPlayerYMax;
+    GLfloat m_posPlayerXMin;
+    GLfloat m_posPlayerXMax;
 
     GLuint m_texture;
 
-    void build(GLfloat width, GLfloat height);
+    void build();
     void mainVBO();
     void mainIBO();
     void mainVAO();
@@ -42,9 +45,9 @@ protected:
 
 public:
     Tile(GLfloat posX, GLfloat posY, GLfloat width, GLfloat height, GLuint& texture)
-        : m_nVertexCount(0), m_posX(posX), m_posY(posY), m_texture(texture)
+        : m_nVertexCount(0), m_posX(posX), m_posY(posY), m_width(width), m_height(height), m_texture(texture)
     {
-        build(width, height); // Construction (voir le .cpp)
+        build(); // Construction (voir le .cpp)
 
         GLuint vbo;
         GLuint ibo;
@@ -68,9 +71,17 @@ public:
     inline const ShapeVertex* getDataPointer() const { return &m_Vertices[0]; }
     inline GLsizei            getVertexCount() const { return m_nVertexCount; }
 
+    inline GLint getWidth() const { return m_width; }
+    inline GLint getHeight() const { return m_height; }
+
     inline GLint getVBO() const { return m_vbo; }
     inline GLint getIBO() const { return m_ibo; }
     inline GLint getVAO() const { return m_vao; }
 
     inline glm::vec2 getPosition() const { return glm::vec2(m_posX, m_posY); }
+
+    // PassageOK : si le joueur respecte certaines conditions
+    // ex : est baissé et/ou est en train de sauter
+    // et/ou est compris entre ymin et ymax
+    // bool PassageOK(Player& player);
 };

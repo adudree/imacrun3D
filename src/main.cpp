@@ -12,6 +12,7 @@
 #include "CameraFirstPerson.hpp"
 #include "CameraThirdPerson.hpp"
 #include "Map.hpp"
+#include "Player.hpp"
 #include "Sphere.hpp"
 #include "Surcouche.hpp"
 #include "Tile.hpp"
@@ -80,7 +81,11 @@ int main()
 
     ProjMatrix = glm::perspective(70.f, float(WIDTH / HEIGHT), 0.1f, 100.0f);
 
-    // =============== TEXTURES =============== //
+    // ================ PLAYER ================ //
+
+    Player player;
+
+    // ================ TEXTURES ================ //
 
     const unsigned int cubemapTexture = loadCubemap({"assets/CubeMap/bluecloud_rt.jpg",
                                                      "assets/CubeMap/bluecloud_lf.jpg",
@@ -98,7 +103,7 @@ int main()
     std::string       fichierMap = "assets/maps/map1.imac";
     Map               myMap(fichierMap);
     std::vector<Tile> tiles;
-    createTiles(myMap, tiles, 1, 1); // 1 & 3 w & h de chaque tuile
+    createTiles(myMap, tiles, player, 1, 1); // 1 & 3 w & h de chaque tuile
 
     // ================ CAMERA ================ //
 
@@ -239,7 +244,7 @@ int main()
     // delete buffers arrays et cie : trouver moyen de le faire izi
     // glDeleteBuffers(1, vbo);
     // glDeleteVertexArrays(1, vao);
-    //glDeleteTextures(1, &texTest);
+    // glDeleteTextures(1, &texTest);
     glDeleteVertexArrays(1, &skyboxVAO);
 
     return EXIT_SUCCESS;
