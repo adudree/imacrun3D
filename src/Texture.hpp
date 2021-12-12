@@ -1,8 +1,7 @@
 #pragma once
 
-#include "glimac/SDLWindowManager.hpp"
-#include "glimac/Image.hpp"
-
 #include <GL/glew.h>
+#include "glimac/Image.hpp"
+#include "glimac/SDLWindowManager.hpp"
 
-void createTexture(GLuint &texture, std::unique_ptr<glimac::Image> &imagePointer);
+void createTexture(GLuint& texture, std::unique_ptr<glimac::Image>& imagePointer);

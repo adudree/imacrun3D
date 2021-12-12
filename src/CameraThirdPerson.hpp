@@ -1,4 +1,4 @@
-#pragma once 
+#pragma once
 
 #include <glimac/glm.hpp>
 #include "ICamera.hpp"
@@ -16,10 +16,10 @@ public:
     void zoom_arriere();
 
 private:
-    float m_pan = 0.f;
+    float m_pan  = 0.f;
     float m_tilt = 0.3f;
     float m_zoom = 10.f;
 
     float m_vitesseRotation = 0.02f;
-    float m_vitesseZoom = 0.8f;
+    float m_vitesseZoom     = 0.8f;
 };

@@ -1,36 +1,32 @@
 #include "Surcouche.hpp"
-
 #include "Hole.hpp"
 
 // IMPORTANT : les fonctions dans ce fichier sont à trier //
 
-void createTiles(const Map &map, std::vector<Tile> &tiles, const GLfloat &w, const GLfloat &h)
+void createTiles(const Map& map, std::vector<Tile>& tiles, const GLfloat& w, const GLfloat& h)
 {
-    std::vector<GLuint> texturesMap(2); // 2 = nb textures 
+    std::vector<GLuint> texturesMap(2); // 2 = nb textures
 
     std::unique_ptr<glimac::Image> simple = glimac::loadImage("assets/textures/cardinale.jpg");
-    std::unique_ptr<glimac::Image> hole = glimac::loadImage("assets/textures/hole.png");
+    std::unique_ptr<glimac::Image> hole   = glimac::loadImage("assets/textures/hole.png");
 
     createTexture(texturesMap[0], simple);
     createTexture(texturesMap[1], hole);
 
-    for (int i = 0; i < map.getDimensions()[0] ; i++)
-    {
-        for (int j = 0; j < map.getDimensions()[1]; j++)
-        {
-            switch (map.getTypeTile(i, j))
-            {
+    for (int i = 0; i < map.getDimensions()[0]; i++) {
+        for (int j = 0; j < map.getDimensions()[1]; j++) {
+            switch (map.getTypeTile(i, j)) {
             case 'P':
                 // initial player position on simple tile
-                tiles.push_back(Tile(i*w, j*h, w, h, texturesMap[0]));
+                tiles.push_back(Tile(i * w, j * h, w, h, texturesMap[0]));
                 break;
 
             case 'S':
-                tiles.push_back(Tile(i*w, j*h, w, h, texturesMap[0]));
+                tiles.push_back(Tile(i * w, j * h, w, h, texturesMap[0]));
                 break;
 
             case 'H':
-                tiles.push_back(Hole(i*w, j*h, w, h, texturesMap[1]));
+                tiles.push_back(Hole(i * w, j * h, w, h, texturesMap[1]));
                 break;
 
             case 'W':
@@ -54,6 +50,4 @@ void createTiles(const Map &map, std::vector<Tile> &tiles, const GLfloat &w, con
             }
         }
     }
-
-
 }

@@ -1,7 +1,6 @@
 #pragma once
 
 #include <vector>
-
 #include "ShapeVertex.hpp"
 
 // Représente une sphère discrétisée centrée en (0, 0, 0) (dans son repère local)
@@ -12,22 +11,25 @@ class Sphere {
 
 public:
     // Constructeur: alloue le tableau de données et construit les attributs des vertex
-    Sphere(GLfloat radius, GLsizei discLat, GLsizei discLong):
-        m_nVertexCount(0) {
+    Sphere(GLfloat radius, GLsizei discLat, GLsizei discLong)
+        : m_nVertexCount(0)
+    {
         build(radius, discLat, discLong); // Construction (voir le .cpp)
     }
 
     // Renvoit le pointeur vers les données
-    const ShapeVertex* getDataPointer() const {
+    const ShapeVertex* getDataPointer() const
+    {
         return &m_Vertices[0];
     }
-    
+
     // Renvoit le nombre de vertex
-    GLsizei getVertexCount() const {
+    GLsizei getVertexCount() const
+    {
         return m_nVertexCount;
     }
 
 private:
     std::vector<ShapeVertex> m_Vertices;
-    GLsizei m_nVertexCount; // Nombre de sommets
+    GLsizei                  m_nVertexCount; // Nombre de sommets
 };

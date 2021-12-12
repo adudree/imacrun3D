@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Tile.hpp"
 #include "Map.hpp"
+#include "Tile.hpp"
 
-void createTiles(const Map &map, std::vector<Tile> &tiles, const GLfloat &w, const GLfloat &h);
+void createTiles(const Map& map, std::vector<Tile>& tiles, const GLfloat& w, const GLfloat& h);
