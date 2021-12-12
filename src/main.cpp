@@ -1,4 +1,5 @@
 #include <GL/glew.h>
+#include <array>
 #include <fstream>
 #include <glimac/FilePath.hpp>
 #include <glimac/Image.hpp>
@@ -16,6 +17,31 @@
 #include "Tile.hpp"
 
 using namespace glimac;
+
+unsigned int loadCubemap(const std::array<const char*, 6>& texturesPaths)
+{
+    unsigned int textureID;
+    glGenTextures(1, &textureID);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
+
+    for (unsigned int i = 0; i < texturesPaths.size(); i++) {
+        const auto image = glimac::loadImage(texturesPaths[i]);
+        if (image) {
+            glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,
+                         0, GL_RGBA, image->getWidth(), image->getHeight(), 0, GL_RGBA, GL_FLOAT, image->getPixels());
+        }
+        else {
+            std::cout << "Cubemap tex failed to load at path: " << texturesPaths[i] << std::endl;
+        }
+    }
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+
+    return textureID;
+}
 
 int main()
 {
@@ -36,14 +62,13 @@ int main()
 
     // program + shaders
     //
-    Program program;
-    program = loadProgram("assets/shaders/3D.vs.glsl", "assets/shaders/tex3D.fs.glsl");
-    program.use();
+    Program program       = loadProgram("assets/shaders/3D.vs.glsl", "assets/shaders/tex3D.fs.glsl");
+    Program skyboxProgram = loadProgram("assets/shaders/skybox.vs.glsl", "assets/shaders/skybox.fs.glsl");
 
     glEnable(GL_DEPTH_TEST);
 
     // ================ MATRIX ================ //
-
+    program.use();
     GLint locMVPMatrix    = glGetUniformLocation(program.getGLId(), "uMVPMatrix");
     GLint locMVMatrix     = glGetUniformLocation(program.getGLId(), "uMVMatrix");
     GLint locNormalMatrix = glGetUniformLocation(program.getGLId(), "uNormalMatrix");
@@ -56,6 +81,17 @@ int main()
     ProjMatrix = glm::perspective(70.f, float(WIDTH / HEIGHT), 0.1f, 100.0f);
 
     // =============== TEXTURES =============== //
+
+    const unsigned int cubemapTexture = loadCubemap({"assets/CubeMap/bluecloud_rt.jpg",
+                                                     "assets/CubeMap/bluecloud_lf.jpg",
+                                                     "assets/CubeMap/bluecloud_up.jpg",
+                                                     "assets/CubeMap/bluecloud_dn.jpg",
+                                                     "assets/CubeMap/bluecloud_bk.jpg",
+                                                     "assets/CubeMap/bluecloud_ft.jpg"});
+
+    GLuint skyboxVAO;
+    glGenVertexArrays(1, &skyboxVAO);
+    glBindVertexArray(skyboxVAO);
 
     // ================= MAP ================== //
 
@@ -77,6 +113,14 @@ int main()
         // ============ RENDERING CODE =========== //
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glDepthMask(GL_FALSE);
+        skyboxProgram.use();
+        // ... set view and projection matrix
+        glBindVertexArray(skyboxVAO);
+        glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
+        glDrawArrays(GL_TRIANGLES, 0, 36);
+        glDepthMask(GL_TRUE);
+        // ... draw rest of the scene
 
         // matrices et compagnie
 
@@ -85,18 +129,20 @@ int main()
 
         // valeurs uniformes
 
+        program.use();
         glUniformMatrix4fv(locMVPMatrix, 1, GL_FALSE, glm::value_ptr(ProjMatrix * MVMatrix));
         glUniformMatrix4fv(locMVMatrix, 1, GL_FALSE, glm::value_ptr(MVMatrix));
         glUniformMatrix4fv(locNormalMatrix, 1, GL_FALSE, glm::value_ptr(NormalMatrix));
         glUniform1i(locTexture, 0);
 
         // dessin des tuiles
-
         for (size_t i = 0; i < tiles.size(); i++) {
             tiles[i].drawTile();
         }
 
         windowManager.swapBuffers();
+
+        // Commandes de Event
 
         SDL_Event e;
 
@@ -194,6 +240,7 @@ int main()
     // glDeleteBuffers(1, vbo);
     // glDeleteVertexArrays(1, vao);
     //glDeleteTextures(1, &texTest);
+    glDeleteVertexArrays(1, &skyboxVAO);
 
     return EXIT_SUCCESS;
 }

@@ -1,0 +1,3 @@
+class Skybox {
+    Skybox();
+};
