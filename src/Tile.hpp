@@ -7,6 +7,7 @@
 #include "IBO.hpp"
 #include "ShapeVertex.hpp"
 #include "Texture.hpp"
+#include "VAO.hpp"
 #include "VBO.hpp"
 #include "glimac/Image.hpp"
 
@@ -20,7 +21,7 @@ protected:
 
     VBO<ShapeVertex> m_vbo;
     IBO              m_ibo;
-    GLuint           m_vao;
+    VAO<ShapeVertex> m_vao;
 
     // positions entre lesquelles le joueur peut circuler
     // généralement les bords de la tuile
@@ -37,21 +38,15 @@ protected:
 
     std::vector<ShapeVertex> buildVertices();
     std::vector<uint32_t>    buildIndices();
-    void                     mainVAO();
+    void                     setupAttribPointer();
 
     void setTexture();
 
 public:
-    Tile(GLfloat posX, GLfloat posY, GLfloat width, GLfloat height, GLuint& texture)
-        : m_posX(posX), m_posY(posY), m_width(width), m_height(height), m_vbo(buildVertices()), m_ibo(buildIndices()), m_texture(texture)
+    Tile(GLfloat posX, GLfloat posY, GLfloat width, GLfloat height, GLuint texture)
+        : m_posX(posX), m_posY(posY), m_width(width), m_height(height), m_vbo(buildVertices()), m_ibo(buildIndices()), m_vao(m_vbo, m_ibo), m_texture(texture)
     {
-        GLuint vao;
-
-        glGenVertexArrays(1, &vao);
-
-        m_vao = vao;
-
-        mainVAO();
+        setupAttribPointer();
     }
     ~Tile() = default;
     void drawTile();
@@ -61,7 +56,7 @@ public:
 
     inline GLuint getVBO() const { return *m_vbo; }
     inline GLuint getIBO() const { return *m_ibo; }
-    inline GLuint getVAO() const { return m_vao; }
+    inline GLuint getVAO() const { return *m_vao; }
 
     inline glm::vec2 getPosition() const { return glm::vec2(m_posX, m_posY); }
 

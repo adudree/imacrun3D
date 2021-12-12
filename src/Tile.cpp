@@ -40,11 +40,10 @@ std::vector<uint32_t> Tile::buildIndices()
     return {0, 1, 2, 0, 2, 3};
 }
 
-void Tile::mainVAO()
+void Tile::setupAttribPointer()
 {
-    glGenVertexArrays(1, &m_vao);
-    glBindVertexArray(m_vao);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, *m_ibo);
+    glBindVertexArray(*m_vao);
+    glBindBuffer(GL_ARRAY_BUFFER, *m_vbo);
 
     const GLuint VERTEX_ATTR_POSITION  = 0;
     const GLuint VERTEX_ATTR_NORMAL    = 1;
@@ -53,8 +52,6 @@ void Tile::mainVAO()
     glEnableVertexAttribArray(VERTEX_ATTR_POSITION);
     glEnableVertexAttribArray(VERTEX_ATTR_NORMAL);
     glEnableVertexAttribArray(VERTEX_ATTR_TEX_COORD);
-
-    glBindBuffer(GL_ARRAY_BUFFER, *m_vbo);
 
     glVertexAttribPointer(VERTEX_ATTR_POSITION, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), 0);
     glVertexAttribPointer(VERTEX_ATTR_NORMAL, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
@@ -66,7 +63,7 @@ void Tile::mainVAO()
 
 void Tile::drawTile()
 {
-    glBindVertexArray(m_vao);
+    glBindVertexArray(*m_vao);
 
     glBindTexture(GL_TEXTURE_2D, m_texture);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
