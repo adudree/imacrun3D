@@ -100,9 +100,9 @@ int main()
 
     // ================= MAP ================== //
 
-    std::string       fichierMap = "assets/maps/map1.imac";
-    Map               myMap(fichierMap);
-    std::vector<Tile> tiles;
+    std::string                        fichierMap = "assets/maps/map1.imac";
+    Map                                myMap(fichierMap);
+    std::vector<std::unique_ptr<Tile>> tiles;
     createTiles(myMap, tiles, player, 1, 1); // 1 & 3 w & h de chaque tuile
 
     // ================ CAMERA ================ //
@@ -142,7 +142,7 @@ int main()
 
         // dessin des tuiles
         for (size_t i = 0; i < tiles.size(); i++) {
-            tiles[i].drawTile();
+            tiles[i]->drawTile();
         }
 
         windowManager.swapBuffers();
