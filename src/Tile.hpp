@@ -38,15 +38,15 @@ protected:
 
     std::vector<ShapeVertex> buildVertices();
     std::vector<uint32_t>    buildIndices();
-    void                     setupAttribPointer();
+    void                     buildVAO();
 
     void setTexture();
 
 public:
     Tile(GLfloat posX, GLfloat posY, GLfloat width, GLfloat height, GLuint texture)
-        : m_posX(posX), m_posY(posY), m_width(width), m_height(height), m_vbo(buildVertices()), m_ibo(buildIndices()), m_vao(m_vbo, m_ibo), m_texture(texture)
+        : m_posX(posX), m_posY(posY), m_width(width), m_height(height), m_vbo(buildVertices()), m_ibo(buildIndices()), m_vao(), m_texture(texture)
     {
-        setupAttribPointer();
+        buildVAO();
     }
     ~Tile() = default;
     void drawTile();

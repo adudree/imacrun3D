@@ -13,9 +13,11 @@
 #include "CameraThirdPerson.hpp"
 #include "Map.hpp"
 #include "Player.hpp"
+#include "Skybox.hpp"
 #include "Sphere.hpp"
 #include "Surcouche.hpp"
 #include "Tile.hpp"
+#include "VAO.hpp"
 
 using namespace glimac;
 
@@ -94,9 +96,58 @@ int main()
                                                      "assets/CubeMap/bluecloud_bk.jpg",
                                                      "assets/CubeMap/bluecloud_ft.jpg"});
 
-    GLuint skyboxVAO;
-    glGenVertexArrays(1, &skyboxVAO);
-    glBindVertexArray(skyboxVAO);
+    VBO<SkyboxVertex> skyboxVBO(std::vector<SkyboxVertex>{
+        {{-1.0f, 1.0f, -1.0f}},
+        {{-1.0f, -1.0f, -1.0f}},
+        {{1.0f, -1.0f, -1.0f}},
+        {{1.0f, -1.0f, -1.0f}},
+        {{1.0f, 1.0f, -1.0f}},
+        {{-1.0f, 1.0f, -1.0f}},
+
+        {{-1.0f, -1.0f, 1.0f}},
+        {{-1.0f, -1.0f, -1.0f}},
+        {{-1.0f, 1.0f, -1.0f}},
+        {{-1.0f, 1.0f, -1.0f}},
+        {{-1.0f, 1.0f, 1.0f}},
+        {{-1.0f, -1.0f, 1.0f}},
+
+        {{1.0f, -1.0f, -1.0f}},
+        {{1.0f, -1.0f, 1.0f}},
+        {{1.0f, 1.0f, 1.0f}},
+        {{1.0f, 1.0f, 1.0f}},
+        {{1.0f, 1.0f, -1.0f}},
+        {{1.0f, -1.0f, -1.0f}},
+
+        {{-1.0f, -1.0f, 1.0f}},
+        {{-1.0f, 1.0f, 1.0f}},
+        {{1.0f, 1.0f, 1.0f}},
+        {{1.0f, 1.0f, 1.0f}},
+        {{1.0f, -1.0f, 1.0f}},
+        {{-1.0f, -1.0f, 1.0f}},
+
+        {{-1.0f, 1.0f, -1.0f}},
+        {{1.0f, 1.0f, -1.0f}},
+        {{1.0f, 1.0f, 1.0f}},
+        {{1.0f, 1.0f, 1.0f}},
+        {{-1.0f, 1.0f, 1.0f}},
+        {{-1.0f, 1.0f, -1.0f}},
+
+        {{-1.0f, -1.0f, -1.0f}},
+        {{-1.0f, -1.0f, 1.0f}},
+        {{1.0f, -1.0f, -1.0f}},
+        {{1.0f, -1.0f, -1.0f}},
+        {{-1.0f, -1.0f, 1.0f}},
+        {{1.0f, -1.0f, 1.0f}}});
+    VAO<SkyboxVertex> skyboxVAO;
+    glBindVertexArray(*skyboxVAO);
+    glBindBuffer(GL_ARRAY_BUFFER, *skyboxVBO);
+
+    const GLuint VERTEX_ATTR_POSITION = 0;
+    glEnableVertexAttribArray(VERTEX_ATTR_POSITION);
+    glVertexAttribPointer(VERTEX_ATTR_POSITION, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), nullptr);
+
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
 
     // ================= MAP ================== //
 
@@ -121,7 +172,7 @@ int main()
         glDepthMask(GL_FALSE);
         skyboxProgram.use();
         // ... set view and projection matrix
-        glBindVertexArray(skyboxVAO);
+        glBindVertexArray(*skyboxVAO);
         glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
         glDrawArrays(GL_TRIANGLES, 0, 36);
         glDepthMask(GL_TRUE);
@@ -245,7 +296,6 @@ int main()
     // glDeleteBuffers(1, vbo);
     // glDeleteVertexArrays(1, vao);
     // glDeleteTextures(1, &texTest);
-    glDeleteVertexArrays(1, &skyboxVAO);
 
     return EXIT_SUCCESS;
 }

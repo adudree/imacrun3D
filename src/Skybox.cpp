@@ -1,4 +1,4 @@
-#include "skybox.hpp"
+#include "Skybox.hpp"
 #include "GL/glew.h"
 
 Skybox::Skybox()

@@ -40,9 +40,10 @@ std::vector<uint32_t> Tile::buildIndices()
     return {0, 1, 2, 0, 2, 3};
 }
 
-void Tile::setupAttribPointer()
+void Tile::buildVAO()
 {
     glBindVertexArray(*m_vao);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, *m_ibo);
     glBindBuffer(GL_ARRAY_BUFFER, *m_vbo);
 
     const GLuint VERTEX_ATTR_POSITION  = 0;

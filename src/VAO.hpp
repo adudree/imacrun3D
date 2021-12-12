@@ -11,12 +11,10 @@ private:
     GLuint m_vao; // NOLINT
 
 public:
-    explicit VAO(const VBO<VertexData>& vbo, const IBO& ibo)
+    VAO()
     {
         glGenVertexArrays(1, &m_vao);
         glBindVertexArray(m_vao);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, *ibo);
-        glBindBuffer(GL_ARRAY_BUFFER, *vbo);
     }
 
     VAO(const VAO&) = delete;
