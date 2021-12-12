@@ -7,9 +7,10 @@ void Tile::setTexture()
     createTexture(m_texture, image);
 }
 
-void Tile::build()
+std::vector<ShapeVertex> Tile::buildVertices()
 {
-    ShapeVertex NO, NE, SO, SE;
+    std::vector<ShapeVertex> vertices;
+    ShapeVertex              NO, NE, SO, SE;
 
     NE.position = glm::vec3(m_posX + m_width / 2, 0, m_posY + m_height / 2);
     SO.position = glm::vec3(m_posX - m_width / 2, 0, m_posY - m_height / 2);
@@ -26,21 +27,12 @@ void Tile::build()
     SO.normal = glm::vec3(0, 1, 0);
     SE.normal = glm::vec3(0, 1, 0);
 
-    m_Vertices.push_back(SO);
-    m_Vertices.push_back(NO);
-    m_Vertices.push_back(NE);
-    m_Vertices.push_back(SE);
+    vertices.push_back(SO);
+    vertices.push_back(NO);
+    vertices.push_back(NE);
+    vertices.push_back(SE);
 
-    m_nVertexCount = m_Vertices.size();
-}
-
-void Tile::mainVBO()
-{
-    glGenBuffers(1, &m_vbo);
-
-    glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
-    glBufferData(GL_ARRAY_BUFFER, m_nVertexCount * sizeof(ShapeVertex), &m_Vertices[0], GL_STATIC_DRAW);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    return vertices;
 }
 
 void Tile::mainIBO()
@@ -69,7 +61,7 @@ void Tile::mainVAO()
     glEnableVertexAttribArray(VERTEX_ATTR_NORMAL);
     glEnableVertexAttribArray(VERTEX_ATTR_TEX_COORD);
 
-    glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
+    glBindBuffer(GL_ARRAY_BUFFER, *m_vbo);
 
     glVertexAttribPointer(VERTEX_ATTR_POSITION, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), 0);
     glVertexAttribPointer(VERTEX_ATTR_NORMAL, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
