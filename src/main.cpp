@@ -81,20 +81,20 @@ int main()
     glm::mat4 MVMatrix;
     glm::mat4 NormalMatrix;
 
-    ProjMatrix = glm::perspective(70.f, float(WIDTH / HEIGHT), 0.1f, 100.0f);
+    ProjMatrix = glm::perspective(70.f, float(WIDTH) / float(HEIGHT), 0.1f, 100.0f);
 
     // ================ PLAYER ================ //
 
     Player player;
 
-    // ================ TEXTURES ================ //
+    // ================ SKYBOX ================ //
 
-    const unsigned int cubemapTexture = loadCubemap({"assets/CubeMap/bluecloud_rt.jpg",
-                                                     "assets/CubeMap/bluecloud_lf.jpg",
+    const unsigned int cubemapTexture = loadCubemap({"assets/CubeMap/bluecloud_ft.jpg",
+                                                     "assets/CubeMap/bluecloud_bk.jpg",
                                                      "assets/CubeMap/bluecloud_up.jpg",
                                                      "assets/CubeMap/bluecloud_dn.jpg",
-                                                     "assets/CubeMap/bluecloud_bk.jpg",
-                                                     "assets/CubeMap/bluecloud_ft.jpg"});
+                                                     "assets/CubeMap/bluecloud_rt.jpg",
+                                                     "assets/CubeMap/bluecloud_lf.jpg"});
 
     VBO<SkyboxVertex> skyboxVBO(std::vector<SkyboxVertex>{
         {{-1.0f, 1.0f, -1.0f}},
@@ -149,6 +149,10 @@ int main()
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 
+    skyboxProgram.use();
+    GLint locprojection = glGetUniformLocation(skyboxProgram.getGLId(), "projection");
+    GLint locview       = glGetUniformLocation(skyboxProgram.getGLId(), "view");
+
     // ================= MAP ================== //
 
     std::string                        fichierMap = "assets/maps/map1.imac";
@@ -168,20 +172,22 @@ int main()
     while (!done) {
         // ============ RENDERING CODE =========== //
 
+        // matrices et compagnie
+
+        MVMatrix     = camera->computeMatrix({0.f, -0.3f, 0.f}); // TODO remplacer par la position du joueur
+        NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
+
+        glClearColor(1., 0., 1, 1);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glDepthMask(GL_FALSE);
         skyboxProgram.use();
-        // ... set view and projection matrix
+        glUniformMatrix4fv(locprojection, 1, GL_FALSE, glm::value_ptr(ProjMatrix));
+        glUniformMatrix4fv(locview, 1, GL_FALSE, glm::value_ptr(MVMatrix));
         glBindVertexArray(*skyboxVAO);
         glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
         glDrawArrays(GL_TRIANGLES, 0, 36);
         glDepthMask(GL_TRUE);
         // ... draw rest of the scene
-
-        // matrices et compagnie
-
-        MVMatrix     = camera->computeMatrix({0.f, -0.3f, 0.f}); // TODO remplacer par la position du joueur
-        NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
 
         // valeurs uniformes
 
