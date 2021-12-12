@@ -35,23 +35,16 @@ std::vector<ShapeVertex> Tile::buildVertices()
     return vertices;
 }
 
-void Tile::mainIBO()
+std::vector<uint32_t> Tile::buildIndices()
 {
-    glGenBuffers(1, &m_ibo);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ibo);
-    uint32_t indicesRectangle[] = {0, 1, 2, 0, 2, 3};
-
-    int sizeTabIBO = sizeof(indicesRectangle) / sizeof(indicesRectangle[0]);
-
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeTabIBO * sizeof(uint32_t), indicesRectangle, GL_STATIC_DRAW);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    return {0, 1, 2, 0, 2, 3};
 }
 
 void Tile::mainVAO()
 {
     glGenVertexArrays(1, &m_vao);
     glBindVertexArray(m_vao);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ibo);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, *m_ibo);
 
     const GLuint VERTEX_ATTR_POSITION  = 0;
     const GLuint VERTEX_ATTR_NORMAL    = 1;
