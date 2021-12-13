@@ -3,7 +3,7 @@
 
 void Tile::setTexture()
 {
-    std::unique_ptr<glimac::Image> image = glimac::loadImage("bin/assets/textures/cardinale.jpg");
+    std::unique_ptr<glimac::Image> image = glimac::loadImage("assets/textures/cardinale.jpg");
     createTexture(m_texture, image);
 }
 

@@ -40,7 +40,7 @@ int main()
 
     // program + shaders
 
-    Program program = loadProgram("bin/assets/shaders/3D.vs.glsl", "bin/assets/shaders/tex3D.fs.glsl");
+    Program program = loadProgram("assets/shaders/3D.vs.glsl", "assets/shaders/tex3D.fs.glsl");
 
     glEnable(GL_DEPTH_TEST);
 
@@ -67,7 +67,7 @@ int main()
 
     // ================= MAP ================== //
 
-    std::string                        fichierMap = "bin/assets/maps/map1.imac";
+    std::string                        fichierMap = "assets/maps/map1.imac";
     Map                                myMap(fichierMap);
     std::vector<std::unique_ptr<Tile>> tiles;
     createTiles(myMap, tiles, player, 1, 1); // 1 & 3 w & h de chaque tuile

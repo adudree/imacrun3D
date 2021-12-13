@@ -7,8 +7,8 @@ void createTiles(const Map& map, std::vector<std::unique_ptr<Tile>>& tiles, Play
 {
     std::vector<GLuint> texturesMap(2); // 2 = nb textures
 
-    std::unique_ptr<glimac::Image> simple = glimac::loadImage("bin/assets/textures/cardinale.jpg");
-    std::unique_ptr<glimac::Image> hole   = glimac::loadImage("bin/assets/textures/hole.png");
+    std::unique_ptr<glimac::Image> simple = glimac::loadImage("assets/textures/cardinale.jpg");
+    std::unique_ptr<glimac::Image> hole   = glimac::loadImage("assets/textures/hole.png");
 
     createTexture(texturesMap[0], simple);
     createTexture(texturesMap[1], hole);
