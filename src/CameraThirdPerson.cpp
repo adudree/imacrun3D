@@ -40,12 +40,12 @@ void CameraThirdPerson::tourne_gauche()
 
 void CameraThirdPerson::tourne_haut()
 {
-    m_tilt += m_vitesseRotation;
+    m_tilt -= m_vitesseRotation;
 }
 
 void CameraThirdPerson::tourne_bas()
 {
-    m_tilt -= m_vitesseRotation;
+    m_tilt += m_vitesseRotation;
 }
 
 void CameraThirdPerson::zoom_avant()
