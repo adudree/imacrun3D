@@ -25,6 +25,11 @@ public:
 
     void swapBuffers();
 
+    SDL_Window* getWindow() const
+    {
+        return m_window;
+    }
+
     // Return the time in seconds
     float getTime() const;
 };

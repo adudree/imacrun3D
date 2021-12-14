@@ -30,6 +30,20 @@ int main()
     GLint            HEIGHT = 800;
     SDLWindowManager windowManager(WIDTH, HEIGHT, "IMAC RUN 3D");
 
+    // souris
+
+    const auto openMenu = [&]() {
+        SDL_ShowCursor(SDL_ENABLE);
+        SDL_SetWindowGrab(windowManager.getWindow(), SDL_FALSE);
+    };
+
+    const auto closeMenu = [&]() {
+        SDL_ShowCursor(SDL_DISABLE);
+        SDL_SetWindowGrab(windowManager.getWindow(), SDL_TRUE);
+    };
+    bool isMenuOpen = false;
+    closeMenu();
+
     // program + shaders
 
     Program program = loadProgram("assets/shaders/3D.vs.glsl", "assets/shaders/tex3D.fs.glsl");
@@ -160,30 +174,17 @@ int main()
                 if (e.key.keysym.sym == SDLK_l) {
                     isCameraLocked = !isCameraLocked;
                 }
-                // lock vue caméra
-
-                // Rotations caméra
-                if (!isCameraLocked) {
-                    if (e.key.keysym.sym == SDLK_LEFT) {
-                        camera->tourne_gauche();
-                    }
-
-                    if (e.key.keysym.sym == SDLK_RIGHT) {
-                        camera->tourne_droite();
-                    }
-
-                    if (e.key.keysym.sym == SDLK_UP) {
-                        camera->tourne_haut();
-                    }
-
-                    if (e.key.keysym.sym == SDLK_DOWN) {
-                        camera->tourne_bas();
-                    }
-                }
 
                 // =========== MENU ============ //
 
                 if (e.key.keysym.sym == SDLK_ESCAPE) {
+                    isMenuOpen = !isMenuOpen;
+                    if (isMenuOpen) {
+                        openMenu();
+                    }
+                    else {
+                        closeMenu();
+                    }
                 }
                 // le menu s'ouvre
 
@@ -198,6 +199,14 @@ int main()
                     if (e.wheel.y < 0) {
                         cameraThirdPerson.zoom_arriere();
                     }
+                }
+
+                break;
+
+            case SDL_MOUSEMOTION:
+                if (!isCameraLocked && !isMenuOpen) {
+                    camera->variationPan(e.motion.xrel);
+                    camera->variationTilt(e.motion.yrel);
                 }
 
                 break;

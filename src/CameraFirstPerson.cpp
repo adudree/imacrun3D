@@ -23,31 +23,19 @@ glm::mat4 CameraFirstPerson::computeMatrix(const glm::vec3& playerPosition) cons
 
 // Fonctions mouvements caméra
 
-void CameraFirstPerson::tourne_droite()
+void CameraFirstPerson::variationPan(float variation)
 {
-    if (canPanDroite()) {
-        m_pan += m_vitesseRotation;
+    if ((canPanDroite() && variation > 0) ||
+        (canPanGauche() && variation < 0)) {
+        m_pan += variation * m_vitesseRotation;
     }
 }
 
-void CameraFirstPerson::tourne_gauche()
+void CameraFirstPerson::variationTilt(float variation)
 {
-    if (canPanGauche()) {
-        m_pan -= m_vitesseRotation;
-    }
-}
-
-void CameraFirstPerson::tourne_haut()
-{
-    if (canTiltHaut()) {
-        m_tilt -= m_vitesseRotation;
-    }
-}
-
-void CameraFirstPerson::tourne_bas()
-{
-    if (canTiltBas()) {
-        m_tilt += m_vitesseRotation;
+    if ((canTiltHaut() && variation < 0) ||
+        (canTiltBas() && variation > 0)) {
+        m_tilt += variation * m_vitesseRotation;
     }
 }
 

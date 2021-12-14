@@ -8,10 +8,8 @@ public:
     glm::mat4 computeMatrix(const glm::vec3& playerPosition) const override;
 
     //mouvement camera
-    void tourne_droite() override;
-    void tourne_gauche() override;
-    void tourne_haut() override;
-    void tourne_bas() override;
+    void variationPan(float variation) override;
+    void variationTilt(float variation) override;
     void zoom_avant();
     void zoom_arriere();
 

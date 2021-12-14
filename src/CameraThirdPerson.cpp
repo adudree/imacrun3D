@@ -28,24 +28,14 @@ glm::mat4 CameraThirdPerson::computeMatrix(const glm::vec3& playerPosition) cons
 
 // Fonctions mouvements caméra
 
-void CameraThirdPerson::tourne_droite()
+void CameraThirdPerson::variationPan(float variation)
 {
-    m_pan -= m_vitesseRotation;
+    m_pan += variation * m_vitesseRotation;
 }
 
-void CameraThirdPerson::tourne_gauche()
+void CameraThirdPerson::variationTilt(float variation)
 {
-    m_pan += m_vitesseRotation;
-}
-
-void CameraThirdPerson::tourne_haut()
-{
-    m_tilt += m_vitesseRotation;
-}
-
-void CameraThirdPerson::tourne_bas()
-{
-    m_tilt -= m_vitesseRotation;
+    m_tilt -= variation * m_vitesseRotation;
 }
 
 void CameraThirdPerson::zoom_avant()
