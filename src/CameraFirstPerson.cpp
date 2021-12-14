@@ -2,12 +2,7 @@
 
 Contrôle de la caméra
 
-Le jeu doit contenir deux types de caméra :
-
-— une caméra centrée sur l’explorateur, qui permet de tourner autour et de zoomer à l’aide de la
-souris ;
-
-— une caméra permettant de voir à travers les yeux de l’explorateur et offrant la possibilité de tourner
+Une caméra permettant de voir à travers les yeux de l’explorateur et offrant la possibilité de tourner
 la tête à l’aide de la souris (attention, nous ne sommes pas dans l’Exorciste, les déplacements de
 la tête doivent être limités).
 
@@ -18,6 +13,7 @@ une configuration idéale pour jouer avec la touche L.
 
 #include "CameraFirstPerson.hpp"
 #include <cmath>
+#include <iostream>
 #include "glm/gtx/polar_coordinates.hpp"
 
 glm::mat4 CameraFirstPerson::computeMatrix(const glm::vec3& playerPosition) const
@@ -29,20 +25,48 @@ glm::mat4 CameraFirstPerson::computeMatrix(const glm::vec3& playerPosition) cons
 
 void CameraFirstPerson::tourne_droite()
 {
-    m_pan += m_vitesseRotation;
+    if (canPanDroite()) {
+        m_pan += m_vitesseRotation;
+    }
 }
 
 void CameraFirstPerson::tourne_gauche()
 {
-    m_pan -= m_vitesseRotation;
+    if (canPanGauche()) {
+        m_pan -= m_vitesseRotation;
+    }
 }
 
 void CameraFirstPerson::tourne_haut()
 {
-    m_tilt -= m_vitesseRotation;
+    if (canTiltHaut()) {
+        m_tilt -= m_vitesseRotation;
+    }
 }
 
 void CameraFirstPerson::tourne_bas()
 {
-    m_tilt += m_vitesseRotation;
+    if (canTiltBas()) {
+        m_tilt += m_vitesseRotation;
+    }
+}
+
+bool CameraFirstPerson::canPanGauche()
+{
+    return m_pan > -M_PI / 3;
+}
+
+bool CameraFirstPerson::canPanDroite()
+{
+    return m_pan < M_PI / 3;
+}
+
+bool CameraFirstPerson::canTiltHaut()
+{
+    return m_tilt > -M_PI / 4;
+}
+
+bool CameraFirstPerson::canTiltBas()
+{
+    return m_tilt < M_PI / 4;
 }

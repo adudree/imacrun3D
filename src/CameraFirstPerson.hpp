@@ -18,4 +18,9 @@ private:
     float m_tilt = 0.3f;
 
     float m_vitesseRotation = 0.02f;
+
+    bool canPanGauche();
+    bool canPanDroite();
+    bool canTiltHaut();
+    bool canTiltBas();
 };
