@@ -22,7 +22,7 @@ une configuration idéale pour jouer avec la touche L.
 
 glm::mat4 CameraThirdPerson::computeMatrix(const glm::vec3& playerPosition) const
 {
-    const auto cameraPosition = playerPosition + m_zoom * glm::euclidean(glm::vec2{m_tilt, m_pan});
+    const auto cameraPosition = playerPosition - m_zoom * glm::euclidean(glm::vec2{m_tilt, m_pan});
     return glm::lookAt(cameraPosition, playerPosition, {0.f, -1.f, 0.f});
 }
 
