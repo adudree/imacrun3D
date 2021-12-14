@@ -80,7 +80,6 @@ int main()
 
     // ================= LOOP ================= //
 
-
     bool done = false;
     while (!done) {
         // ============ RENDERING CODE =========== //
@@ -101,7 +100,6 @@ int main()
         glUniform1i(locTexture, 0);
         // dessin des tuiles
         for (size_t i = 0; i < tiles.size(); i++) {
-            
             tiles[i]->drawTile();
         }
 
