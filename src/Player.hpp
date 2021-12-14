@@ -23,7 +23,7 @@ private:
 
 public:
     Player()
-        : m_nom("John Doe"), m_score(0), m_position(glm::vec3(0)) {}
+        : m_nom("John Doe"), m_score(0), m_position(glm::vec3(0.f)) {}
     ~Player() = default;
 
     inline const glm::vec3 getPosition() const { return m_position; }

@@ -40,7 +40,7 @@ int main()
 
     // program + shaders
 
-    Program program = loadProgram("assets/shaders/3D.vs.glsl", "assets/shaders/tex3D.fs.glsl");
+    Program program = loadProgram("bin/assets/shaders/3D.vs.glsl", "bin/assets/shaders/tex3D.fs.glsl");
 
     glEnable(GL_DEPTH_TEST);
 
@@ -67,7 +67,7 @@ int main()
 
     // ================= MAP ================== //
 
-    std::string                        fichierMap = "assets/maps/map1.imac";
+    std::string                        fichierMap = "bin/assets/maps/map1.imac";
     Map                                myMap(fichierMap);
     std::vector<std::unique_ptr<Tile>> tiles;
     createTiles(myMap, tiles, player, 1, 1); // 1 & 3 w & h de chaque tuile
@@ -80,13 +80,14 @@ int main()
 
     // ================= LOOP ================= //
 
+
     bool done = false;
     while (!done) {
         // ============ RENDERING CODE =========== //
 
         // matrices et compagnie
 
-        MVMatrix     = camera->computeMatrix({0.f, -0.3f, 0.f}); // TODO remplacer par la position du joueur
+        MVMatrix     = camera->computeMatrix(player.getPosition());
         NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
 
         skybox.render(ProjMatrix, MVMatrix);
@@ -98,9 +99,9 @@ int main()
         glUniformMatrix4fv(locMVMatrix, 1, GL_FALSE, glm::value_ptr(MVMatrix));
         glUniformMatrix4fv(locNormalMatrix, 1, GL_FALSE, glm::value_ptr(NormalMatrix));
         glUniform1i(locTexture, 0);
-
         // dessin des tuiles
         for (size_t i = 0; i < tiles.size(); i++) {
+            
             tiles[i]->drawTile();
         }
 
