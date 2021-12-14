@@ -162,7 +162,7 @@ int main()
                 }
                 // lock vue caméra
 
-                // Rotations
+                // Rotations caméra
                 if (!isCameraLocked) {
                     if (e.key.keysym.sym == SDLK_LEFT) {
                         camera->tourne_gauche();
@@ -186,6 +186,19 @@ int main()
                 if (e.key.keysym.sym == SDLK_ESCAPE) {
                 }
                 // le menu s'ouvre
+
+                break;
+
+            case SDL_MOUSEWHEEL:
+                if (camera == &cameraThirdPerson) {
+                    if (e.wheel.y > 0) {
+                        cameraThirdPerson.zoom_avant();
+                    }
+
+                    if (e.wheel.y < 0) {
+                        cameraThirdPerson.zoom_arriere();
+                    }
+                }
 
                 break;
 
