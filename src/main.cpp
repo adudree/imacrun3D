@@ -76,7 +76,8 @@ int main()
 
     CameraThirdPerson cameraThirdPerson;
     CameraFirstPerson cameraFirstPerson;
-    ICamera*          camera = &cameraThirdPerson;
+    ICamera*          camera         = &cameraThirdPerson;
+    bool              isCameraLocked = false;
 
     // ================= LOOP ================= //
 
@@ -165,24 +166,27 @@ int main()
                 }
 
                 if (e.key.keysym.sym == SDLK_l) {
+                    isCameraLocked = !isCameraLocked;
                 }
                 // lock vue caméra
 
                 // Rotations
-                if (e.key.keysym.sym == SDLK_LEFT) {
-                    camera->tourne_gauche();
-                }
+                if (!isCameraLocked) {
+                    if (e.key.keysym.sym == SDLK_LEFT) {
+                        camera->tourne_gauche();
+                    }
 
-                if (e.key.keysym.sym == SDLK_RIGHT) {
-                    camera->tourne_droite();
-                }
+                    if (e.key.keysym.sym == SDLK_RIGHT) {
+                        camera->tourne_droite();
+                    }
 
-                if (e.key.keysym.sym == SDLK_UP) {
-                    camera->tourne_haut();
-                }
+                    if (e.key.keysym.sym == SDLK_UP) {
+                        camera->tourne_haut();
+                    }
 
-                if (e.key.keysym.sym == SDLK_DOWN) {
-                    camera->tourne_bas();
+                    if (e.key.keysym.sym == SDLK_DOWN) {
+                        camera->tourne_bas();
+                    }
                 }
 
                 // =========== MENU ============ //
