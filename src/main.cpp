@@ -29,14 +29,6 @@ int main()
     GLint            WIDTH  = 800;
     GLint            HEIGHT = 800;
     SDLWindowManager windowManager(WIDTH, HEIGHT, "IMAC RUN 3D");
-    SDL_EnableKeyRepeat(1000, 10);
-
-    // glew : mettre un catch try par ici
-    GLenum glewInitError = glewInit();
-    if (GLEW_OK != glewInitError) {
-        std::cerr << glewGetErrorString(glewInitError) << std::endl;
-        return EXIT_FAILURE;
-    }
 
     // program + shaders
 
