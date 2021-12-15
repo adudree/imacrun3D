@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.13)
 project(IMACRUN)
 add_executable(${PROJECT_NAME})
 # (optional) put the binary files in this directory
-set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
+# set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
 
 add_subdirectory(third-party/glimac)
 target_link_libraries(${PROJECT_NAME} glimac::glimac)
