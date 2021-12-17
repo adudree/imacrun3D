@@ -30,7 +30,7 @@ int main()
     GLint            HEIGHT = 800;
     SDLWindowManager windowManager(WIDTH, HEIGHT, "IMAC RUN 3D");
 
-    // souris
+    // mouse
 
     const auto openMenu = [&]() {
         SDL_ShowCursor(SDL_ENABLE);
@@ -65,7 +65,11 @@ int main()
 
     // ================ PLAYER ================ //
 
-    Player player;
+    GLuint texTemp;
+    std::unique_ptr<glimac::Image> playerTemp   = glimac::loadImage("assets/textures/cardinale.jpg");
+    createTexture(texTemp, playerTemp);
+
+    Player player(texTemp);
 
     // ================ SKYBOX ================ //
 
@@ -76,7 +80,8 @@ int main()
     std::string                        fichierMap = "assets/maps/map1.imac";
     Map                                myMap(fichierMap);
     std::vector<std::unique_ptr<Tile>> tiles;
-    createTiles(myMap, tiles, player, 1, 1); // 1 & 3 w & h de chaque tuile
+
+    createTiles(myMap, tiles, player, 1, 1);    // 1 & 3 w & h de chaque tuile
 
     // ================ CAMERA ================ //
 
@@ -89,6 +94,7 @@ int main()
 
     bool done = false;
     while (!done) {
+
         // ============ RENDERING CODE =========== //
 
         // matrices et compagnie
@@ -105,14 +111,22 @@ int main()
         glUniformMatrix4fv(locMVMatrix, 1, GL_FALSE, glm::value_ptr(MVMatrix));
         glUniformMatrix4fv(locNormalMatrix, 1, GL_FALSE, glm::value_ptr(NormalMatrix));
         glUniform1i(locTexture, 0);
-        // dessin des tuiles
+
+        // draw tiles
+
         for (size_t i = 0; i < tiles.size(); i++) {
             tiles[i]->drawTile();
         }
 
+        //  draw player
+
+        player.draw();
+
         windowManager.swapBuffers();
 
-        // Commandes de Event
+        // player.moveForward(); // test 
+        
+        // events
 
         SDL_Event e;
 
@@ -129,36 +143,26 @@ int main()
                 // ========= MOUVEMENT ========== //
 
                 if (e.key.keysym.sym == SDLK_d) {
+                    // si on est sur une case "virage" : on tourne
+                    // sinon :
+                    player.moveRight();
                 }
-                // si on est sur une case "virage" : on tourne
-                // sinon : perso.posX ++;
-                //player.avance_droite();
 
                 if (e.key.keysym.sym == SDLK_q) {
+                    // si on est sur une case "virage" : on tourne
+                    // sinon :
+                    player.moveLeft();
                 }
-                // si on est sur une case "virage" : on tourne
-                // sinon : perso.posX --;
-                //player.avance_gauche();
 
                 if (e.key.keysym.sym == SDLK_z) {
+                    player.moveForward();   // pour le test; devra avancer tout seul après 
+                    // player.jump();
                 }
-                // le perso saute
-                //player.avance_tout_droit();
 
                 if (e.key.keysym.sym == SDLK_s) {
+                    //player.squat();
+                    player.fall();
                 }
-                // le perso se baisse
-                //player.avance_en_arriere();
-
-                if (e.key.keysym.sym == SDLK_e) {
-                }
-                // le perso se baisse
-                //player.avance_haut();
-
-                if (e.key.keysym.sym == SDLK_f) {
-                }
-                // le perso se baisse
-                //player.avance_bas();
 
                 // =========== CAMERA =========== //
 
@@ -216,11 +220,6 @@ int main()
             }
         }
     }
-
-    // delete buffers arrays et cie : trouver moyen de le faire izi
-    // glDeleteBuffers(1, vbo);
-    // glDeleteVertexArrays(1, vao);
-    // glDeleteTextures(1, &texTest);
 
     return EXIT_SUCCESS;
 }

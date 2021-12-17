@@ -35,7 +35,10 @@ void CameraThirdPerson::variationPan(float variation)
 
 void CameraThirdPerson::variationTilt(float variation)
 {
-    m_tilt -= variation * m_vitesseRotation;
+    if ((canTiltHaut() && variation < 0) ||
+        (canTiltBas() && variation > 0)) {
+        m_tilt += variation * m_vitesseRotation;
+    }
 }
 
 void CameraThirdPerson::zoom_avant()
@@ -46,4 +49,14 @@ void CameraThirdPerson::zoom_avant()
 void CameraThirdPerson::zoom_arriere()
 {
     m_zoom /= m_vitesseZoom;
+}
+
+bool CameraThirdPerson::canTiltHaut()
+{
+    return m_tilt > 0;
+}
+
+bool CameraThirdPerson::canTiltBas()
+{
+    return m_tilt < M_PI / 4;
 }

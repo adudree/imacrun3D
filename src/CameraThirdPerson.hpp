@@ -20,4 +20,8 @@ private:
 
     float m_vitesseRotation = 0.02f;
     float m_vitesseZoom     = 0.8f;
+
+    bool canTiltHaut();
+    bool canTiltBas();
+
 };

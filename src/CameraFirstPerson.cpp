@@ -41,12 +41,12 @@ void CameraFirstPerson::variationTilt(float variation)
 
 bool CameraFirstPerson::canPanGauche()
 {
-    return m_pan > -M_PI / 3;
+    return m_pan > -M_PI / 2;
 }
 
 bool CameraFirstPerson::canPanDroite()
 {
-    return m_pan < M_PI / 3;
+    return m_pan < M_PI / 2;
 }
 
 bool CameraFirstPerson::canTiltHaut()
