@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 #include "Hole.hpp"
+#include "Map.hpp"
 #include "Tile.hpp"
 #include "glimac/glm.hpp"
 #include "Sphere.hpp"
@@ -64,6 +65,9 @@ public:
 
 
     //inline void squat() { /* height objet/2 */ } // GILET JAUNE 10 SQUATS 
+
+    char tileDetection(Map& map, float tileWidth, float tileLength);
+    void tilesConditions(char &tile);
 
     void collision(Hole& hole);
 

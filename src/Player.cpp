@@ -11,12 +11,29 @@ void Player::collision(Coin &coin)
 }
 */
 
-void Player::collision(Hole& /*Obstacle*/)
+
+char Player::tileDetection(Map& map, float tileWidth, float  tileLength)
 {
-    if (!isJumping)
-        m_position.y--;
+    return map.getTypeTile(round(m_position.x / tileWidth), round(m_position.z / tileLength));
 }
 
+void Player::tilesConditions(char &tile)
+{
+    switch (tile)
+    {
+    case 'P' || 'S':
+        // tout est normal 
+        break;
+
+    case 'H':
+        fall();
+        break;
+    
+    default:
+        break;
+    }
+
+}
 
 bool Player::isFalling()
 {

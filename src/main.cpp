@@ -118,6 +118,10 @@ int main()
             tiles[i]->drawTile();
         }
 
+        // tile detection 
+        char actTile = player.tileDetection(myMap, 1, 1);
+        player.tilesConditions(actTile);
+
         //  draw player
 
         player.draw();
@@ -126,10 +130,10 @@ int main()
 
         // player.moveForward(); // test 
         
+
         // events
 
         SDL_Event e;
-
         while (windowManager.pollEvent(e)) {
             switch (e.type) {
             case SDL_QUIT:
