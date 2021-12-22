@@ -70,6 +70,8 @@ public:
     glm::vec2 getActiveTile(float tileWidth, float  tileLength);
     char tileDetection(glm::vec2 coordActiveTile);
     void tilesConditions(char &tile);
+    bool canMoveRight(float tilePosition, float tileWidth);
+    bool canMoveLeft(float tilePosition, float tileWidth);
 
     //collision(Coin)
 

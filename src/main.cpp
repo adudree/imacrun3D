@@ -134,8 +134,9 @@ int main()
         // tile detection 
         glm::vec2 actTileCoord = player.getActiveTile(tilesW, tilesL); 
         char actTile = myMap.tileDetection(actTileCoord);
-        player.tilesConditions(actTile);
 
+        player.moveForward(); // test 
+        player.tilesConditions(actTile);
 
         //  draw player
 
@@ -143,10 +144,7 @@ int main()
 
         windowManager.swapBuffers();
 
-        player.moveForward(); // test 
         
-        std:: cout << abs((player.getPosition().x)- actTileCoord.x * tilesW)  + 0.2 << " | "  << tilesW/2<< std::endl;
-
         // events
 
         SDL_Event e;
@@ -165,6 +163,7 @@ int main()
                 if (e.key.keysym.sym == SDLK_d) {
                     // si on est sur une case "virage" : on tourne
                     // sinon :
+                    if (player.canMoveRight(actTileCoord[0], tilesW))
                         player.moveRight();
                     
                 }
@@ -172,6 +171,7 @@ int main()
                 if (e.key.keysym.sym == SDLK_q) {
                     // si on est sur une case "virage" : on tourne
                     // sinon :
+                    if (player.canMoveLeft(actTileCoord[0], tilesW))
                         player.moveLeft();
                 }
 
