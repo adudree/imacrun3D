@@ -72,13 +72,3 @@ void Tile::drawTile()
 
     glBindVertexArray(0);
 }
-
-
-// bool Tile::PassageOK(Player& p)
-// {
-//     if (p.getPosition().y > m_posPlayerXMin && p.getPosition().y < m_posPlayerXMax) {
-//         return true;
-//     }
-
-//     return false;
-// }
