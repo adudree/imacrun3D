@@ -10,11 +10,12 @@ class Sphere {
     void build(GLfloat radius, GLsizei discLat, GLsizei discLong);
     
     std::vector<ShapeVertex> m_data;
+    glm::vec3 m_position; 
 
 public:
     // Constructeur: alloue le tableau de données et construit les attributs des vertex
-    Sphere(GLfloat radius, GLsizei discLat, GLsizei discLong)
-        : m_nVertexCount(0)
+    Sphere(glm::vec3 pos, GLfloat radius, GLsizei discLat, GLsizei discLong)
+        : m_position(pos), m_nVertexCount(0)
     {
         build(radius, discLat, discLong); // Construction (voir le .cpp)
     }

@@ -19,10 +19,6 @@ protected:
     GLfloat m_width;
     GLfloat m_height;
 
-    VBO<ShapeVertex> m_vbo;
-    IBO              m_ibo;
-    VAO<ShapeVertex> m_vao;
-
     // positions entre lesquelles le joueur peut circuler
     // généralement les bords de la tuile
     // changent lorsque obstacle (objet ou trou) sur la tuile
@@ -33,6 +29,12 @@ protected:
     // pas de y min ou max, le joueur est obligé de sauter
     GLfloat m_posPlayerXMin;
     GLfloat m_posPlayerXMax;
+
+
+    VBO<ShapeVertex> m_vbo;
+    IBO              m_ibo;
+    VAO<ShapeVertex> m_vao;
+
 
     GLuint m_texture;
 
@@ -65,6 +67,7 @@ public:
 
     inline glm::vec2 getPosition() const { return glm::vec2(m_posX, m_posY); }
 
+    glm::vec2 getActiveTile(glm::vec3 &playerPosition) const;
 
     // PassageOK : si le joueur respecte certaines conditions
     // ex : est baissé et/ou est en train de sauter

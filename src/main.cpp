@@ -26,9 +26,11 @@ int main()
     // ============ INITIALIZATION =========== //
 
     // window
+
     GLint            WIDTH  = 800;
     GLint            HEIGHT = 800;
     SDLWindowManager windowManager(WIDTH, HEIGHT, "IMAC RUN 3D");
+
 
     // mouse
 
@@ -51,6 +53,7 @@ int main()
     glEnable(GL_DEPTH_TEST);
 
     // ================ MATRIX ================ //
+
     program.use();
     GLint locMVPMatrix    = glGetUniformLocation(program.getGLId(), "uMVPMatrix");
     GLint locMVMatrix     = glGetUniformLocation(program.getGLId(), "uMVMatrix");
@@ -81,7 +84,10 @@ int main()
     Map                                myMap(fichierMap);
     std::vector<std::unique_ptr<Tile>> tiles;
 
-    createTiles(myMap, tiles, player, 1, 1);    // 1 & 3 w & h de chaque tuile
+    const float tilesW = 2;
+    const float tilesL = 4;
+
+    createTiles(myMap, tiles, player, tilesW, tilesL);
 
     // ================ CAMERA ================ //
 
@@ -119,8 +125,10 @@ int main()
         }
 
         // tile detection 
-        char actTile = player.tileDetection(myMap, 1, 1);
+        glm::vec2 actTileCoord = player.getActiveTile(tilesW, tilesL); 
+        char actTile = myMap.tileDetection(actTileCoord);
         player.tilesConditions(actTile);
+
 
         //  draw player
 
@@ -128,8 +136,9 @@ int main()
 
         windowManager.swapBuffers();
 
-        // player.moveForward(); // test 
+        player.moveForward(); // test 
         
+        std:: cout << abs((player.getPosition().x)- actTileCoord.x * tilesW)  + 0.2 << " | "  << tilesW/2<< std::endl;
 
         // events
 
@@ -149,18 +158,18 @@ int main()
                 if (e.key.keysym.sym == SDLK_d) {
                     // si on est sur une case "virage" : on tourne
                     // sinon :
-                    player.moveRight();
+                        player.moveRight();
+                    
                 }
 
                 if (e.key.keysym.sym == SDLK_q) {
                     // si on est sur une case "virage" : on tourne
                     // sinon :
-                    player.moveLeft();
+                        player.moveLeft();
                 }
 
                 if (e.key.keysym.sym == SDLK_z) {
-                    player.moveForward();   // pour le test; devra avancer tout seul après 
-                    // player.jump();
+                    // player.jump()
                 }
 
                 if (e.key.keysym.sym == SDLK_s) {
@@ -188,9 +197,11 @@ int main()
                 if (e.key.keysym.sym == SDLK_ESCAPE) {
                     isMenuOpen = !isMenuOpen;
                     if (isMenuOpen) {
+                        player.setSpeed(0.f);
                         openMenu();
                     }
                     else {
+                        player.setSpeed(0.5f);
                         closeMenu();
                     }
                 }

@@ -11,11 +11,11 @@ void Player::collision(Coin &coin)
 }
 */
 
-
-char Player::tileDetection(Map& map, float tileWidth, float  tileLength)
+glm::vec2 Player::getActiveTile(float tileWidth, float  tileLength) 
 {
-    return map.getTypeTile(round(m_position.x / tileWidth), round(m_position.z / tileLength));
+    return glm::vec2(round(m_position.x / tileWidth), round(m_position.z / tileLength));
 }
+
 
 void Player::tilesConditions(char &tile)
 {
@@ -37,36 +37,10 @@ void Player::tilesConditions(char &tile)
 
 bool Player::isFalling()
 {
-    if (m_position.y < -5)
+    if (m_position.y > 1) // axe vertical inversé tkt 
         return true;
     return false;
 }
-
-
-bool Player::isOnTile(Tile& tile)
-{
-    if (m_position.z - tile.getPosition().y < abs(tile.getHeight() / 2))
-        return true;
-    else
-        return false;
-}
-
-/*
-void Player::collision(Arch& Obstacle)
-{
-    // si le joueur est sur la tuile mais pas baissé
-    // il n'avance plus vers l'avant
-
-    // A TESTER AILLEURS : si sa position = celle des singes, c perdu
-}
-*/
-
-// void Player::moveSide(const float& indice)
-// {
-//     // indice > 0 : vers la droite
-//     // indice < 0 : vers la gauche
-//     m_position.x += indice;
-// }
 
 void Player::jump()
 {
@@ -81,6 +55,7 @@ void Player::jump()
     // g = 9.81
     // v0 = vecteur directionnel là // faut le définir pour que la parabole soit bien
     // alpha : angle (degré)
+
 }
 
 
@@ -109,8 +84,6 @@ void Player::buildVAO()
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 }
-
-
 
 void Player::draw()
 {

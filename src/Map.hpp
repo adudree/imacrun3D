@@ -20,4 +20,6 @@ public:
 
     inline const glm::vec2 getDimensions() const { return glm::vec2(m_nbLines, m_nbCols); };
     inline char            getTypeTile(const int& i, const int& j) const { return m_coords[i][j]; };
+
+    char tileDetection(glm::vec2 coordActiveTile);
 };

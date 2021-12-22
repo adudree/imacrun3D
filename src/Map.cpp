@@ -26,4 +26,14 @@ Map::Map(const std::string& filename)
     m_nbCols  = ligne.length();
     m_nbLines = m_coords.size();
     fichier.close();
+
 }
+
+
+char Map::tileDetection(glm::vec2 coordActiveTile)
+{
+    return getTypeTile(coordActiveTile[0], coordActiveTile[1]);
+}
+
+
+
