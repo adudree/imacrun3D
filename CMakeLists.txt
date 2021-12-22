@@ -7,6 +7,8 @@ add_executable(${PROJECT_NAME})
 
 add_subdirectory(third-party/glimac)
 target_link_libraries(${PROJECT_NAME} glimac::glimac)
+add_subdirectory(third-party/assimp)
+target_link_libraries(${PROJECT_NAME} assimp)
 
 file(GLOB_RECURSE SRC_FILES CONFIGURE_DEPENDS src/*.cpp)
 target_sources(${PROJECT_NAME} PRIVATE ${SRC_FILES})

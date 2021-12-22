@@ -18,6 +18,7 @@
 #include "Surcouche.hpp"
 #include "Tile.hpp"
 #include "VAO.hpp"
+#include "Model.hpp"
 
 using namespace glimac;
 
@@ -74,6 +75,10 @@ int main()
 
     Player player(texTemp);
 
+    Model testPlayer("suzanne.obj");
+    //test de load de shaders pour suzi
+    //Program ModelProgram = loadProgram("assets/shaders/Model.vs.glsl", "assets/shaders/Model.fs.glsl");
+
     // ================ SKYBOX ================ //
 
     Skybox skybox;
@@ -117,6 +122,8 @@ int main()
         glUniformMatrix4fv(locMVMatrix, 1, GL_FALSE, glm::value_ptr(MVMatrix));
         glUniformMatrix4fv(locNormalMatrix, 1, GL_FALSE, glm::value_ptr(NormalMatrix));
         glUniform1i(locTexture, 0);
+
+        testPlayer.Draw(program);
 
         // draw tiles
 
