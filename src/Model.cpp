@@ -1,8 +1,8 @@
 #include "Model.hpp"
-#include <assimp/Importer.hpp>      // C++ importer interface
-#include <assimp/scene.h>           // Output data structure
-#include <assimp/postprocess.h>     // Post processing flags
 #include <assimp/material.h>
+#include <assimp/postprocess.h> // Post processing flags
+#include <assimp/scene.h>       // Output data structure
+#include <assimp/Importer.hpp>  // C++ importer interface
 
 void Model::Draw(glimac::Program& program)
 {
@@ -81,13 +81,11 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 
     //process material
     //if (mesh->mMaterialIndex >= 0) {
-        aiMaterial*              material    = scene->mMaterials[mesh->mMaterialIndex];
-        std::vector<TextureMesh> diffuseMaps = loadMaterialTextures(material,
-                                                                    aiTextureType_DIFFUSE, "texture_diffuse");
-        textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
-        std::vector<TextureMesh> specularMaps = loadMaterialTextures(material,
-                                                                     aiTextureType_SPECULAR, "texture_specular");
-        textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
+    aiMaterial*              material    = scene->mMaterials[mesh->mMaterialIndex];
+    std::vector<TextureMesh> diffuseMaps = loadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
+    textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
+    std::vector<TextureMesh> specularMaps = loadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
+    textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
     //}
 
     return Mesh(vertices, indices, textures);
@@ -96,7 +94,10 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 unsigned int TextureFromFile(const char* path, const std::string& directory)
 {
     std::string filename = std::string(path);
-    filename             = directory + '/' + filename;
+    std::cout << directory << " et " << filename << std::endl;
+    filename = directory + '/' + filename;
+    std::cout << filename;
+
 
     unsigned int textureID;
     glGenTextures(1, &textureID);
@@ -104,6 +105,7 @@ unsigned int TextureFromFile(const char* path, const std::string& directory)
     int width, height, nrComponents;
 
     unsigned char* data = stbi_load(filename.c_str(), &width, &height, &nrComponents, 0);
+    std::cout << stbi_load(filename.c_str(), &width, &height, &nrComponents, 0) << std::endl;
     if (data) {
         GLenum format = GL_RGBA;
         if (nrComponents == 1)
@@ -119,7 +121,6 @@ unsigned int TextureFromFile(const char* path, const std::string& directory)
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
         stbi_image_free(data);
     }
     else {
@@ -131,13 +132,14 @@ unsigned int TextureFromFile(const char* path, const std::string& directory)
 }
 
 std::vector<TextureMesh> Model::loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName)
-{
+{std::cout << mat->GetTextureCount(type);
     std::vector<TextureMesh> textures;
     for (unsigned int i = 0; i < mat->GetTextureCount(type); i++) {
         aiString str;
         mat->GetTexture(type, i, &str);
         bool skip = false;
         for (unsigned int j = 0; j < m_texturesLoaded.size(); j++) {
+            
             if (std::strcmp(m_texturesLoaded[j].m_path.data(), str.C_Str()) == 0) {
                 textures.push_back(m_texturesLoaded[j]);
                 skip = true;
@@ -152,6 +154,6 @@ std::vector<TextureMesh> Model::loadMaterialTextures(aiMaterial* mat, aiTextureT
             textures.push_back(texture);
             m_texturesLoaded.push_back(texture); // add to loaded textures
         }
-    }
+    }    
     return textures;
 }
