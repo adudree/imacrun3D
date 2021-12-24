@@ -94,10 +94,9 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 unsigned int TextureFromFile(const char* path, const std::string& directory)
 {
     std::string filename = std::string(path);
-    std::cout << directory << " et " << filename << std::endl;
+    // std::cout << directory << " et " << filename << std::endl;
     filename = directory + '/' + filename;
-    std::cout << filename;
-
+    // std::cout << filename;
 
     unsigned int textureID;
     glGenTextures(1, &textureID);
@@ -105,7 +104,7 @@ unsigned int TextureFromFile(const char* path, const std::string& directory)
     int width, height, nrComponents;
 
     unsigned char* data = stbi_load(filename.c_str(), &width, &height, &nrComponents, 0);
-    std::cout << stbi_load(filename.c_str(), &width, &height, &nrComponents, 0) << std::endl;
+    // std::cout << stbi_load(filename.c_str(), &width, &height, &nrComponents, 0) << std::endl;
     if (data) {
         GLenum format = GL_RGBA;
         if (nrComponents == 1)
@@ -132,14 +131,14 @@ unsigned int TextureFromFile(const char* path, const std::string& directory)
 }
 
 std::vector<TextureMesh> Model::loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName)
-{std::cout << mat->GetTextureCount(type);
+{
+    // std::cout << mat->GetTextureCount(type);
     std::vector<TextureMesh> textures;
     for (unsigned int i = 0; i < mat->GetTextureCount(type); i++) {
         aiString str;
         mat->GetTexture(type, i, &str);
         bool skip = false;
         for (unsigned int j = 0; j < m_texturesLoaded.size(); j++) {
-            
             if (std::strcmp(m_texturesLoaded[j].m_path.data(), str.C_Str()) == 0) {
                 textures.push_back(m_texturesLoaded[j]);
                 skip = true;
@@ -154,6 +153,6 @@ std::vector<TextureMesh> Model::loadMaterialTextures(aiMaterial* mat, aiTextureT
             textures.push_back(texture);
             m_texturesLoaded.push_back(texture); // add to loaded textures
         }
-    }    
+    }
     return textures;
 }
