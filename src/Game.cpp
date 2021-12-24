@@ -1,31 +1,35 @@
 #include "Game.hpp"
 
-
-Game::Game()
-{
-
-}
-
+Game::Game(){}
 
 void Game::initGame()
 {
     // set player & map
+    m_player.setPosition(glm::vec3(m_playerPosition[0], -1.0f, m_playerPosition[1]));
+    m_player.setSpeed(m_speed); 
+
+    m_isRunning = true;
 }
 
 void Game::runGame()
 {
-    // while (m_isRunning)
-    m_player.moveForward(); 
-
-    glm::vec2 activeTileCoords = getActiveTile(2, 4); // TO DO dynamiser
-    char actTile = m_map.tileDetection(activeTileCoords);
-    tilesConditions(actTile);
-
-    // conditions de fin de partie 
-    if (m_player.isFalling()) 
+    if (m_isRunning && !m_gameOver)
     {
-        m_gameOver = true;
-        m_isRunning = false;
+        m_player.moveForward(); 
+
+        m_playerPosition = getActiveTile(tilesW, tilesL);
+        char actTile = m_map.tileDetection(m_playerPosition);
+        tilesConditions(actTile);
+
+        m_player.fallingTest();
+
+        std::cout << m_player.isFalling << std::endl;
+        // conditions de fin de partie 
+        if (m_player.isFalling) 
+        {
+            m_gameOver = true;
+            m_isRunning = false;
+        }
     }
 
     // gestion des événements inclus dedans 
@@ -57,7 +61,8 @@ switch (tile)
         break;
 
     case 'H':
-        m_player.fall();
+        if (!m_player.isFalling)
+            m_player.fall();
         break;
     
     default:
@@ -66,4 +71,32 @@ switch (tile)
   
 }
 
-// events ? 
+
+void Game::playerMoves(SDL_Event &e)
+{
+    if (e.key.keysym.sym == SDLK_d) {
+        // si on est sur une case "virage" : on tourne
+        // sinon :
+        if (m_player.canMoveRight(m_playerPosition[0], tilesW))
+            m_player.moveRight();
+        
+    }
+
+    if (e.key.keysym.sym == SDLK_q) {
+        // si on est sur une case "virage" : on tourne
+        // sinon :
+        if (m_player.canMoveLeft(m_playerPosition[0], tilesW))
+            m_player.moveLeft();
+    }
+
+    if (e.key.keysym.sym == SDLK_z) {
+        // player.jump()
+        m_player.moveForward();
+    }
+
+    if (e.key.keysym.sym == SDLK_s) {
+        //player.squat();
+            m_player.fall();
+    }
+
+}

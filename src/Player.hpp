@@ -15,22 +15,14 @@
 
 class Player {
 private:
-    // model
-    // texture
+    std::string m_nom = "John Doe";
+    int         m_score = 0;
+    glm::vec3   m_position = glm::vec3(0);
+    float       m_speed;
 
-    std::string m_nom;
-    int         m_score;
-    glm::vec3   m_position;
-    float       m_speed = 0.5;
 
-    bool isJumping;
-    bool isLowed;
-    bool isMovingForward;
-
-    Sphere m_sphere; 
-    
-    VBO<ShapeVertex> m_vbo;
-    VAO<ShapeVertex> m_vao;
+    // VBO<ShapeVertex> m_vbo;
+    // VAO<ShapeVertex> m_vao;
 
     GLuint m_texture;
 
@@ -40,13 +32,15 @@ private:
     void setTexture();
 
 public:
+    bool isJumping;
+    bool isLowed;
+    bool isFalling;
+    bool isMovingForward;
 
-    Player(GLuint texture)
-        : m_nom("John Doe"), m_score(0), m_position(glm::vec3(0.f)), 
-          m_sphere(Sphere(m_position, 1, 32, 16)),      // pour l'instant ; sera obj 3D plus tard
-          m_vbo(buildVertices()), m_vao(), 
-          m_texture(texture) {
-            buildVAO();
+    Player()
+        // :  m_vbo(buildVertices()), m_vao()
+        {
+            // buildVAO();
         }
 
     ~Player() = default;
@@ -55,6 +49,7 @@ public:
 
     inline void setPosition(glm::vec3 pos)  {m_position = pos; }
     inline void setSpeed(float speed)      {m_speed = speed;}
+
     void draw(); // chargement + affichage obj 3D
 
     inline void moveForward()   {m_position.z += m_speed * 0.1;}
@@ -67,13 +62,10 @@ public:
 
     //inline void squat() { /* height objet/2 */ } // GILET JAUNE 10 SQUATS 
     
-    glm::vec2 getActiveTile(float tileWidth, float  tileLength);
-    char tileDetection(glm::vec2 coordActiveTile);
-    void tilesConditions(char &tile);
     bool canMoveRight(float tilePosition, float tileWidth);
     bool canMoveLeft(float tilePosition, float tileWidth);
 
     //collision(Coin)
 
-    bool isFalling();
+    void fallingTest();
 };

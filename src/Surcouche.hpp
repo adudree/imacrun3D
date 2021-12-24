@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Map.hpp"
-#include "Player.hpp"
 #include "Tile.hpp"
+#include "Hole.hpp"
+#include "Game.hpp"
 
-void createTiles(const Map& map, std::vector<std::unique_ptr<Tile>>& tiles, Player& p, const GLfloat& w, const GLfloat& h);
+void createTiles(Game &game, std::vector<std::unique_ptr<Tile>>& tiles, const GLfloat& w, const GLfloat& h);

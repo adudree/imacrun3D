@@ -1,6 +1,6 @@
 #include "Map.hpp"
 
-Map::Map(const std::string& filename)
+Map::Map()
 {
     std::ifstream fichier(filename, std::ios::in);
     std::string   ligne;
