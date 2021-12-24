@@ -70,6 +70,19 @@ void Player::collision(Arch& Obstacle)
 
 void Player::jump()
 {
+    // y = (-g / (2 * v0^2 * cos(alpha))) * x^2 + tan(alpha) * x + h
+    // v0
+    // alpha
+    // g
+    // h
+    // x (variable)
+
+    float v0    = 0.5f;
+    float alpha = M_PI / 3;
+    float g     = 9.81f;
+
+    m_position.y += (-g / (2 * v0 * v0 * cos(alpha))) * m_position.x * m_position.x + tan(alpha) * m_position.x;
+
     // float x     = m_position.x;
     // float v0  qqq  = 1;
     // float alpha = 45;
