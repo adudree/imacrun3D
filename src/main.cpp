@@ -12,6 +12,7 @@
 #include "CameraFirstPerson.hpp"
 #include "CameraThirdPerson.hpp"
 #include "Map.hpp"
+#include "Model.hpp"
 #include "Player.hpp"
 #include "Skybox.hpp"
 #include "Sphere.hpp"
@@ -66,8 +67,8 @@ int main()
 
     // ================ PLAYER ================ //
 
-    GLuint texTemp;
-    std::unique_ptr<glimac::Image> playerTemp   = glimac::loadImage("assets/textures/cardinale.jpg");
+    GLuint                         texTemp;
+    std::unique_ptr<glimac::Image> playerTemp = glimac::loadImage("assets/textures/cardinale.jpg");
     createTexture(texTemp, playerTemp);
 
     Player player(texTemp);
@@ -87,7 +88,7 @@ int main()
     Map                                myMap(fichierMap);
     std::vector<std::unique_ptr<Tile>> tiles;
 
-    createTiles(myMap, tiles, player, 1, 1);    // 1 & 3 w & h de chaque tuile
+    createTiles(myMap, tiles, player, 1, 1); // 1 & 3 w & h de chaque tuile
 
     // ================ CAMERA ================ //
 
@@ -100,7 +101,6 @@ int main()
 
     bool done = false;
     while (!done) {
-
         // ============ RENDERING CODE =========== //
 
         // matrices et compagnie
@@ -126,7 +126,7 @@ int main()
             tiles[i]->drawTile();
         }
 
-        // tile detection 
+        // tile detection
         char actTile = player.tileDetection(myMap, 1, 1);
         player.tilesConditions(actTile);
 
@@ -136,7 +136,7 @@ int main()
 
         windowManager.swapBuffers();
 
-        // player.moveForward(); // test 
+        // player.moveForward(); // test
         
 
         // events
@@ -167,7 +167,7 @@ int main()
                 }
 
                 if (e.key.keysym.sym == SDLK_z) {
-                    player.moveForward();   // pour le test; devra avancer tout seul après 
+                    player.moveForward(); // pour le test; devra avancer tout seul après
                     // player.jump();
                 }
 
