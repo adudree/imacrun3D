@@ -20,7 +20,6 @@
 #include "Surcouche.hpp"
 #include "Tile.hpp"
 #include "VAO.hpp"
-#include "Model.hpp"
 
 using namespace glimac;
 
@@ -93,7 +92,7 @@ int main()
 
     // ================= COIN ================= //
 
-    Coin coin;
+    Coin coin(texTemp);
     coin.setPosition(myMap, 1, 1);
 
     // ================ CAMERA ================ //
@@ -136,14 +135,17 @@ int main()
         char actTile = player.tileDetection(myMap, 1, 1);
         player.tilesConditions(actTile);
 
-        //  draw player
+        // draw player
 
         player.draw();
+
+        // draw coin
+
+        coin.draw();
 
         windowManager.swapBuffers();
 
         // player.moveForward(); // test
-        
 
         // events
 
