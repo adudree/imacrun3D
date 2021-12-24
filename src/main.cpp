@@ -75,7 +75,8 @@ int main()
 
     Player player(texTemp);
 
-    Model testPlayer("suzanne.obj");
+    Model testPlayer("assets/models/test2/StarSparrow.obj");
+    //Model testPlayer("assets/models/test/backpack.obj");
     //test de load de shaders pour suzi
     //Program ModelProgram = loadProgram("assets/shaders/Model.vs.glsl", "assets/shaders/Model.fs.glsl");
 
