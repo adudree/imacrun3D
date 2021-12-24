@@ -88,8 +88,8 @@ int main()
 
     // ================= COIN ================= //
 
-    Coin coin(texTemp);
-    coin.setPosition(myMap, 1, 1);
+    Coin coin();
+    // coin.setPosition(myMap, 1, 1);
 
     // ================ CAMERA ================ //
 
@@ -133,7 +133,7 @@ int main()
 
         // draw coin
 
-        coin.draw();
+        // coin.draw();
 
         windowManager.swapBuffers();
 

@@ -4,19 +4,20 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "Hole.hpp"
-#include "Map.hpp"
-#include "Sphere.hpp"
-#include "Tile.hpp"
-#include "VAO.hpp"
 #include "glimac/glm.hpp"
+#include "Sphere.hpp"
+#include "IBO.hpp"
+#include "VAO.hpp"
+#include "VBO.hpp"
 
 class Player {
+
 private:
     std::string m_nom = "John Doe";
     int         m_score = 0;
     glm::vec3   m_position = glm::vec3(0);
     float       m_speed;
+
 
     // VBO<ShapeVertex> m_vbo;
     // VAO<ShapeVertex> m_vao;
@@ -24,7 +25,7 @@ private:
     GLuint m_texture;
 
     std::vector<ShapeVertex> buildVertices();
-    void                     buildVAO();
+    void             buildVAO();
 
     void setTexture();
 
@@ -34,11 +35,11 @@ public:
     bool isFalling;
     bool isMovingForward;
 
-    Player()
-        // :  m_vbo(buildVertices()), m_vao()
-        {
-            // buildVAO();
-        }
+    Player(){}
+        // // :  m_vbo(buildVertices()), m_vao()
+        // {
+        //     // buildVAO();
+        // }
 
     ~Player() = default;
 
