@@ -11,28 +11,25 @@ void Player::collision(Coin &coin)
 }
 */
 
-
-char Player::tileDetection(Map& map, float tileWidth, float  tileLength)
+char Player::tileDetection(Map& map, float tileWidth, float tileLength)
 {
     return map.getTypeTile(round(m_position.x / tileWidth), round(m_position.z / tileLength));
 }
 
-void Player::tilesConditions(char &tile)
+void Player::tilesConditions(char& tile)
 {
-    switch (tile)
-    {
+    switch (tile) {
     case 'P' || 'S':
-        // tout est normal 
+        // tout est normal
         break;
 
     case 'H':
         fall();
         break;
-    
+
     default:
         break;
     }
-
 }
 
 bool Player::isFalling()
@@ -41,7 +38,6 @@ bool Player::isFalling()
         return true;
     return false;
 }
-
 
 bool Player::isOnTile(Tile& tile)
 {
@@ -96,7 +92,6 @@ void Player::jump()
     // alpha : angle (degré)
 }
 
-
 std::vector<ShapeVertex> Player::buildVertices()
 {
     return m_sphere.getVertices();
@@ -123,11 +118,9 @@ void Player::buildVAO()
     glBindVertexArray(0);
 }
 
-
-
 void Player::draw()
 {
     glBindVertexArray(*m_vao);
-    glDrawArrays(GL_TRIANGLES,0, m_sphere.getVertexCount());
+    glDrawArrays(GL_TRIANGLES, 0, m_sphere.getVertexCount());
     glBindVertexArray(0);
 }
