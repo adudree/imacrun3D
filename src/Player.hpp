@@ -15,19 +15,14 @@
 
 class Player {
 private:
-    std::string m_nom;
-    int         m_score;
-    glm::vec3   m_position;
-    float       m_speed = 0.5;
+    std::string m_nom = "John Doe";
+    int         m_score = 0;
+    glm::vec3   m_position = glm::vec3(0);
+    float       m_speed;
 
-    bool isJumping;
-    bool isLowed;
-    bool isMovingForward;
 
-    Sphere m_sphere; 
-    
-    VBO<ShapeVertex> m_vbo;
-    VAO<ShapeVertex> m_vao;
+    // VBO<ShapeVertex> m_vbo;
+    // VAO<ShapeVertex> m_vao;
 
     GLuint m_texture;
 
@@ -37,13 +32,15 @@ private:
     void setTexture();
 
 public:
+    bool isJumping;
+    bool isLowed;
+    bool isFalling;
+    bool isMovingForward;
 
     Player()
-        : m_nom("John Doe"), m_score(0), m_position(glm::vec3(0.f)), 
-          m_sphere(Sphere(m_position, 1, 32, 16)),      // pour l'instant ; sera obj 3D plus tard
-          m_vbo(buildVertices()), m_vao()
-          {
-            buildVAO();
+        // :  m_vbo(buildVertices()), m_vao()
+        {
+            // buildVAO();
         }
 
     ~Player() = default;
@@ -52,6 +49,7 @@ public:
 
     inline void setPosition(glm::vec3 pos)  {m_position = pos; }
     inline void setSpeed(float speed)      {m_speed = speed;}
+
     void draw(); // chargement + affichage obj 3D
 
     inline void moveForward()   {m_position.z += m_speed * 0.1;}
@@ -69,5 +67,5 @@ public:
 
     //collision(Coin)
 
-    bool isFalling();
+    void fallingTest();
 };

@@ -19,6 +19,7 @@
 #include "Tile.hpp"
 #include "VAO.hpp"
 #include "Model.hpp"
+#include "Game.hpp"
 
 using namespace glimac;
 
@@ -44,14 +45,18 @@ int main()
         SDL_ShowCursor(SDL_DISABLE);
         SDL_SetWindowGrab(windowManager.getWindow(), SDL_TRUE);
     };
+
     bool isMenuOpen = false;
     closeMenu();
+
 
     // program + shaders
 
     Program program = loadProgram("assets/shaders/3D.vs.glsl", "assets/shaders/tex3D.fs.glsl");
 
     glEnable(GL_DEPTH_TEST);
+
+    Game game; 
 
     // ================ MATRIX ================ //
 
@@ -69,16 +74,6 @@ int main()
 
     // ================ PLAYER ================ //
 
-    GLuint texTemp;
-    std::unique_ptr<glimac::Image> playerTemp   = glimac::loadImage("assets/textures/cardinale.jpg");
-    createTexture(texTemp, playerTemp);
-
-    Player player(texTemp);
-
-    Model testPlayer("assets/models/test2/StarSparrow.obj");
-    //Model testPlayer("assets/models/test/backpack.obj");
-    //test de load de shaders pour suzi
-    //Program ModelProgram = loadProgram("assets/shaders/Model.vs.glsl", "assets/shaders/Model.fs.glsl");
 
     // ================ SKYBOX ================ //
 
@@ -86,14 +81,9 @@ int main()
 
     // ================= MAP ================== //
 
-    std::string                        fichierMap = "assets/maps/map1.imac";
-    Map                                myMap(fichierMap);
     std::vector<std::unique_ptr<Tile>> tiles;
 
-    const float tilesW = 2;
-    const float tilesL = 4;
-
-    createTiles(myMap, tiles, player, tilesW, tilesL);
+    createTiles(game, tiles, tilesW, tilesL); 
 
     // ================ CAMERA ================ //
 
@@ -101,6 +91,10 @@ int main()
     CameraFirstPerson cameraFirstPerson;
     ICamera*          camera         = &cameraThirdPerson;
     bool              isCameraLocked = false;
+
+
+    game.initGame();
+
 
     // ================= LOOP ================= //
 
@@ -111,7 +105,7 @@ int main()
 
         // matrices et compagnie
 
-        MVMatrix     = camera->computeMatrix(player.getPosition());
+        MVMatrix     = camera->computeMatrix(game.getPlayerPosition());
         NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
 
         skybox.render(ProjMatrix, MVMatrix);
@@ -124,24 +118,14 @@ int main()
         glUniformMatrix4fv(locNormalMatrix, 1, GL_FALSE, glm::value_ptr(NormalMatrix));
         glUniform1i(locTexture, 0);
 
-        testPlayer.Draw(program);
-
         // draw tiles
 
         for (size_t i = 0; i < tiles.size(); i++) {
             tiles[i]->drawTile();
         }
 
-        // tile detection 
-        glm::vec2 actTileCoord = player.getActiveTile(tilesW, tilesL); 
-        char actTile = myMap.tileDetection(actTileCoord);
-
-        player.moveForward(); // test 
-        player.tilesConditions(actTile);
-
-        //  draw player
-
-        player.draw();
+        
+        game.runGame();
 
         windowManager.swapBuffers();
 
@@ -161,29 +145,7 @@ int main()
 
                 // ========= MOUVEMENT ========== //
 
-                if (e.key.keysym.sym == SDLK_d) {
-                    // si on est sur une case "virage" : on tourne
-                    // sinon :
-                    if (player.canMoveRight(actTileCoord[0], tilesW))
-                        player.moveRight();
-                    
-                }
-
-                if (e.key.keysym.sym == SDLK_q) {
-                    // si on est sur une case "virage" : on tourne
-                    // sinon :
-                    if (player.canMoveLeft(actTileCoord[0], tilesW))
-                        player.moveLeft();
-                }
-
-                if (e.key.keysym.sym == SDLK_z) {
-                    // player.jump()
-                }
-
-                if (e.key.keysym.sym == SDLK_s) {
-                    //player.squat();
-                    player.fall();
-                }
+                if (game.m_isRunning) {game.playerMoves(e);}
 
                 // =========== CAMERA =========== //
 
@@ -205,11 +167,11 @@ int main()
                 if (e.key.keysym.sym == SDLK_ESCAPE) {
                     isMenuOpen = !isMenuOpen;
                     if (isMenuOpen) {
-                        player.setSpeed(0.f);
+                        game.setSpeed(0.f);
                         openMenu();
                     }
                     else {
-                        player.setSpeed(0.5f);
+                        game.setSpeed(0.5f);
                         closeMenu();
                     }
                 }

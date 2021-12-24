@@ -1,23 +1,25 @@
 #include "Surcouche.hpp"
-#include "Hole.hpp"
 
 // IMPORTANT : les fonctions dans ce fichier sont à trier //
 
-void createTiles(const Map& map, std::vector<std::unique_ptr<Tile>>& tiles, Player& p, const GLfloat& w, const GLfloat& h)
+void createTiles(Game &game, std::vector<std::unique_ptr<Tile>>& tiles, const GLfloat& w, const GLfloat& h)
 {
     std::vector<GLuint> texturesMap(2); // 2 = nb textures
 
     std::unique_ptr<glimac::Image> simple = glimac::loadImage("assets/textures/cardinale.jpg");
     std::unique_ptr<glimac::Image> hole   = glimac::loadImage("assets/textures/hole.png");
 
+    Map map = game.getMap();
+
     createTexture(texturesMap[0], simple);
     createTexture(texturesMap[1], hole);
 
+    
     for (int i = 0; i < map.getDimensions()[0]; i++) {
         for (int j = 0; j < map.getDimensions()[1]; j++) {
             switch (map.getTypeTile(i, j)) {
             case 'P':
-                p.setPosition(glm::vec3(i * w, -1.f, j * h));
+                game.setPlayerPosition(glm::vec2(i * w, j * h));
                 tiles.push_back(std::make_unique<Tile>(i * w, j * h, w, h, texturesMap[0]));
                 break;
 
