@@ -98,7 +98,6 @@ unsigned int TextureFromFile(const char* path, const std::string& directory)
     filename = directory + '/' + filename;
     // std::cout << filename;
 
-
     unsigned int textureID;
     glGenTextures(1, &textureID);
 
@@ -140,7 +139,6 @@ std::vector<TextureMesh> Model::loadMaterialTextures(aiMaterial* mat, aiTextureT
         mat->GetTexture(type, i, &str);
         bool skip = false;
         for (unsigned int j = 0; j < m_texturesLoaded.size(); j++) {
-            
             if (std::strcmp(m_texturesLoaded[j].m_path.data(), str.C_Str()) == 0) {
                 textures.push_back(m_texturesLoaded[j]);
                 skip = true;
@@ -155,6 +153,6 @@ std::vector<TextureMesh> Model::loadMaterialTextures(aiMaterial* mat, aiTextureT
             textures.push_back(texture);
             m_texturesLoaded.push_back(texture); // add to loaded textures
         }
-    }    
+    }
     return textures;
 }

@@ -11,7 +11,9 @@
 #include <vector>
 #include "CameraFirstPerson.hpp"
 #include "CameraThirdPerson.hpp"
+#include "Coin.hpp"
 #include "Map.hpp"
+#include "Model.hpp"
 #include "Player.hpp"
 #include "Skybox.hpp"
 #include "Sphere.hpp"
@@ -74,7 +76,6 @@ int main()
 
     // ================ PLAYER ================ //
 
-
     // ================ SKYBOX ================ //
 
     Skybox skybox;
@@ -84,6 +85,11 @@ int main()
     std::vector<std::unique_ptr<Tile>> tiles;
 
     createTiles(game, tiles, tilesW, tilesL); 
+
+    // ================= COIN ================= //
+
+    Coin coin(texTemp);
+    coin.setPosition(myMap, 1, 1);
 
     // ================ CAMERA ================ //
 
@@ -100,7 +106,6 @@ int main()
 
     bool done = false;
     while (!done) {
-
         // ============ RENDERING CODE =========== //
 
         // matrices et compagnie
@@ -123,13 +128,15 @@ int main()
         for (size_t i = 0; i < tiles.size(); i++) {
             tiles[i]->drawTile();
         }
-
         
         game.runGame();
 
+        // draw coin
+
+        coin.draw();
+
         windowManager.swapBuffers();
 
-        
         // events
 
         SDL_Event e;
