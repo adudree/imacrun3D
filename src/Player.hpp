@@ -15,9 +15,6 @@
 
 class Player {
 private:
-    // model
-    // texture
-
     std::string m_nom;
     int         m_score;
     glm::vec3   m_position;
@@ -41,11 +38,11 @@ private:
 
 public:
 
-    Player(GLuint texture)
+    Player()
         : m_nom("John Doe"), m_score(0), m_position(glm::vec3(0.f)), 
           m_sphere(Sphere(m_position, 1, 32, 16)),      // pour l'instant ; sera obj 3D plus tard
-          m_vbo(buildVertices()), m_vao(), 
-          m_texture(texture) {
+          m_vbo(buildVertices()), m_vao()
+          {
             buildVAO();
         }
 
@@ -67,9 +64,6 @@ public:
 
     //inline void squat() { /* height objet/2 */ } // GILET JAUNE 10 SQUATS 
     
-    glm::vec2 getActiveTile(float tileWidth, float  tileLength);
-    char tileDetection(glm::vec2 coordActiveTile);
-    void tilesConditions(char &tile);
     bool canMoveRight(float tilePosition, float tileWidth);
     bool canMoveLeft(float tilePosition, float tileWidth);
 

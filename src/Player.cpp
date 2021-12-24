@@ -11,10 +11,6 @@ void Player::collision(Coin &coin)
 }
 */
 
-glm::vec2 Player::getActiveTile(float tileWidth, float  tileLength) 
-{
-    return glm::vec2(round(m_position.x / tileWidth), round(m_position.z / tileLength));
-}
 
 // TO DO : à optimiser ici 
 bool Player::canMoveRight(float tilePosition, float tileWidth)
@@ -27,24 +23,6 @@ bool Player::canMoveLeft(float tilePosition, float tileWidth)
 {
     if (m_position.x >= tileWidth * tilePosition - tileWidth/2 + m_speed * 0.2) return true;
     else return false;
-}
-
-void Player::tilesConditions(char &tile)
-{
-    switch (tile)
-    {
-    case 'P' || 'S':
-        // tout est normal 
-        break;
-
-    case 'H':
-        fall();
-        break;
-    
-    default:
-        break;
-    }
-
 }
 
 bool Player::isFalling()
