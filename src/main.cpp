@@ -11,6 +11,7 @@
 #include <vector>
 #include "CameraFirstPerson.hpp"
 #include "CameraThirdPerson.hpp"
+#include "Coin.hpp"
 #include "Map.hpp"
 #include "Model.hpp"
 #include "Player.hpp"
@@ -89,6 +90,11 @@ int main()
     std::vector<std::unique_ptr<Tile>> tiles;
 
     createTiles(myMap, tiles, player, 1, 1); // 1 & 3 w & h de chaque tuile
+
+    // ================= COIN ================= //
+
+    Coin coin;
+    coin.setPosition(myMap, 1, 1);
 
     // ================ CAMERA ================ //
 
