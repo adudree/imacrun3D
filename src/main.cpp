@@ -21,8 +21,6 @@
 #include "Surcouche.hpp"
 #include "Tile.hpp"
 #include "VAO.hpp"
-#include "Model.hpp"
-#include "Game.hpp"
 
 using namespace glimac;
 
@@ -35,7 +33,6 @@ int main()
     GLint            WIDTH  = 800;
     GLint            HEIGHT = 800;
     SDLWindowManager windowManager(WIDTH, HEIGHT, "IMAC RUN 3D");
-
 
     // mouse
 
@@ -51,7 +48,6 @@ int main()
 
     bool isMenuOpen = false;
     closeMenu();
-
 
     // program + shaders
 
@@ -96,7 +92,7 @@ int main()
 
     CameraThirdPerson cameraThirdPerson;
     CameraFirstPerson cameraFirstPerson;
-    ICamera*          camera         = &cameraThirdPerson;
+    ICamera*          camera         = &cameraFirstPerson;
     bool              isCameraLocked = false;
 
     game.initGame();
