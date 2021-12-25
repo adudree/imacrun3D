@@ -12,6 +12,7 @@
 #include "CameraFirstPerson.hpp"
 #include "CameraThirdPerson.hpp"
 #include "Coin.hpp"
+#include "Game.hpp"
 #include "Map.hpp"
 #include "Model.hpp"
 #include "Player.hpp"
@@ -58,7 +59,7 @@ int main()
 
     glEnable(GL_DEPTH_TEST);
 
-    Game game; 
+    Game game;
 
     // ================ MATRIX ================ //
 
@@ -84,7 +85,7 @@ int main()
 
     std::vector<std::unique_ptr<Tile>> tiles;
 
-    createTiles(game, tiles, tilesW, tilesL); 
+    createTiles(game, tiles, tilesW, tilesL);
 
     // ================= COIN ================= //
 
@@ -98,9 +99,7 @@ int main()
     ICamera*          camera         = &cameraThirdPerson;
     bool              isCameraLocked = false;
 
-
     game.initGame();
-
 
     // ================= LOOP ================= //
 
@@ -128,7 +127,7 @@ int main()
         for (size_t i = 0; i < tiles.size(); i++) {
             tiles[i]->drawTile();
         }
-        
+
         game.runGame();
 
         // draw coin
@@ -152,7 +151,9 @@ int main()
 
                 // ========= MOUVEMENT ========== //
 
-                if (game.m_isRunning) {game.playerMoves(e);}
+                if (game.m_isRunning) {
+                    game.playerMoves(e);
+                }
 
                 // =========== CAMERA =========== //
 
