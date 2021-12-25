@@ -1,6 +1,5 @@
 #include "Player.hpp"
 
-
 // TO DO : à optimiser ici
 bool Player::canMoveRight(float tilePosition, float tileWidth)
 {
@@ -27,7 +26,6 @@ void Player::fallingTest()
     else
         isFalling = false;
 }
-
 
 void Player::jump()
 {
