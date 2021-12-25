@@ -92,7 +92,7 @@ int main()
 
     CameraThirdPerson cameraThirdPerson;
     CameraFirstPerson cameraFirstPerson;
-    ICamera*          camera         = &cameraThirdPerson;
+    ICamera*          camera         = &cameraFirstPerson;
     bool              isCameraLocked = false;
 
     game.initGame();
