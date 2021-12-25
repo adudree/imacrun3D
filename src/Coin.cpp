@@ -24,35 +24,35 @@ void Coin::setPosition(const Map& map, float tileWidth, float tileLength)
 
 // ---------------------------------------------------------------------------- //
 
-std::vector<ShapeVertex> Coin::buildVertices()
-{
-    return m_sphere.getVertices();
-}
+// std::vector<ShapeVertex> Coin::buildVertices()
+// {
+//     return m_sphere.getVertices();
+// }
 
-void Coin::buildVAO()
-{
-    glBindVertexArray(*m_vao);
-    glBindBuffer(GL_ARRAY_BUFFER, *m_vbo);
+// void Coin::buildVAO()
+// {
+//     glBindVertexArray(*m_vao);
+//     glBindBuffer(GL_ARRAY_BUFFER, *m_vbo);
 
-    const GLuint VERTEX_ATTR_POSITION  = 0;
-    const GLuint VERTEX_ATTR_NORMAL    = 1;
-    const GLuint VERTEX_ATTR_TEX_COORD = 2;
+//     const GLuint VERTEX_ATTR_POSITION  = 0;
+//     const GLuint VERTEX_ATTR_NORMAL    = 1;
+//     const GLuint VERTEX_ATTR_TEX_COORD = 2;
 
-    glEnableVertexAttribArray(VERTEX_ATTR_POSITION);
-    glEnableVertexAttribArray(VERTEX_ATTR_NORMAL);
-    glEnableVertexAttribArray(VERTEX_ATTR_TEX_COORD);
+//     glEnableVertexAttribArray(VERTEX_ATTR_POSITION);
+//     glEnableVertexAttribArray(VERTEX_ATTR_NORMAL);
+//     glEnableVertexAttribArray(VERTEX_ATTR_TEX_COORD);
 
-    glVertexAttribPointer(VERTEX_ATTR_POSITION, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), nullptr);
-    glVertexAttribPointer(VERTEX_ATTR_NORMAL, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
-    glVertexAttribPointer(VERTEX_ATTR_TEX_COORD, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)(6 * sizeof(GLfloat)));
+//     glVertexAttribPointer(VERTEX_ATTR_POSITION, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), nullptr);
+//     glVertexAttribPointer(VERTEX_ATTR_NORMAL, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
+//     glVertexAttribPointer(VERTEX_ATTR_TEX_COORD, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)(6 * sizeof(GLfloat)));
 
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindVertexArray(0);
-}
+//     glBindBuffer(GL_ARRAY_BUFFER, 0);
+//     glBindVertexArray(0);
+// }
 
-void Coin::draw()
-{
-    glBindVertexArray(*m_vao);
-    glDrawArrays(GL_TRIANGLES, 0, m_sphere.getVertexCount());
-    glBindVertexArray(0);
-}
+// void Coin::draw()
+// {
+//     glBindVertexArray(*m_vao);
+//     glDrawArrays(GL_TRIANGLES, 0, m_sphere.getVertexCount());
+//     glBindVertexArray(0);
+// }

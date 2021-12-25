@@ -20,6 +20,8 @@
 #include "Surcouche.hpp"
 #include "Tile.hpp"
 #include "VAO.hpp"
+#include "Model.hpp"
+#include "Game.hpp"
 
 using namespace glimac;
 
@@ -28,9 +30,11 @@ int main()
     // ============ INITIALIZATION =========== //
 
     // window
+
     GLint            WIDTH  = 800;
     GLint            HEIGHT = 800;
     SDLWindowManager windowManager(WIDTH, HEIGHT, "IMAC RUN 3D");
+
 
     // mouse
 
@@ -43,8 +47,10 @@ int main()
         SDL_ShowCursor(SDL_DISABLE);
         SDL_SetWindowGrab(windowManager.getWindow(), SDL_TRUE);
     };
+
     bool isMenuOpen = false;
     closeMenu();
+
 
     // program + shaders
 
@@ -52,7 +58,10 @@ int main()
 
     glEnable(GL_DEPTH_TEST);
 
+    Game game; 
+
     // ================ MATRIX ================ //
+
     program.use();
     GLint locMVPMatrix    = glGetUniformLocation(program.getGLId(), "uMVPMatrix");
     GLint locMVMatrix     = glGetUniformLocation(program.getGLId(), "uMVMatrix");
@@ -67,33 +76,20 @@ int main()
 
     // ================ PLAYER ================ //
 
-    GLuint                         texTemp;
-    std::unique_ptr<glimac::Image> playerTemp = glimac::loadImage("assets/textures/cardinale.jpg");
-    createTexture(texTemp, playerTemp);
-
-    Player player(texTemp);
-
-    Model testPlayer("assets/models/test2/StarSparrow.obj");
-    //Model testPlayer("assets/models/test/backpack.obj");
-    //test de load de shaders pour suzi
-    //Program ModelProgram = loadProgram("assets/shaders/Model.vs.glsl", "assets/shaders/Model.fs.glsl");
-
     // ================ SKYBOX ================ //
 
     Skybox skybox;
 
     // ================= MAP ================== //
 
-    std::string                        fichierMap = "assets/maps/map1.imac";
-    Map                                myMap(fichierMap);
     std::vector<std::unique_ptr<Tile>> tiles;
 
-    createTiles(myMap, tiles, player, 1, 1); // 1 & 3 w & h de chaque tuile
+    createTiles(game, tiles, tilesW, tilesL); 
 
     // ================= COIN ================= //
 
-    Coin coin(texTemp);
-    coin.setPosition(myMap, 1, 1);
+    Coin coin();
+    // coin.setPosition(myMap, 1, 1);
 
     // ================ CAMERA ================ //
 
@@ -101,6 +97,10 @@ int main()
     CameraFirstPerson cameraFirstPerson;
     ICamera*          camera         = &cameraThirdPerson;
     bool              isCameraLocked = false;
+
+
+    game.initGame();
+
 
     // ================= LOOP ================= //
 
@@ -110,7 +110,7 @@ int main()
 
         // matrices et compagnie
 
-        MVMatrix     = camera->computeMatrix(player.getPosition());
+        MVMatrix     = camera->computeMatrix(game.getPlayerPosition());
         NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
 
         skybox.render(ProjMatrix, MVMatrix);
@@ -123,29 +123,19 @@ int main()
         glUniformMatrix4fv(locNormalMatrix, 1, GL_FALSE, glm::value_ptr(NormalMatrix));
         glUniform1i(locTexture, 0);
 
-        testPlayer.Draw(program);
-
         // draw tiles
 
         for (size_t i = 0; i < tiles.size(); i++) {
             tiles[i]->drawTile();
         }
-
-        // tile detection
-        char actTile = player.tileDetection(myMap, 1, 1);
-        player.tilesConditions(actTile);
-
-        // draw player
-
-        player.draw();
+        
+        game.runGame();
 
         // draw coin
 
-        coin.draw();
+        // coin.draw();
 
         windowManager.swapBuffers();
-
-        // player.moveForward(); // test
 
         // events
 
@@ -162,27 +152,7 @@ int main()
 
                 // ========= MOUVEMENT ========== //
 
-                if (e.key.keysym.sym == SDLK_d) {
-                    // si on est sur une case "virage" : on tourne
-                    // sinon :
-                    player.moveRight();
-                }
-
-                if (e.key.keysym.sym == SDLK_q) {
-                    // si on est sur une case "virage" : on tourne
-                    // sinon :
-                    player.moveLeft();
-                }
-
-                if (e.key.keysym.sym == SDLK_z) {
-                    player.moveForward(); // pour le test; devra avancer tout seul après
-                    // player.jump();
-                }
-
-                if (e.key.keysym.sym == SDLK_s) {
-                    //player.squat();
-                    player.fall();
-                }
+                if (game.m_isRunning) {game.playerMoves(e);}
 
                 // =========== CAMERA =========== //
 
@@ -204,9 +174,11 @@ int main()
                 if (e.key.keysym.sym == SDLK_ESCAPE) {
                     isMenuOpen = !isMenuOpen;
                     if (isMenuOpen) {
+                        game.setSpeed(0.f);
                         openMenu();
                     }
                     else {
+                        game.setSpeed(0.5f);
                         closeMenu();
                     }
                 }

@@ -6,20 +6,6 @@
 
 void Sphere::build(GLfloat r, GLsizei discLat, GLsizei discLong)
 {
-    // Equation paramétrique en (r, phi, theta) de la sphère
-    // avec r >= 0, -PI / 2 <= theta <= PI / 2, 0 <= phi <= 2PI
-    //
-    // x(r, phi, theta) = r sin(phi) cos(theta)
-    // y(r, phi, theta) = r sin(theta)
-    // z(r, phi, theta) = r cos(phi) cos(theta)
-    //
-    // Discrétisation:
-    // dPhi = 2PI / discLat, dTheta = PI / discLong
-    //
-    // x(r, i, j) = r * sin(i * dPhi) * cos(-PI / 2 + j * dTheta)
-    // y(r, i, j) = r * sin(-PI / 2 + j * dTheta)
-    // z(r, i, j) = r * cos(i * dPhi) * cos(-PI / 2 + j * dTheta)
-
     GLfloat rcpLat = 1.f / discLat, rcpLong = 1.f / discLong;
     GLfloat dPhi = 2 * glm::pi<float>() * rcpLat, dTheta = glm::pi<float>() * rcpLong;
 
@@ -40,7 +26,7 @@ void Sphere::build(GLfloat r, GLsizei discLat, GLsizei discLong)
             vertex.normal.y = sinTheta;
             vertex.normal.z = cos(i * dPhi) * cosTheta;
 
-            vertex.position = r * vertex.normal;
+            vertex.position = m_position + r * vertex.normal;
 
             m_data.push_back(vertex);
         }
@@ -63,7 +49,4 @@ void Sphere::build(GLfloat r, GLsizei discLat, GLsizei discLong)
             m_Vertices.push_back(m_data[offset + i + discLat + 1]);
         }
     }
-
-    // Attention ! dans cette implantation on duplique beaucoup de sommets. Une meilleur stratégie est de passer
-    // par un Index Buffer Object, que nous verrons dans les prochains TDs
 }

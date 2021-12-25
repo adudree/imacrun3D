@@ -1,68 +1,26 @@
 #include "Player.hpp"
 
-/*
-void Player::collision(Coin &coin)
-{
-    if(m_position == coin.m_position)
-    {
-        coin.disappear();
-        score++; 
-    }
-}
-*/
 
-char Player::tileDetection(Map& map, float tileWidth, float tileLength)
+// TO DO : à optimiser ici 
+bool Player::canMoveRight(float tilePosition, float tileWidth)
 {
-    return map.getTypeTile(round(m_position.x / tileWidth), round(m_position.z / tileLength));
+    if (m_position.x <= tileWidth * tilePosition + tileWidth/2 - m_speed * 0.2) return true;
+    else return false;
 }
 
-void Player::tilesConditions(char& tile)
+bool Player::canMoveLeft(float tilePosition, float tileWidth)
 {
-    switch (tile) {
-    case 'P' || 'S':
-        // tout est normal
-        break;
-
-    case 'H':
-        fall();
-        break;
-
-    default:
-        break;
-    }
+    if (m_position.x >= tileWidth * tilePosition - tileWidth/2 + m_speed * 0.2) return true;
+    else return false;
 }
 
-bool Player::isFalling()
+void Player::fallingTest()
 {
-    if (m_position.y < -5)
-        return true;
-    return false;
+    if (m_position.y > 1) // axe vertical inversé tkt 
+        isFalling = true;
+    else isFalling = false;
 }
 
-bool Player::isOnTile(Tile& tile)
-{
-    if (m_position.z - tile.getPosition().y < abs(tile.getHeight() / 2))
-        return true;
-    else
-        return false;
-}
-
-/*
-void Player::collision(Arch& Obstacle)
-{
-    // si le joueur est sur la tuile mais pas baissé
-    // il n'avance plus vers l'avant
-
-    // A TESTER AILLEURS : si sa position = celle des singes, c perdu
-}
-*/
-
-// void Player::moveSide(const float& indice)
-// {
-//     // indice > 0 : vers la droite
-//     // indice < 0 : vers la gauche
-//     m_position.x += indice;
-// }
 
 void Player::jump()
 {
@@ -90,37 +48,4 @@ void Player::jump()
     // g = 9.81
     // v0 = vecteur directionnel là // faut le définir pour que la parabole soit bien
     // alpha : angle (degré)
-}
-
-std::vector<ShapeVertex> Player::buildVertices()
-{
-    return m_sphere.getVertices();
-}
-
-void Player::buildVAO()
-{
-    glBindVertexArray(*m_vao);
-    glBindBuffer(GL_ARRAY_BUFFER, *m_vbo);
-
-    const GLuint VERTEX_ATTR_POSITION  = 0;
-    const GLuint VERTEX_ATTR_NORMAL    = 1;
-    const GLuint VERTEX_ATTR_TEX_COORD = 2;
-
-    glEnableVertexAttribArray(VERTEX_ATTR_POSITION);
-    glEnableVertexAttribArray(VERTEX_ATTR_NORMAL);
-    glEnableVertexAttribArray(VERTEX_ATTR_TEX_COORD);
-
-    glVertexAttribPointer(VERTEX_ATTR_POSITION, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), nullptr);
-    glVertexAttribPointer(VERTEX_ATTR_NORMAL, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
-    glVertexAttribPointer(VERTEX_ATTR_TEX_COORD, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)(6 * sizeof(GLfloat)));
-
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindVertexArray(0);
-}
-
-void Player::draw()
-{
-    glBindVertexArray(*m_vao);
-    glDrawArrays(GL_TRIANGLES, 0, m_sphere.getVertexCount());
-    glBindVertexArray(0);
 }

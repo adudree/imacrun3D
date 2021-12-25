@@ -13,20 +13,22 @@ private:
     int       m_point;
     glm::vec3 m_position;
 
-    Sphere m_sphere;
+    // Sphere m_sphere;
 
-    VBO<ShapeVertex> m_vbo;
+    // VBO<ShapeVertex> m_vbo;
     VAO<ShapeVertex> m_vao;
 
-    GLuint m_texture;
+    // GLuint m_texture;
 
     std::vector<ShapeVertex> buildVertices();
     void                     buildVAO();
     void                     setTexture();
 
 public:
-    explicit Coin(GLuint texture)
-        : m_point(1), m_position(glm::vec3(0.f)), m_sphere(Sphere(1.0f, 8.0f, 8.0f)), m_vbo(buildVertices()), m_vao(), m_texture(texture)
+    explicit Coin()
+        : m_point(1), m_position(glm::vec3(0.f))
+        // m_sphere(Sphere(1.0f, 8.0f, 8.0f)), 
+        // m_vbo(buildVertices()), m_vao(), m_texture(texture)
     {
         buildVAO();
     }
