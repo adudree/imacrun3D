@@ -73,7 +73,7 @@ int main()
 
     // ================ PLAYER ================ //
 
-    Player Jean;
+    //Player Jean;
 
     // ================ SKYBOX ================ //
 
@@ -108,10 +108,11 @@ int main()
         // matrices et compagnie
 
         MVMatrix     = camera->computeMatrix(game.getPlayerPosition());
+        MVMatrix = glm::translate(MVMatrix, glm::vec3(0, 0.2f, 0));
         NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
 
         skybox.render(ProjMatrix, MVMatrix);
-        Jean.draw(ProjMatrix, MVMatrix);
+        game.draw(ProjMatrix, MVMatrix);
 
         // valeurs uniformes
 

@@ -32,11 +32,14 @@ public:
     inline Map getMap() { return m_map;}
 
     inline void setPlayerPosition(glm::vec2 pos) {m_playerPosition = pos;}
-    inline void setSpeed(float speed)      {m_speed = speed;}
+    inline void setSpeed(float speed) {m_speed = speed;}
 
     // Map & Player relation
-    glm::vec2 getActiveTile(float tileWidth, float tileLength);
+    glm::vec2 getActiveTile();
     void tilesConditions(char &tile);
 
     void playerMoves(SDL_Event &e);
+
+
+    void draw(glm::mat4 proj, glm::mat4 mv); 
 };

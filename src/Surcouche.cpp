@@ -17,7 +17,7 @@ void createTiles(Game &game, std::vector<std::unique_ptr<Tile>>& tiles, const GL
     
     for (int i = 0; i < map.getDimensions()[0]; i++) {
         for (int j = 0; j < map.getDimensions()[1]; j++) {
-            switch (map.getTypeTile(i, j)) {
+            switch (map.getTypeTile(glm::vec2(i, j))) {
             case 'P':
                 game.setPlayerPosition(glm::vec2(i * w, j * h));
                 tiles.push_back(std::make_unique<Tile>(i * w, j * h, w, h, texturesMap[0]));

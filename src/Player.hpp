@@ -4,13 +4,11 @@
 #include <iostream>
 #include <string>
 #include <vector>
-/* #include "IBO.hpp"
-#include "Sphere.hpp"
-#include "VAO.hpp"
-#include "VBO.hpp" */
 #include "glimac/glm.hpp"
 #include <glm/gtc/matrix_transform.hpp>
 #include "Model.hpp"
+#include "Map.hpp"
+
 
 class Player {
 private:
@@ -22,13 +20,6 @@ private:
     Model           m_model;
     glimac::Program m_program = glimac::loadProgram("assets/shaders/Model.vs.glsl", "assets/shaders/Model.fs.glsl");
 
-/*      GLuint m_texture;
-
-        std::vector<ShapeVertex> buildVertices();
-        void                     buildVAO();
-
-    void setTexture(); */
-
     inline void moveForward() { m_position.z += m_speed * 0.1; }
     void        updateJump();
 
@@ -38,14 +29,8 @@ public:
     bool isFalling = false;
     bool isMovingForward;
 
-    Player() 
-        : m_model("assets/models/test2/StarSparrow.obj")
+    Player() : m_model("assets/models/test2/StarSparrow.obj")
     {}
-    // // :  m_vbo(buildVertices()), m_vao()
-    // {
-    //     // buildVAO();
-    // }
-
     ~Player() = default;
 
     inline const glm::vec3 getPosition() const { return m_position; }
@@ -56,15 +41,16 @@ public:
     void draw(const glm::mat4& projMatrix, const glm::mat4& mvMatrix); // chargement + affichage obj 3D
 
     void        update();
-    inline void moveLeft() { m_position.x -= m_speed * 0.1; }
-    inline void moveRight() { m_position.x += m_speed * 0.1; }
-    void        jump();
+    // inline void moveLeft() { m_position.x -= m_speed * 0.1; }
+    // inline void moveRight() { m_position.x += m_speed * 0.1; }
+    void moveLeft();
+    void moveRight();
+    void jump();
 
     void fall();
 
     // inline void squat() { /* height objet/2 */ } // GILET JAUNE 10 SQUATS
 
-    bool canMoveRight(float tilePosition, float tileWidth);
-    bool canMoveLeft(float tilePosition, float tileWidth);
+    bool canMoveRight(float tilePosition);
+    bool canMoveLeft(float tilePosition);
 };
-    //collision(Coin)

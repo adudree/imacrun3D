@@ -5,7 +5,7 @@ Game::Game() {}
 void Game::initGame()
 {
     // set player & map
-    m_player.setPosition(glm::vec3(m_playerPosition[0], -1.0f, m_playerPosition[1]));
+    m_player.setPosition(glm::vec3(m_playerPosition[0], -.5f, m_playerPosition[1]));
     m_player.setSpeed(m_speed);
 
     m_isRunning = true;
@@ -16,8 +16,8 @@ void Game::runGame()
     if (m_isRunning && !m_gameOver) {
         m_player.update();
 
-        m_playerPosition = getActiveTile(tilesW, tilesL);
-        char actTile     = m_map.tileDetection(m_playerPosition);
+        m_playerPosition = getActiveTile();
+        char actTile     = m_map.getTypeTile(m_playerPosition);
         tilesConditions(actTile);
 
         // conditions de fin de partie
@@ -26,8 +26,6 @@ void Game::runGame()
             m_isRunning = false;
         }
     }
-
-    // gestion des événements inclus dedans
 }
 
 void Game::endGame()
@@ -40,9 +38,9 @@ void Game::endGame()
     }
 }
 
-glm::vec2 Game::getActiveTile(float tileWidth, float tileLength)
+glm::vec2 Game::getActiveTile()
 {
-    return glm::vec2(round(m_player.getPosition().x / tileWidth), round(m_player.getPosition().z / tileLength));
+    return glm::vec2(round(m_player.getPosition().x / tilesW), round(m_player.getPosition().z / tilesL));
 }
 
 void Game::tilesConditions(char& tile)
@@ -67,14 +65,14 @@ void Game::playerMoves(SDL_Event& e)
     if (e.key.keysym.sym == SDLK_d) {
         // si on est sur une case "virage" : on tourne
         // sinon :
-        if (m_player.canMoveRight(m_playerPosition[0], tilesW))
+        if (m_player.canMoveRight(m_playerPosition[0]))
             m_player.moveRight();
     }
 
     if (e.key.keysym.sym == SDLK_q) {
         // si on est sur une case "virage" : on tourne
         // sinon :
-        if (m_player.canMoveLeft(m_playerPosition[0], tilesW))
+        if (m_player.canMoveLeft(m_playerPosition[0]))
             m_player.moveLeft();
     }
 
@@ -85,6 +83,10 @@ void Game::playerMoves(SDL_Event& e)
 
     if (e.key.keysym.sym == SDLK_s) {
         //player.squat();
-        m_player.fall();
     }
+}
+
+void Game::draw(glm::mat4 proj, glm::mat4 mv)
+{
+    m_player.draw(proj, mv);
 }

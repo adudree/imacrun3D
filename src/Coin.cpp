@@ -24,7 +24,7 @@ valeur de la pièce (que vous déterminerez).
 
 void Coin::setPosition(const Map& map, float tileWidth, float tileLength)
 {
-    if (map.getTypeTile(round(m_position.x / tileWidth), round(m_position.z / tileLength)) == 'S') {
+    if (map.getTypeTile(glm::vec2(round(m_position.x / tileWidth), round(m_position.z / tileLength))) == 'S') {
         m_position = glm::vec3{tileWidth / 2, -0.3f, tileLength / 2};
     }
 }

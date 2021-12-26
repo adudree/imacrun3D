@@ -28,12 +28,3 @@ Map::Map()
     fichier.close();
 
 }
-
-
-char Map::tileDetection(glm::vec2 coordActiveTile)
-{
-    return getTypeTile(coordActiveTile[0], coordActiveTile[1]);
-}
-
-
-
