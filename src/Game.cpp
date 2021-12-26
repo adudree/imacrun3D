@@ -14,7 +14,7 @@ void Game::initGame()
 void Game::runGame()
 {
     if (m_isRunning && !m_gameOver) {
-        m_player.moveForward();
+        m_player.update();
 
         m_playerPosition = getActiveTile(tilesW, tilesL);
         char actTile     = m_map.tileDetection(m_playerPosition);
@@ -82,7 +82,6 @@ void Game::playerMoves(SDL_Event& e)
     }
 
     if (e.key.keysym.sym == SDLK_z) {
-        m_player.moveForward();
         if (!m_player.isFalling) {
             m_player.jump();
         }
