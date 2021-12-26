@@ -12,6 +12,7 @@
 #include "CameraFirstPerson.hpp"
 #include "CameraThirdPerson.hpp"
 #include "Coin.hpp"
+#include "Game.hpp"
 #include "Map.hpp"
 #include "Model.hpp"
 #include "Player.hpp"
@@ -20,8 +21,6 @@
 #include "Surcouche.hpp"
 #include "Tile.hpp"
 #include "VAO.hpp"
-#include "Model.hpp"
-#include "Game.hpp"
 
 using namespace glimac;
 
@@ -34,7 +33,6 @@ int main()
     GLint            WIDTH  = 800;
     GLint            HEIGHT = 800;
     SDLWindowManager windowManager(WIDTH, HEIGHT, "IMAC RUN 3D");
-
 
     // mouse
 
@@ -51,14 +49,13 @@ int main()
     bool isMenuOpen = false;
     closeMenu();
 
-
     // program + shaders
 
     Program program = loadProgram("assets/shaders/3D.vs.glsl", "assets/shaders/tex3D.fs.glsl");
 
     glEnable(GL_DEPTH_TEST);
 
-    Game game; 
+    Game game;
 
     // ================ MATRIX ================ //
 
@@ -84,7 +81,7 @@ int main()
 
     std::vector<std::unique_ptr<Tile>> tiles;
 
-    createTiles(game, tiles, tilesW, tilesL); 
+    createTiles(game, tiles, tilesW, tilesL);
 
     // ================= COIN ================= //
 
@@ -98,9 +95,7 @@ int main()
     ICamera*          camera         = &cameraThirdPerson;
     bool              isCameraLocked = false;
 
-
     game.initGame();
-
 
     // ================= LOOP ================= //
 
@@ -128,7 +123,7 @@ int main()
         for (size_t i = 0; i < tiles.size(); i++) {
             tiles[i]->drawTile();
         }
-        
+
         game.runGame();
 
         // draw coin
@@ -152,7 +147,9 @@ int main()
 
                 // ========= MOUVEMENT ========== //
 
-                if (game.m_isRunning) {game.playerMoves(e);}
+                if (game.m_isRunning) {
+                    game.playerMoves(e);
+                }
 
                 // =========== CAMERA =========== //
 

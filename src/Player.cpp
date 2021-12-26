@@ -16,11 +16,11 @@ bool Player::canMoveLeft(float tilePosition, float tileWidth)
 
 void Player::fallingTest()
 {
-    if (m_position.y > 1) // axe vertical inversé tkt 
+    if (m_position.y > 1) // axe vertical inversé tkt
         isFalling = true;
-    else isFalling = false;
+    else
+        isFalling = false;
 }
-
 
 void Player::jump()
 {
