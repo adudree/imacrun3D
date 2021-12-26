@@ -8,9 +8,9 @@
 class Sphere {
     // Alloue et construit les données (implantation dans le .cpp)
     void build(GLfloat radius, GLsizei discLat, GLsizei discLong);
-    
+
     std::vector<ShapeVertex> m_data;
-    glm::vec3 m_position; 
+    glm::vec3                m_position;
 
 public:
     // Constructeur: alloue le tableau de données et construit les attributs des vertex
@@ -26,7 +26,7 @@ public:
         return &m_Vertices[0];
     }
 
-    const std::vector<ShapeVertex> getVertices() { return m_data;}
+    const std::vector<ShapeVertex> getVertices() { return m_data; }
     // Renvoit le nombre de vertex
     GLsizei getVertexCount() const
     {

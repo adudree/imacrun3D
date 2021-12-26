@@ -11,7 +11,7 @@ void Game::initGame()
 
     m_gameOver = false;
     m_isPaused = false;
-    m_isEnded = false;
+    m_isEnded  = false;
 
     m_player.isFalling = false;
     m_player.isJumping = false;
@@ -40,12 +40,10 @@ void Game::runGame()
 
 void Game::pauseGame()
 {
-    if (m_isPaused) 
-    {
+    if (m_isPaused) {
         m_player.setSpeed(0);
     }
-    else
-    {
+    else {
         m_player.setSpeed(m_speed);
     }
 }
@@ -109,7 +107,7 @@ void Game::playerMoves(SDL_Event& e)
     }
 
     if (e.key.keysym.sym == SDLK_z) {
-        if (m_player.getPosition().y <= -0.5 && !m_player.isJumping) 
+        if (m_player.getPosition().y <= -0.5 && !m_player.isJumping)
             m_player.jump();
     }
 

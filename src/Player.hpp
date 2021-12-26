@@ -1,13 +1,13 @@
 #pragma once
 
 #include <cmath>
+#include <glm/gtc/matrix_transform.hpp>
 #include <iostream>
 #include <string>
 #include <vector>
-#include <glm/gtc/matrix_transform.hpp>
-#include "glimac/glm.hpp"
-#include "Model.hpp"
 #include "Map.hpp"
+#include "Model.hpp"
+#include "glimac/glm.hpp"
 
 class Player {
 private:
@@ -18,8 +18,8 @@ private:
     float           m_jumpInitialZ;
     Model           m_model;
     glimac::Program m_program = glimac::loadProgram("assets/shaders/Model.vs.glsl", "assets/shaders/Model.fs.glsl");
-    
-    char            m_orientation = 'N'; 
+
+    char m_orientation = 'N';
 
     void moveForward();
     void updateJump();
@@ -30,7 +30,8 @@ public:
     bool isFalling       = false;
     bool isMovingForward = false;
 
-    Player() : m_model("assets/models/player/StarSparrow.obj") {}
+    Player()
+        : m_model("assets/models/player/StarSparrow.obj") {}
     ~Player() = default;
 
     inline const glm::vec3 getPosition() const { return m_position; }

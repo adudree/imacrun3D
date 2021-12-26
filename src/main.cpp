@@ -108,13 +108,13 @@ int main()
         // matrices et compagnie
 
         MVMatrix     = camera->computeMatrix(game.getPlayerPosition());
-        MVMatrix = glm::translate(MVMatrix, glm::vec3(0, 0.2f, 0));
+        MVMatrix     = glm::translate(MVMatrix, glm::vec3(0, 0.2f, 0));
         NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
 
         skybox.render(ProjMatrix, MVMatrix);
         game.draw(ProjMatrix, MVMatrix);
 
-/**************************************************************
+        /**************************************************************
          * ******Test de coin pour Clémence ;) 
          * ************
          * *********************
@@ -180,9 +180,8 @@ int main()
                 // =========== MENU ============ //
 
                 if (e.key.keysym.sym == SDLK_ESCAPE) {
-
-                    isMenuOpen = !isMenuOpen;
-                    game.m_isPaused = ! game.m_isPaused;
+                    isMenuOpen      = !isMenuOpen;
+                    game.m_isPaused = !game.m_isPaused;
 
                     game.pauseGame();
 

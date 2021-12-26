@@ -4,15 +4,15 @@
 #include <iostream>
 #include <vector>
 #include "Map.hpp"
-#include "Tile.hpp"
 #include "Model.hpp"
+#include "Tile.hpp"
 
 class Coin {
 private:
     int       m_point;
     glm::vec3 m_position;
 
-/*      Sphere m_sphere;
+    /*      Sphere m_sphere;
 
      VBO<ShapeVertex> m_vbo;
     VAO<ShapeVertex> m_vao;
@@ -24,7 +24,6 @@ private:
     void                     setTexture(); */
     Model           m_model;
     glimac::Program m_program = glimac::loadProgram("assets/shaders/Model.vs.glsl", "assets/shaders/Model.fs.glsl");
-
 
 public:
     explicit Coin()
