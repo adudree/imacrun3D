@@ -22,7 +22,7 @@ void Game::runGame()
 
         m_player.fallingTest();
 
-        std::cout << m_player.isFalling << std::endl;
+        // std::cout << m_player.isFalling << std::endl; AUDREY TEST
         // conditions de fin de partie
         if (m_player.isFalling) {
             m_gameOver  = true;
