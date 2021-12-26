@@ -73,6 +73,8 @@ int main()
 
     // ================ PLAYER ================ //
 
+    Player Jean;
+
     // ================ SKYBOX ================ //
 
     Skybox skybox;
@@ -109,6 +111,7 @@ int main()
         NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
 
         skybox.render(ProjMatrix, MVMatrix);
+        Jean.draw(ProjMatrix, MVMatrix);
 
         // valeurs uniformes
 
