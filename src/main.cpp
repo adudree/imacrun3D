@@ -87,7 +87,7 @@ int main()
 
     // ================= COIN ================= //
 
-    Coin coin();
+    Coin coin;
     // coin.setPosition(myMap, 1, 1);
 
     // ================ CAMERA ================ //
@@ -113,6 +113,13 @@ int main()
 
         skybox.render(ProjMatrix, MVMatrix);
         game.draw(ProjMatrix, MVMatrix);
+
+/**************************************************************
+         * ******Test de coin pour Clémence ;) 
+         * ************
+         * *********************
+        **************************************** * *******************/
+        coin.draw(ProjMatrix, MVMatrix);
 
         // valeurs uniformes
 

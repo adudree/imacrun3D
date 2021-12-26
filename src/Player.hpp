@@ -29,7 +29,7 @@ public:
     bool isFalling = false;
     bool isMovingForward;
 
-    Player() : m_model("assets/models/test2/StarSparrow.obj")
+    Player() : m_model("assets/models/player/StarSparrow.obj")
     {}
     ~Player() = default;
 
