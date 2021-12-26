@@ -3,15 +3,15 @@
 /* A FAIRE
 
     INITIALISATION
-    - Placer les pièces sur les tuiles simples OK
-        - Si pièce simple alors position pièce centre de la tuile OK
-    - Dessiner les pièces (sphère puis forme pièce) OK MAIS ATTENTION DECENTRE : FONCTION SPHERE NUL
+    - Placer les pièces sur les tuiles simples
+        - Si pièce simple alors position pièce centre de la tuile
+    - Dessiner les pièces (sphère puis forme pièce) OK
 
     BOUCLE
     - Contact entre joueur et pièce
-        - Détection de la collision
-        - Disparition pièce
-        - Ajout point au score du joueur
+        - Détection de la collision VERIF
+        - Disparition pièce VERIF
+        - Ajout point au score du joueur VERIF
 
 */
 
@@ -55,37 +55,15 @@ void Coin::draw(const glm::mat4& projMatrix, const glm::mat4& mvMatrix)
     m_model.Draw(m_program);
 }
 
-// ---------------------------------------------------------------------------- //
+bool Coin::isCollision(const Player& player) const // A OPTIMISER !!!
+{
+    return (player.getPosition().z <= (m_position.z + 0.25f)) && (player.getPosition().z >= (m_position.z - 0.25f)) && (player.getPosition().x <= (m_position.x + 0.25f)) && (player.getPosition().x >= (m_position.z - 0.25f)) && (player.getPosition().y <= (m_position.y + 0.25f)) && (player.getPosition().y >= (m_position.z - 0.25f));
+}
 
-// std::vector<ShapeVertex> Coin::buildVertices()
-// {
-//     return m_sphere.getVertices();
-// }
-
-// void Coin::buildVAO()
-// {
-//     glBindVertexArray(*m_vao);
-//     glBindBuffer(GL_ARRAY_BUFFER, *m_vbo);
-
-//     const GLuint VERTEX_ATTR_POSITION  = 0;
-//     const GLuint VERTEX_ATTR_NORMAL    = 1;
-//     const GLuint VERTEX_ATTR_TEX_COORD = 2;
-
-//     glEnableVertexAttribArray(VERTEX_ATTR_POSITION);
-//     glEnableVertexAttribArray(VERTEX_ATTR_NORMAL);
-//     glEnableVertexAttribArray(VERTEX_ATTR_TEX_COORD);
-
-//     glVertexAttribPointer(VERTEX_ATTR_POSITION, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), nullptr);
-//     glVertexAttribPointer(VERTEX_ATTR_NORMAL, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
-//     glVertexAttribPointer(VERTEX_ATTR_TEX_COORD, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)(6 * sizeof(GLfloat)));
-
-//     glBindBuffer(GL_ARRAY_BUFFER, 0);
-//     glBindVertexArray(0);
-// }
-
-// void Coin::draw()
-// {
-//     glBindVertexArray(*m_vao);
-//     glDrawArrays(GL_TRIANGLES, 0, m_sphere.getVertexCount());
-//     glBindVertexArray(0);
-// }
+void Coin::touchCoin(Player player)
+{
+    if (isCollision(player)) {
+        player.addPointToScore(m_point);
+        this->~Coin();
+    }
+}

@@ -38,6 +38,7 @@ public:
 
     inline void setPosition(glm::vec3 pos) { m_position = pos; }
     inline void setSpeed(float speed) { m_speed = speed; }
+    inline void addPointToScore(int point) { m_score += point; }
 
     void draw(const glm::mat4& projMatrix, const glm::mat4& mvMatrix); // chargement + affichage obj 3D
 

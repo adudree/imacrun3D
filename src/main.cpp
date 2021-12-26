@@ -88,7 +88,7 @@ int main()
     // ================= COIN ================= //
 
     Coin coin;
-    // coin.setPosition(myMap, 1, 1);
+    coin.setPosition(game.getMap(), 1, 1);
 
     // ================ CAMERA ================ //
 
@@ -120,6 +120,7 @@ int main()
          * *********************
         **************************************** * *******************/
         coin.draw(ProjMatrix, MVMatrix);
+        // coin.touchCoin(game.m_player);
 
         // valeurs uniformes
 

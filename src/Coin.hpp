@@ -41,4 +41,8 @@ public:
     void setPosition(const Map& map, float tileWidth, float tileLength);
 
     void draw(const glm::mat4& projMatrix, const glm::mat4& mvMatrix);
+
+    bool isCollision(const Player& player) const;
+
+    void touchCoin(Player player);
 };
