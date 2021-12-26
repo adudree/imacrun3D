@@ -15,6 +15,13 @@
 
 */
 
+/* CONSIGNES
+Différentes valeurs de pièces
+Position des pièces dans le fichier de la map ?
+Lorsque l’explorateur passe sur une pièce, celle-ci disparaı̂t et le score du joueur est augmenté de la
+valeur de la pièce (que vous déterminerez).
+*/
+
 void Coin::setPosition(const Map& map, float tileWidth, float tileLength)
 {
     if (map.getTypeTile(round(m_position.x / tileWidth), round(m_position.z / tileLength)) == 'S') {
