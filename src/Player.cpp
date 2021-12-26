@@ -28,12 +28,18 @@ void Player::draw(const glm::mat4& projMatrix, const glm::mat4& mvMatrix){
 
 bool Player::canMoveRight(float tilePosition)
 {
-    return m_position.x <= tilesW * tilePosition + tilesW / 2 - 0.1;
+    return m_position.x <= tilesW * tilePosition + tilesW / 2 - 0.3;
 }
 
 bool Player::canMoveLeft(float tilePosition)
 {
-    return m_position.x >= tilesW * tilePosition - tilesW / 2 + 0.1;
+    return m_position.x >= tilesW * tilePosition - tilesW / 2 + 0.3;
+}
+
+
+void Player::moveRight() 
+{
+    m_position.x += tilesW / 2 - 0.2;
 }
 
 
@@ -41,12 +47,6 @@ void Player::moveLeft()
 {
     m_position.x -= tilesW / 2 - 0.2;
 }
-
-void Player::moveRight() 
-{
-    m_position.x += tilesW / 2 - 0.2;
-}
-
 
 
 void Player::fall()

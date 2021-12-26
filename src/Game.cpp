@@ -5,8 +5,16 @@ Game::Game() {}
 void Game::initGame()
 {
     // set player & map
-    m_player.setPosition(glm::vec3(m_playerPosition[0], -.5f, m_playerPosition[1]));
+
+    m_player.setPosition(glm::vec3(m_initPlayerPosition[0], -.5f, m_initPlayerPosition[1]));
     m_player.setSpeed(m_speed);
+
+    m_gameOver = false;
+    m_isPaused = false;
+    m_isEnded = false;
+
+    m_player.isFalling = false;
+    m_player.isJumping = false;
 
     m_isRunning = true;
 }
@@ -21,21 +29,41 @@ void Game::runGame()
         tilesConditions(actTile);
 
         // conditions de fin de partie
+
+        // défaite
         if (m_player.isFalling) {
-            m_gameOver  = true;
-            m_isRunning = false;
+            m_gameOver = true;
+            endGame();
         }
+    }
+}
+
+void Game::pauseGame()
+{
+    if (m_isPaused) 
+    {
+        m_player.setSpeed(0);
+    }
+    else
+    {
+        m_player.setSpeed(m_speed);
     }
 }
 
 void Game::endGame()
 {
+    m_isRunning = false;
+
     if (!m_gameOver) {
         // conditions de partie gagnée
+        std::cout << "C'est gagné, bravo !" << std::endl;
     }
     else {
         // conditions de partie perdue
+        std::cout << "Oh le loser..." << std::endl;
     }
+
+    initGame();
 }
 
 glm::vec2 Game::getActiveTile()
@@ -53,6 +81,10 @@ void Game::tilesConditions(char& tile)
     case 'H':
         if (!m_player.isFalling)
             m_player.fall();
+        break;
+
+    case 'E':
+        endGame();
         break;
 
     default:
@@ -77,7 +109,7 @@ void Game::playerMoves(SDL_Event& e)
     }
 
     if (e.key.keysym.sym == SDLK_z) {
-        if (m_player.getPosition().y <= -1 && !m_player.isJumping) 
+        if (m_player.getPosition().y <= -0.5 && !m_player.isJumping) 
             m_player.jump();
     }
 

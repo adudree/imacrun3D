@@ -41,9 +41,7 @@ public:
     void draw(const glm::mat4& projMatrix, const glm::mat4& mvMatrix); // chargement + affichage obj 3D
 
     void        update();
-    // inline void moveLeft() { m_position.x -= m_speed * 0.1; }
-    // inline void moveRight() { m_position.x += m_speed * 0.1; }
-    void moveLeft();
+        void moveLeft();
     void moveRight();
     void jump();
 

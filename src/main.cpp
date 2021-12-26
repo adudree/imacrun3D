@@ -173,13 +173,16 @@ int main()
                 // =========== MENU ============ //
 
                 if (e.key.keysym.sym == SDLK_ESCAPE) {
+
                     isMenuOpen = !isMenuOpen;
+                    game.m_isPaused = ! game.m_isPaused;
+
+                    game.pauseGame();
+
                     if (isMenuOpen) {
-                        game.setSpeed(0.f);
                         openMenu();
                     }
                     else {
-                        game.setSpeed(0.5f);
                         closeMenu();
                     }
                 }

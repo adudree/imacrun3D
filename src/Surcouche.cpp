@@ -23,6 +23,7 @@ void createTiles(Game &game, std::vector<std::unique_ptr<Tile>>& tiles, const GL
                 tiles.push_back(std::make_unique<Tile>(i * w, j * h, w, h, texturesMap[0]));
                 break;
 
+            case 'E':
             case 'S':
                 tiles.push_back(std::make_unique<Tile>(i * w, j * h, w, h, texturesMap[0]));
                 break;

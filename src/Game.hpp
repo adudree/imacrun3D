@@ -12,26 +12,29 @@ private:
     Player m_player;
     Map m_map;
 
-
+    glm::vec2 m_initPlayerPosition = glm::vec2(0);
     glm::vec2 m_playerPosition = glm::vec2(0);
 
 
 public: 
     bool m_isRunning = false;
     bool m_gameOver = false;
+    bool m_isPaused = false;
+    bool m_isEnded = false;
 
     Game();
     ~Game() = default;
     
     // Game states 
     void initGame();
-    void runGame(); 
+    void runGame();
+    void pauseGame();
     void endGame();
 
     inline glm::vec3 getPlayerPosition() {return m_player.getPosition();}
     inline Map getMap() { return m_map;}
 
-    inline void setPlayerPosition(glm::vec2 pos) {m_playerPosition = pos;}
+    inline void setPlayerPosition(glm::vec2 pos) {m_initPlayerPosition = pos;}
     inline void setSpeed(float speed) {m_speed = speed;}
 
     // Map & Player relation
