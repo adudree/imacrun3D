@@ -20,9 +20,6 @@ void Game::runGame()
         char actTile     = m_map.tileDetection(m_playerPosition);
         tilesConditions(actTile);
 
-        m_player.fallingTest();
-
-        // std::cout << m_player.isFalling << std::endl;
         // conditions de fin de partie
         if (m_player.isFalling) {
             m_gameOver  = true;
@@ -82,9 +79,8 @@ void Game::playerMoves(SDL_Event& e)
     }
 
     if (e.key.keysym.sym == SDLK_z) {
-        if (!m_player.isFalling) {
+        if (m_player.getPosition().y <= -1 && !m_player.isJumping) 
             m_player.jump();
-        }
     }
 
     if (e.key.keysym.sym == SDLK_s) {

@@ -60,14 +60,11 @@ public:
     inline void moveRight() { m_position.x += m_speed * 0.1; }
     void        jump();
 
-    inline void fall() { m_position.y += m_speed * 0.1; } // TODO : axe y inversé !
+    void fall();
 
     // inline void squat() { /* height objet/2 */ } // GILET JAUNE 10 SQUATS
 
     bool canMoveRight(float tilePosition, float tileWidth);
     bool canMoveLeft(float tilePosition, float tileWidth);
-
-    // collision(Coin)
-
-    void fallingTest();
 };
+    //collision(Coin)
