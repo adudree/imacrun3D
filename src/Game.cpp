@@ -83,6 +83,9 @@ void Game::playerMoves(SDL_Event& e)
 
     if (e.key.keysym.sym == SDLK_z) {
         m_player.moveForward();
+        if (!m_player.isFalling) {
+            m_player.jump();
+        }
     }
 
     if (e.key.keysym.sym == SDLK_s) {
