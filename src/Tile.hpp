@@ -11,6 +11,9 @@
 #include "VBO.hpp"
 #include "glimac/Image.hpp"
 
+#include "Game.hpp"
+
+
 class Tile {
 protected:
     GLfloat m_posX;
