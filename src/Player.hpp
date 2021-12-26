@@ -4,11 +4,10 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "glimac/glm.hpp"
 #include <glm/gtc/matrix_transform.hpp>
+#include "glimac/glm.hpp"
 #include "Model.hpp"
 #include "Map.hpp"
-
 
 class Player {
 private:
@@ -19,15 +18,17 @@ private:
     float           m_jumpInitialZ;
     Model           m_model;
     glimac::Program m_program = glimac::loadProgram("assets/shaders/Model.vs.glsl", "assets/shaders/Model.fs.glsl");
+    
+    char            m_orientation = 'N'; 
 
-    inline void moveForward() { m_position.z += m_speed * 0.1; }
-    void        updateJump();
+    void moveForward();
+    void updateJump();
 
 public:
-    bool isJumping = false;
-    bool isLowed;
-    bool isFalling = false;
-    bool isMovingForward;
+    bool isJumping       = false;
+    bool isLowed         = false;
+    bool isFalling       = false;
+    bool isMovingForward = false;
 
     Player() : m_model("assets/models/player/StarSparrow.obj") {}
     ~Player() = default;

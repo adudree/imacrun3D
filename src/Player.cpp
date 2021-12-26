@@ -26,26 +26,116 @@ void Player::draw(const glm::mat4& projMatrix, const glm::mat4& mvMatrix){
     m_model.Draw(m_program);
 }
 
+void Player::moveForward() {
+    switch (m_orientation)
+    {
+    case 'N':
+    default:
+        m_position.z += m_speed * 0.1;
+        break;
+
+    case 'O':
+        m_position.x -= m_speed * 0.1;
+        break;
+    
+    case 'S':
+        m_position.z -= m_speed * 0.1;
+        break;
+
+    case 'E':
+        m_position.x += m_speed * 0.1;
+        break;
+    }
+}
+
 bool Player::canMoveRight(float tilePosition)
 {
-    return m_position.x <= tilesW * tilePosition + tilesW / 2 - 0.3;
+    switch (m_orientation)
+    {
+    case 'N':
+    default:
+        return m_position.x <= tilesW * tilePosition + tilesW / 2 - 0.3;
+        break;
+
+    case 'O':
+        break;
+    
+    case 'S':
+        break;
+
+    case 'E':
+        break;
+    }
+    return true;
 }
+
 
 bool Player::canMoveLeft(float tilePosition)
 {
-    return m_position.x >= tilesW * tilePosition - tilesW / 2 + 0.3;
-}
+    switch (m_orientation)
+    {
+    case 'N':
+    default:
+        return m_position.x >= tilesW * tilePosition - tilesW / 2 + 0.3;
+        break;
 
+    case 'O':
+        break;
+    
+    case 'S':
+        break;
+
+    case 'E':
+        break;
+    }    
+    return true;
+}
 
 void Player::moveRight() 
 {
-    m_position.x += tilesW / 2 - 0.2;
+    switch (m_orientation)
+    {
+    case 'N':
+    default:
+        m_position.x += tilesW / 2 - 0.2;
+        break;
+
+    case 'O':
+        m_position.z += tilesL / 2 - 0.2;
+        break;
+    
+    case 'S':
+        m_position.x -= tilesW / 2 - 0.2;
+        break;
+
+    case 'E':
+        m_position.z -= tilesL / 2 - 0.2;
+        break;
+    }        
 }
 
 
 void Player::moveLeft() 
 {
-    m_position.x -= tilesW / 2 - 0.2;
+    switch (m_orientation)
+    {
+    case 'N':
+    default:
+        m_position.x -= tilesW / 2 - 0.2;
+        break;
+
+    case 'O':
+        m_position.z -= tilesL / 2 - 0.2;
+        break;
+    
+    case 'S':
+        m_position.x += tilesW / 2 - 0.2;
+        break;
+
+    case 'E':
+        m_position.z += tilesL / 2 - 0.2;
+        break;
+    }        
 }
 
 
@@ -57,10 +147,25 @@ void Player::fall()
     m_position.y += m_speed * 0.1;
 }
 
+
 void Player::jump()
 {
     isJumping      = true;
-    m_jumpInitialZ = m_position.z;
+
+    switch (m_orientation)
+    {
+    case 'N':
+    case 'S':
+    default:
+        m_jumpInitialZ = m_position.z;
+        break;
+
+    case 'O':
+    case 'E':
+        m_jumpInitialZ = m_position.x;
+        break;
+    }        
+
 }
 
 void Player::updateJump()
@@ -68,7 +173,26 @@ void Player::updateJump()
     float v0    = 10.0f;
     float alpha = M_PI / 3;
     float g     = 15.0f;
-    float z     = m_position.z - m_jumpInitialZ;
+    float z;
+
+    switch (m_orientation)
+    {
+    case 'N':
+    default:
+        z = m_position.z - m_jumpInitialZ;
+        break;
+    case 'S':
+        z = m_position.z + m_jumpInitialZ;
+        break;
+
+    case 'O':
+        z = m_position.x - m_jumpInitialZ;
+        break;
+    
+    case 'E':
+        z = m_position.x + m_jumpInitialZ;
+        break;
+    }        
 
     if (isJumping) {
         m_position.y = (g * z * z) / (2 * v0 * v0 * cos(alpha) * cos(alpha)) - (tan(alpha) * z) - 1;
