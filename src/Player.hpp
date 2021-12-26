@@ -29,8 +29,7 @@ public:
     bool isFalling = false;
     bool isMovingForward;
 
-    Player() : m_model("assets/models/player/StarSparrow.obj")
-    {}
+    Player() : m_model("assets/models/player/StarSparrow.obj") {}
     ~Player() = default;
 
     inline const glm::vec3 getPosition() const { return m_position; }
@@ -40,8 +39,8 @@ public:
 
     void draw(const glm::mat4& projMatrix, const glm::mat4& mvMatrix); // chargement + affichage obj 3D
 
-    void        update();
-        void moveLeft();
+    void update();
+    void moveLeft();
     void moveRight();
     void jump();
 
