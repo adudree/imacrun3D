@@ -46,111 +46,61 @@ void Player::draw(const glm::mat4& projMatrix, const glm::mat4& mvMatrix)
 
 void Player::moveForward()
 {
-    switch (m_orientation) {
-    case 'N':
-    default:
-        m_position.z += m_speed * 0.1;
-        break;
-
-    case 'O':
-        m_position.x -= m_speed * 0.1;
-        break;
-
-    case 'S':
-        m_position.z -= m_speed * 0.1;
-        break;
-
-    case 'E':
-        m_position.x += m_speed * 0.1;
-        break;
+    switch (m_orientation) 
+    {
+        default:
+        case 'N': m_position.z += m_speed * 0.1; break;
+        case 'O': m_position.x -= m_speed * 0.1; break;
+        case 'S': m_position.z -= m_speed * 0.1; break;
+        case 'E': m_position.x += m_speed * 0.1; break;
     }
 }
 
 bool Player::canMoveRight(float tilePosition)
 {  
-    switch (m_orientation) {
-    case 'N':
-    default:
-        return m_position.x <= tilesW * tilePosition + tilesW / 2 - 0.3;
-        break;
-
-    case 'O':
-        return m_position.z <= tilesL * tilePosition + tilesL / 2 - 0.3;
-        break;
-
-    case 'S':
-        return m_position.x >= tilesW * tilePosition - tilesW / 2 + 0.3;
-        break;
-
-    case 'E':
-        return m_position.z >= tilesL * tilePosition - tilesL / 2 + 0.3;
-        break;
+    switch (m_orientation) 
+    {
+        default:
+        case 'N': return m_position.x <= tilesW * tilePosition + tilesW / 2 - 0.3; break;
+        case 'O': return m_position.z <= tilesL * tilePosition + tilesL / 2 - 0.3; break;
+        case 'S': return m_position.x >= tilesW * tilePosition - tilesW / 2 + 0.3; break;
+        case 'E': return m_position.z >= tilesL * tilePosition - tilesL / 2 + 0.3; break;
     }
 }
 
 bool Player::canMoveLeft(float tilePosition)
 {
-    switch (m_orientation) {
-    case 'N':
-    default:
-        return m_position.x >= tilesW * tilePosition - tilesW / 2 + 0.3;
-        break;
-
-    case 'O':
-        return m_position.z >= tilesL * tilePosition - tilesL / 2 + 0.3;
-        break;
-
-    case 'S':
-        return m_position.x <= tilesW * tilePosition + tilesW / 2 - 0.3;
-        break;
-
-    case 'E':
-        return m_position.z <= tilesL * tilePosition + tilesL / 2 - 0.3;
-        break;
+    switch (m_orientation) 
+    {
+        default:
+        case 'N': return m_position.x >= tilesW * tilePosition - tilesW / 2 + 0.3; break;
+        case 'O': return m_position.z >= tilesL * tilePosition - tilesL / 2 + 0.3; break;
+        case 'S': return m_position.x <= tilesW * tilePosition + tilesW / 2 - 0.3; break;
+        case 'E': return m_position.z <= tilesL * tilePosition + tilesL / 2 - 0.3; break;
     }    
 }
 
 void Player::moveRight()
 {
-    switch (m_orientation) {
-    case 'N':
-    default:
-        m_position.x += tilesW / 2 - 0.2;
-        break;
-
-    case 'O':
-        m_position.z += tilesL / 2 - 0.2;
-        break;
-
-    case 'S':
-        m_position.x -= tilesW / 2 - 0.2;
-        break;
-
-    case 'E':
-        m_position.z -= tilesL / 2 - 0.2;
-        break;
+    switch (m_orientation) 
+    {
+        default:
+        case 'N': m_position.x += tilesW / 2 - 0.2; break;
+        case 'O': m_position.z += tilesL / 2 - 0.2; break;
+        case 'S': m_position.x -= tilesW / 2 - 0.2; break;
+        case 'E': m_position.z -= tilesL / 2 - 0.2; break;
     }
 }
 
 void Player::moveLeft()
 {
-    switch (m_orientation) {
-    case 'N':
-    default:
-        m_position.x -= tilesW / 2 - 0.2;
-        break;
-
-    case 'O':
-        m_position.z -= tilesL / 2 - 0.2;
-        break;
-
-    case 'S':
-        m_position.x += tilesW / 2 - 0.2;
-        break;
-
-    case 'E':
-        m_position.z += tilesL / 2 - 0.2;
-        break;
+    switch (m_orientation) 
+    {
+        default:
+        case 'N': m_position.x -= tilesW / 2 - 0.2; break;
+        case 'O': m_position.z -= tilesL / 2 - 0.2; break;
+        case 'S': m_position.x += tilesW / 2 - 0.2; break;
+        case 'E': m_position.z += tilesL / 2 - 0.2; break;
     }
 }
 
@@ -166,17 +116,13 @@ void Player::jump()
 {
     m_isJumping      = true;
 
-    switch (m_orientation) {
-    case 'N':
-    case 'S':
-    default:
-        m_jumpInitialZ = m_position.z;
-        break;
-
-    case 'O':
-    case 'E':
-        m_jumpInitialZ = m_position.x;
-        break;
+    switch (m_orientation) 
+    {
+        default:
+        case 'N':
+        case 'S': m_jumpInitialZ = m_position.z; break;
+        case 'O':
+        case 'E': m_jumpInitialZ = m_position.x; break;
     }        
 }
 
@@ -197,22 +143,13 @@ void Player::updateJump()
     float g     = 15.0f;
     float z;
 
-    switch (m_orientation) {
-    case 'N':
-    default:
-        z = m_position.z - m_jumpInitialZ;
-        break;
-    case 'S':
-        z = m_position.z + m_jumpInitialZ;
-        break;
-
-    case 'O':
-        z = m_position.x - m_jumpInitialZ;
-        break;
-
-    case 'E':
-        z = m_position.x + m_jumpInitialZ;
-        break;
+    switch (m_orientation) 
+    {
+        default:
+        case 'N': z = m_position.z - m_jumpInitialZ; break;
+        case 'O': z = m_position.x - m_jumpInitialZ; break;
+        case 'S': z = m_position.z + m_jumpInitialZ; break;
+        case 'E': z = m_position.x + m_jumpInitialZ; break;
     }
 
     if (m_isJumping) {
