@@ -179,6 +179,10 @@ int main()
                 }
 
                 // =========== MENU ============ //
+                if (e.key.keysym.sym == SDLK_SPACE) {
+                    // temporaire : reset la partie
+                    game.initGame();
+                }
 
                 if (e.key.keysym.sym == SDLK_ESCAPE) {
                     isMenuOpen      = !isMenuOpen;

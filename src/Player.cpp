@@ -49,7 +49,7 @@ void Player::moveForward()
 }
 
 bool Player::canMoveRight(float tilePosition)
-{
+{  
     switch (m_orientation) {
     case 'N':
     default:
@@ -65,7 +65,7 @@ bool Player::canMoveRight(float tilePosition)
         break;
 
     case 'E':
-        return m_position.z >= tilesL * tilePosition + tilesL / 2 + 0.3;
+        return m_position.z >= tilesL * tilePosition - tilesL / 2 + 0.3;
         break;
     }
 }
@@ -83,7 +83,7 @@ bool Player::canMoveLeft(float tilePosition)
         break;
 
     case 'S':
-        return m_position.z >= tilesL * tilePosition + tilesL / 2 + 0.3;
+        return m_position.x <= tilesW * tilePosition + tilesW / 2 - 0.3;
         break;
 
     case 'E':

@@ -8,6 +8,7 @@ void Game::initGame()
 
     m_player.setPosition(glm::vec3(m_initPlayerPosition[0], -.5f, m_initPlayerPosition[1]));
     m_player.setSpeed(m_speed);
+    m_player.setOrientation('N');
 
     m_gameOver = false;
     m_isPaused = false;
@@ -68,14 +69,15 @@ glm::vec2 Game::getActiveTile()
 
 void Game::tilesConditions(char& tile)
 {
+    m_isOnVirage = false; 
+
     switch (tile) {
-    case 'P' || 'S':
-        // tout est normal
-        m_isOnVirage = false; 
+
+    case '-':
+        m_player.fall();
         break;
 
     case 'H':
-        m_isOnVirage = false; 
         if (!m_player.m_isFalling)
             m_player.fall();
         break;
@@ -83,12 +85,16 @@ void Game::tilesConditions(char& tile)
     case 'V':
         m_isOnVirage = true; 
         break;
+    
+    case 'W':
+        m_player.setSpeed(0);
+        break;
 
     case 'E':
-        m_isOnVirage = false; 
         endGame();
         break;
 
+    case 'P' || 'S':
     default:
         break;
     }
@@ -96,18 +102,33 @@ void Game::tilesConditions(char& tile)
 
 void Game::playerMoves(SDL_Event& e)
 {
+    float refPosition = 0;
+    if (m_player.getOrientation() == 'N' || m_player.getOrientation() == 'S') refPosition = m_playerPosition[0]; 
+    else refPosition = m_playerPosition[1];
+
     if (e.key.keysym.sym == SDLK_d) {
-        if (m_player.canMoveRight(m_playerPosition[0]) && !m_isOnVirage)
+        if ( m_player.canMoveRight(refPosition) &&  !m_isOnVirage)
+        {
             m_player.moveRight();
-        else if (m_isOnVirage)
+        }
+        if (m_isOnVirage)
+        {
             turnRight();
+        }
+
+        m_isOnVirage = false;
     }
 
     if (e.key.keysym.sym == SDLK_q) {
-        if (m_player.canMoveLeft(m_playerPosition[0]) && !m_isOnVirage)
+
+
+        if (m_player.canMoveLeft(refPosition) && !m_isOnVirage)
             m_player.moveLeft();
-        else if (m_isOnVirage)
+        if (m_isOnVirage)
+        {    
             turnLeft();
+        }
+        m_isOnVirage = false;
     }
 
     if (e.key.keysym.sym == SDLK_z) {
@@ -132,15 +153,20 @@ void Game::turnRight()
     {
     case 'N':
         m_player.setOrientation('E');
+        m_player.setPosition(glm::vec3(m_player.getPosition().x, -.5f, getActiveTile().y * tilesL));
         break;
     case 'E':
         m_player.setOrientation('S');
+        m_player.setPosition(glm::vec3(getActiveTile().x * tilesW, -.5f, m_player.getPosition().z));
+        std::cout << m_player.getPosition() << std::endl;
         break;
     case 'S':
         m_player.setOrientation('O');
+        m_player.setPosition(glm::vec3(m_player.getPosition().x, -.5f, getActiveTile().y * tilesL));
         break;
     case 'O':
         m_player.setOrientation('N');
+        m_player.setPosition(glm::vec3(getActiveTile().x * tilesW, -.5f, m_player.getPosition().z));
         break;
     
     default:
@@ -155,15 +181,19 @@ void Game::turnLeft()
     {
     case 'N':
         m_player.setOrientation('O');
+        m_player.setPosition(glm::vec3(m_player.getPosition().x, -.5f, getActiveTile().y * tilesL));
         break;
     case 'O':
         m_player.setOrientation('S');
+        m_player.setPosition(glm::vec3(getActiveTile().x * tilesW, -.5f, m_player.getPosition().z));
         break;
     case 'S':
         m_player.setOrientation('E');
+        m_player.setPosition(glm::vec3(m_player.getPosition().x, -.5f, getActiveTile().y * tilesL));
         break;
     case 'E':
         m_player.setOrientation('N');
+        m_player.setPosition(glm::vec3(getActiveTile().x * tilesW, -.5f, m_player.getPosition().z));
         break;
     
     default:
