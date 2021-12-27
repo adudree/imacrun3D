@@ -2,7 +2,7 @@
 
 // IMPORTANT : les fonctions dans ce fichier sont à trier //
 
-void createTiles(Game &game, std::vector<std::unique_ptr<Tile>>& tiles, const GLfloat& w, const GLfloat& h)
+void createTiles(Game& game, std::vector<std::unique_ptr<Tile>>& tiles, const GLfloat& w, const GLfloat& h)
 {
     std::vector<GLuint> texturesMap(2); // 2 = nb textures
 
@@ -14,7 +14,6 @@ void createTiles(Game &game, std::vector<std::unique_ptr<Tile>>& tiles, const GL
     createTexture(texturesMap[0], simple);
     createTexture(texturesMap[1], hole);
 
-    
     for (int i = 0; i < map.getDimensions()[0]; i++) {
         for (int j = 0; j < map.getDimensions()[1]; j++) {
             switch (map.getTypeTile(glm::vec2(i, j))) {

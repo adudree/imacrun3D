@@ -23,5 +23,4 @@ private:
 
     bool canTiltHaut();
     bool canTiltBas();
-
 };

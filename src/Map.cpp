@@ -26,5 +26,4 @@ Map::Map()
     m_nbCols  = ligne.length();
     m_nbLines = m_coords.size();
     fichier.close();
-
 }

@@ -88,7 +88,7 @@ int main()
     // ================= COIN ================= //
 
     Coin coin;
-    // coin.setPosition(myMap, 1, 1);
+    coin.setPosition(game.getMap(), 1, 1);
 
     // ================ CAMERA ================ //
 
@@ -108,18 +108,19 @@ int main()
         // matrices et compagnie
 
         MVMatrix     = camera->computeMatrix(game.getPlayerPosition());
-        MVMatrix     = glm::translate(camera->computeMatrix(game.getPlayerPosition()), glm::vec3(0, 0.2f, 0));
+        MVMatrix     = glm::translate(MVMatrix, glm::vec3(0, 0.2f, 0));
         NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
 
         skybox.render(ProjMatrix, MVMatrix);
         game.draw(ProjMatrix, MVMatrix);
 
-/**************************************************************
+        /**************************************************************
          * ******Test de coin pour Clémence ;) 
          * ************
          * *********************
         **************************************** * *******************/
-        //coin.draw(ProjMatrix, MVMatrix);
+        coin.draw(ProjMatrix, MVMatrix);
+        // coin.touchCoin(game.m_player);
 
         // valeurs uniformes
 
@@ -180,9 +181,8 @@ int main()
                 // =========== MENU ============ //
 
                 if (e.key.keysym.sym == SDLK_ESCAPE) {
-
-                    isMenuOpen = !isMenuOpen;
-                    game.m_isPaused = ! game.m_isPaused;
+                    isMenuOpen      = !isMenuOpen;
+                    game.m_isPaused = !game.m_isPaused;
 
                     game.pauseGame();
 

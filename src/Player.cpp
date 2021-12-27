@@ -1,7 +1,7 @@
 #include "Player.hpp"
 
-void Player::draw(const glm::mat4& projMatrix, const glm::mat4& mvMatrix){
-
+void Player::draw(const glm::mat4& projMatrix, const glm::mat4& mvMatrix)
+{
     GLint locMVPMatrix    = glGetUniformLocation(m_program.getGLId(), "uMVPMatrix");
     GLint locMVMatrix     = glGetUniformLocation(m_program.getGLId(), "uMVMatrix");
     GLint locNormalMatrix = glGetUniformLocation(m_program.getGLId(), "uNormalMatrix");
@@ -9,16 +9,16 @@ void Player::draw(const glm::mat4& projMatrix, const glm::mat4& mvMatrix){
     GLint locTexture      = glGetUniformLocation(m_program.getGLId(), "texture_diffuse1");
 
     glm::mat4 ProjMatrix = projMatrix;
-    glm::mat4 MVMatrix = mvMatrix;
-   
+    glm::mat4 MVMatrix   = mvMatrix;
+
     glm::mat4 NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
-    glm::mat4 modMatrix =   
-                            glm::translate(glm::mat4(1), m_position) * 
-                            glm::rotate(glm::mat4(1.), glm::radians(180.0f), glm::vec3(0.,0.,1.)) * 
-                            glm::scale(glm::mat4(1.), glm::vec3(0.1,0.1,0.1));
+    glm::mat4 modMatrix =
+        glm::translate(glm::mat4(1), m_position) *
+        glm::rotate(glm::mat4(1.), glm::radians(180.0f), glm::vec3(0., 0., 1.)) *
+        glm::scale(glm::mat4(1.), glm::vec3(0.1, 0.1, 0.1));
 
     m_program.use();
-    glUniformMatrix4fv(locModelMatrix, 1, GL_FALSE, glm::value_ptr(modMatrix));  
+    glUniformMatrix4fv(locModelMatrix, 1, GL_FALSE, glm::value_ptr(modMatrix));
     glUniformMatrix4fv(locMVPMatrix, 1, GL_FALSE, glm::value_ptr(ProjMatrix * MVMatrix));
     glUniformMatrix4fv(locMVMatrix, 1, GL_FALSE, glm::value_ptr(MVMatrix));
     glUniformMatrix4fv(locNormalMatrix, 1, GL_FALSE, glm::value_ptr(NormalMatrix));
@@ -26,9 +26,9 @@ void Player::draw(const glm::mat4& projMatrix, const glm::mat4& mvMatrix){
     m_model.Draw(m_program);
 }
 
-void Player::moveForward() {
-    switch (m_orientation)
-    {
+void Player::moveForward()
+{
+    switch (m_orientation) {
     case 'N':
     default:
         m_position.z += m_speed * 0.1;
@@ -37,7 +37,7 @@ void Player::moveForward() {
     case 'O':
         m_position.x -= m_speed * 0.1;
         break;
-    
+
     case 'S':
         m_position.z -= m_speed * 0.1;
         break;
@@ -50,8 +50,7 @@ void Player::moveForward() {
 
 bool Player::canMoveRight(float tilePosition)
 {
-    switch (m_orientation)
-    {
+    switch (m_orientation) {
     case 'N':
     default:
         return m_position.x <= tilesW * tilePosition + tilesW / 2 - 0.3;
@@ -60,7 +59,7 @@ bool Player::canMoveRight(float tilePosition)
     case 'O':
         return m_position.z <= tilesL * tilePosition + tilesL / 2 - 0.3;
         break;
-    
+
     case 'S':
         return m_position.x >= tilesW * tilePosition - tilesW / 2 + 0.3;
         break;
@@ -71,11 +70,9 @@ bool Player::canMoveRight(float tilePosition)
     }
 }
 
-
 bool Player::canMoveLeft(float tilePosition)
 {
-    switch (m_orientation)
-    {
+    switch (m_orientation) {
     case 'N':
     default:
         return m_position.x >= tilesW * tilePosition - tilesW / 2 + 0.3;
@@ -84,7 +81,7 @@ bool Player::canMoveLeft(float tilePosition)
     case 'O':
         return m_position.z >= tilesL * tilePosition - tilesL / 2 + 0.3;
         break;
-    
+
     case 'S':
         return m_position.z >= tilesL * tilePosition + tilesL / 2 + 0.3;
         break;
@@ -95,10 +92,9 @@ bool Player::canMoveLeft(float tilePosition)
     }    
 }
 
-void Player::moveRight() 
+void Player::moveRight()
 {
-    switch (m_orientation)
-    {
+    switch (m_orientation) {
     case 'N':
     default:
         m_position.x += tilesW / 2 - 0.2;
@@ -107,7 +103,7 @@ void Player::moveRight()
     case 'O':
         m_position.z += tilesL / 2 - 0.2;
         break;
-    
+
     case 'S':
         m_position.x -= tilesW / 2 - 0.2;
         break;
@@ -115,14 +111,12 @@ void Player::moveRight()
     case 'E':
         m_position.z -= tilesL / 2 - 0.2;
         break;
-    }        
+    }
 }
 
-
-void Player::moveLeft() 
+void Player::moveLeft()
 {
-    switch (m_orientation)
-    {
+    switch (m_orientation) {
     case 'N':
     default:
         m_position.x -= tilesW / 2 - 0.2;
@@ -131,7 +125,7 @@ void Player::moveLeft()
     case 'O':
         m_position.z -= tilesL / 2 - 0.2;
         break;
-    
+
     case 'S':
         m_position.x += tilesW / 2 - 0.2;
         break;
@@ -139,9 +133,8 @@ void Player::moveLeft()
     case 'E':
         m_position.z += tilesL / 2 - 0.2;
         break;
-    }        
+    }
 }
-
 
 void Player::fall()
 {
@@ -151,13 +144,11 @@ void Player::fall()
     m_position.y += m_speed * 0.1;
 }
 
-
 void Player::jump()
 {
     m_isJumping      = true;
 
-    switch (m_orientation)
-    {
+    switch (m_orientation) {
     case 'N':
     case 'S':
     default:
@@ -188,8 +179,7 @@ void Player::updateJump()
     float g     = 15.0f;
     float z;
 
-    switch (m_orientation)
-    {
+    switch (m_orientation) {
     case 'N':
     default:
         z = m_position.z - m_jumpInitialZ;
@@ -201,11 +191,11 @@ void Player::updateJump()
     case 'O':
         z = m_position.x - m_jumpInitialZ;
         break;
-    
+
     case 'E':
         z = m_position.x + m_jumpInitialZ;
         break;
-    }        
+    }
 
     if (m_isJumping) {
         m_position.y = (g * z * z) / (2 * v0 * v0 * cos(alpha) * cos(alpha)) - (tan(alpha) * z) - 1;

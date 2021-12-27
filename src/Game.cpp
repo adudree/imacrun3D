@@ -15,7 +15,6 @@ void Game::initGame()
     m_isOnVirage = false; 
     m_player.m_isFalling = false;
     m_player.m_isJumping = false;
-
     m_isRunning = true;
 }
 
@@ -38,12 +37,10 @@ void Game::runGame()
 
 void Game::pauseGame()
 {
-    if (m_isPaused) 
-    {
+    if (m_isPaused) {
         m_player.setSpeed(0);
     }
-    else
-    {
+    else {
         m_player.setSpeed(m_speed);
     }
 }

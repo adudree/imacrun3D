@@ -2,22 +2,22 @@
 
 #include <SDL2/SDL.h>
 #include <iostream>
-#include "Player.hpp"
 #include "Map.hpp"
+#include "Player.hpp"
 
 class Game {
 private:
     float m_speed = 0.5;
 
     Player m_player;
-    Map m_map;
+    Map    m_map;
 
     glm::vec2 m_initPlayerPosition = glm::vec2(0);
-    glm::vec2 m_playerPosition = glm::vec2(0);
+    glm::vec2 m_playerPosition     = glm::vec2(0);
 
-
-public: 
+public:
     bool m_isRunning = false;
+
     bool m_gameOver = false;
     bool m_isPaused = false;
     bool m_isEnded = false;
@@ -25,8 +25,8 @@ public:
 
     Game();
     ~Game() = default;
-    
-    // Game states 
+
+    // Game states
     void initGame();
     void runGame();
     void pauseGame();
@@ -39,15 +39,14 @@ public:
     inline Map getMap() { return m_map;}
     inline char getOrientation() { return m_player.getOrientation();}
 
-    inline void setPlayerPosition(glm::vec2 pos) {m_initPlayerPosition = pos;}
-    inline void setSpeed(float speed) {m_speed = speed;}
+    inline void setPlayerPosition(glm::vec2 pos) { m_initPlayerPosition = pos; }
+    inline void setSpeed(float speed) { m_speed = speed; }
 
     // Map & Player relation
     glm::vec2 getActiveTile();
-    void tilesConditions(char &tile);
+    void      tilesConditions(char& tile);
 
-    void playerMoves(SDL_Event &e);
-
+    void playerMoves(SDL_Event& e);
 
     void draw(glm::mat4 proj, glm::mat4 mv); 
 };
