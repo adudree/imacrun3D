@@ -108,7 +108,7 @@ int main()
         // matrices et compagnie
 
         MVMatrix     = camera->computeMatrix(game.getPlayerPosition());
-        MVMatrix = glm::translate(MVMatrix, glm::vec3(0, 0.2f, 0));
+        MVMatrix     = glm::translate(camera->computeMatrix(game.getPlayerPosition()), glm::vec3(0, 0.2f, 0));
         NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
 
         skybox.render(ProjMatrix, MVMatrix);
@@ -119,7 +119,7 @@ int main()
          * ************
          * *********************
         **************************************** * *******************/
-        coin.draw(ProjMatrix, MVMatrix);
+        //coin.draw(ProjMatrix, MVMatrix);
 
         // valeurs uniformes
 

@@ -12,9 +12,9 @@ void Game::initGame()
     m_gameOver = false;
     m_isPaused = false;
     m_isEnded = false;
-
-    m_player.isFalling = false;
-    m_player.isJumping = false;
+    m_isOnVirage = false; 
+    m_player.m_isFalling = false;
+    m_player.m_isJumping = false;
 
     m_isRunning = true;
 }
@@ -28,10 +28,8 @@ void Game::runGame()
         char actTile     = m_map.getTypeTile(m_playerPosition);
         tilesConditions(actTile);
 
-        // conditions de fin de partie
-
         // défaite
-        if (m_player.isFalling) {
+        if (m_player.m_isFalling) {
             m_gameOver = true;
             endGame();
         }
@@ -76,14 +74,21 @@ void Game::tilesConditions(char& tile)
     switch (tile) {
     case 'P' || 'S':
         // tout est normal
+        m_isOnVirage = false; 
         break;
 
     case 'H':
-        if (!m_player.isFalling)
+        m_isOnVirage = false; 
+        if (!m_player.m_isFalling)
             m_player.fall();
         break;
 
+    case 'V':
+        m_isOnVirage = true; 
+        break;
+
     case 'E':
+        m_isOnVirage = false; 
         endGame();
         break;
 
@@ -95,30 +100,76 @@ void Game::tilesConditions(char& tile)
 void Game::playerMoves(SDL_Event& e)
 {
     if (e.key.keysym.sym == SDLK_d) {
-        // si on est sur une case "virage" : on tourne
-        // sinon :
-        if (m_player.canMoveRight(m_playerPosition[0]))
+        if (m_player.canMoveRight(m_playerPosition[0]) && !m_isOnVirage)
             m_player.moveRight();
+        else if (m_isOnVirage)
+            turnRight();
     }
 
     if (e.key.keysym.sym == SDLK_q) {
-        // si on est sur une case "virage" : on tourne
-        // sinon :
-        if (m_player.canMoveLeft(m_playerPosition[0]))
+        if (m_player.canMoveLeft(m_playerPosition[0]) && !m_isOnVirage)
             m_player.moveLeft();
+        else if (m_isOnVirage)
+            turnLeft();
     }
 
     if (e.key.keysym.sym == SDLK_z) {
-        if (m_player.getPosition().y <= -0.5 && !m_player.isJumping) 
+        if (m_player.getPosition().y <= -0.5 && !m_player.m_isJumping) 
             m_player.jump();
     }
 
     if (e.key.keysym.sym == SDLK_s) {
-        //player.squat();
+        m_player.bendDown();
     }
 }
 
 void Game::draw(glm::mat4 proj, glm::mat4 mv)
 {
     m_player.draw(proj, mv);
+}
+
+
+void Game::turnRight()
+{
+    switch (m_player.getOrientation())
+    {
+    case 'N':
+        m_player.setOrientation('E');
+        break;
+    case 'E':
+        m_player.setOrientation('S');
+        break;
+    case 'S':
+        m_player.setOrientation('O');
+        break;
+    case 'O':
+        m_player.setOrientation('N');
+        break;
+    
+    default:
+        break;
+    }
+}
+
+
+void Game::turnLeft()
+{
+    switch (m_player.getOrientation())
+    {
+    case 'N':
+        m_player.setOrientation('O');
+        break;
+    case 'O':
+        m_player.setOrientation('S');
+        break;
+    case 'S':
+        m_player.setOrientation('E');
+        break;
+    case 'E':
+        m_player.setOrientation('N');
+        break;
+    
+    default:
+        break;
+    }
 }

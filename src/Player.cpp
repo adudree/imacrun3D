@@ -58,15 +58,17 @@ bool Player::canMoveRight(float tilePosition)
         break;
 
     case 'O':
+        return m_position.z <= tilesL * tilePosition + tilesL / 2 - 0.3;
         break;
     
     case 'S':
+        return m_position.x >= tilesW * tilePosition - tilesW / 2 + 0.3;
         break;
 
     case 'E':
+        return m_position.z >= tilesL * tilePosition + tilesL / 2 + 0.3;
         break;
     }
-    return true;
 }
 
 
@@ -80,15 +82,17 @@ bool Player::canMoveLeft(float tilePosition)
         break;
 
     case 'O':
+        return m_position.z >= tilesL * tilePosition - tilesL / 2 + 0.3;
         break;
     
     case 'S':
+        return m_position.z >= tilesL * tilePosition + tilesL / 2 + 0.3;
         break;
 
     case 'E':
+        return m_position.z <= tilesL * tilePosition + tilesL / 2 - 0.3;
         break;
     }    
-    return true;
 }
 
 void Player::moveRight() 
@@ -142,7 +146,7 @@ void Player::moveLeft()
 void Player::fall()
 {
     if (m_position.y > 1) // axe vertical inversé
-        isFalling = true;
+        m_isFalling = true;
 
     m_position.y += m_speed * 0.1;
 }
@@ -150,7 +154,7 @@ void Player::fall()
 
 void Player::jump()
 {
-    isJumping      = true;
+    m_isJumping      = true;
 
     switch (m_orientation)
     {
@@ -165,7 +169,16 @@ void Player::jump()
         m_jumpInitialZ = m_position.x;
         break;
     }        
+}
 
+void Player::bendDown()
+{
+    m_isDown = !m_isDown;
+
+    if (m_isDown)
+        m_position.y = -0.1;
+    else
+        m_position.y = -0.5;    
 }
 
 void Player::updateJump()
@@ -194,10 +207,10 @@ void Player::updateJump()
         break;
     }        
 
-    if (isJumping) {
+    if (m_isJumping) {
         m_position.y = (g * z * z) / (2 * v0 * v0 * cos(alpha) * cos(alpha)) - (tan(alpha) * z) - 1;
         if (m_position.y > -0.9999f) {
-            isJumping    = false;
+            m_isJumping    = false;
             m_position.y = -1.0f;
         }
     }

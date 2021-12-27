@@ -21,6 +21,7 @@ public:
     bool m_gameOver = false;
     bool m_isPaused = false;
     bool m_isEnded = false;
+    bool m_isOnVirage = false; 
 
     Game();
     ~Game() = default;
@@ -31,8 +32,12 @@ public:
     void pauseGame();
     void endGame();
 
+    void turnLeft();
+    void turnRight();
+
     inline glm::vec3 getPlayerPosition() {return m_player.getPosition();}
     inline Map getMap() { return m_map;}
+    inline char getOrientation() { return m_player.getOrientation();}
 
     inline void setPlayerPosition(glm::vec2 pos) {m_initPlayerPosition = pos;}
     inline void setSpeed(float speed) {m_speed = speed;}

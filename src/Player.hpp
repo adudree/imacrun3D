@@ -25,18 +25,20 @@ private:
     void updateJump();
 
 public:
-    bool isJumping       = false;
-    bool isLowed         = false;
-    bool isFalling       = false;
-    bool isMovingForward = false;
+    bool m_isJumping       = false;
+    bool m_isDown         = false;
+    bool m_isFalling       = false;
+    bool m_isMovingForward = false;
 
     Player() : m_model("assets/models/player/StarSparrow.obj") {}
     ~Player() = default;
 
     inline const glm::vec3 getPosition() const { return m_position; }
+    inline char getOrientation() const { return m_orientation;}
 
-    inline void setPosition(glm::vec3 pos) { m_position = pos; }
-    inline void setSpeed(float speed) { m_speed = speed; }
+    inline void setPosition(const glm::vec3 &pos) { m_position = pos; }
+    inline void setSpeed(const float &speed) { m_speed = speed; }
+    inline void setOrientation(const char &o) { m_orientation = o;}
 
     void draw(const glm::mat4& projMatrix, const glm::mat4& mvMatrix); // chargement + affichage obj 3D
 
@@ -47,7 +49,7 @@ public:
 
     void fall();
 
-    // inline void squat() { /* height objet/2 */ } // GILET JAUNE 10 SQUATS
+    void bendDown();
 
     bool canMoveRight(float tilePosition);
     bool canMoveLeft(float tilePosition);
