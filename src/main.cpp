@@ -164,6 +164,8 @@ int main()
                 }
 
                 // =========== CAMERA =========== //
+                if (e.key.keysym.sym == SDLK_d) {
+                }
 
                 if (e.key.keysym.sym == SDLK_c) {
                     if (camera == &cameraFirstPerson) {

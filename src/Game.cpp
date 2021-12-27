@@ -158,7 +158,6 @@ void Game::turnRight()
     case 'E':
         m_player.setOrientation('S');
         m_player.setPosition(glm::vec3(getActiveTile().x * tilesW, -.5f, m_player.getPosition().z));
-        std::cout << m_player.getPosition() << std::endl;
         break;
     case 'S':
         m_player.setOrientation('O');
