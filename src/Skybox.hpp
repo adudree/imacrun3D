@@ -11,12 +11,12 @@ struct SkyboxVertex {
 
 class Skybox {
 private:
-    unsigned int      m_cubemapTexture = loadCubemap({"assets/CubeMap/bluecloud_ft.jpg",
-                                                 "assets/CubeMap/bluecloud_bk.jpg",
-                                                 "assets/CubeMap/bluecloud_up.jpg",
-                                                 "assets/CubeMap/bluecloud_dn.jpg",
-                                                 "assets/CubeMap/bluecloud_rt.jpg",
-                                                 "assets/CubeMap/bluecloud_lf.jpg"});
+    unsigned int      m_cubemapTexture = loadCubemap({"assets/CubeMap/right.png",
+                                                 "assets/CubeMap/left.png",
+                                                 "assets/CubeMap/top.png",
+                                                 "assets/CubeMap/bot.png",
+                                                 "assets/CubeMap/front.png",
+                                                 "assets/CubeMap/back.png"});
     glimac::Program   m_skyboxProgram  = glimac::loadProgram("assets/shaders/skybox.vs.glsl", "assets/shaders/skybox.fs.glsl");
     VAO<SkyboxVertex> m_skyboxVAO;
     VBO<SkyboxVertex> m_skyboxVBO;
