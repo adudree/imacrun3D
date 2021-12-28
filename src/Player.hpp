@@ -15,6 +15,7 @@ private:
     int             m_score    = 0;
     glm::vec3       m_position = glm::vec3(0);
     float           m_speed;
+    float           m_jumpInitialY;
     float           m_jumpInitialZ;
     Model           m_model;
     glimac::Program m_program = glimac::loadProgram("assets/shaders/Model.vs.glsl", "assets/shaders/Model.fs.glsl");

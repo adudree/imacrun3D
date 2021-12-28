@@ -38,22 +38,20 @@ public:
     void turnLeft();
     void turnRight();
 
-    inline glm::vec3 getPlayerPosition() {return m_player.getPosition();}
-    inline Map getMap() { return m_map;}
-    inline char getOrientation() { return m_player.getOrientation();}
+    inline glm::vec3    getPlayerPosition() {return m_player.getPosition();}
+    inline char         getOrientation()    {return m_player.getOrientation();}
+    inline Map          getMap()            {return m_map;}
 
-    inline void setPlayerPosition(glm::vec2 pos) { m_initPlayerPosition = pos; }
-    inline void setSpeed(float speed) { m_speed = speed; }
+    inline void setPlayerPosition(glm::vec2 pos){m_initPlayerPosition = pos;}
+    inline void setSpeed(float speed)           {m_speed = speed;}
 
     // Map & Player relation
-    glm::vec2 getActiveTile();
-    void      tilesConditions(char& tile);
+    glm::vec2   getActiveTile();
+    void        tilesConditions(char& tile);
 
-    void playerMoves(SDL_Event& e);
+    void        playerMoves(SDL_Event& e);
 
-    void draw(glm::mat4 proj, glm::mat4 mv); 
+    inline int  getScore() const { return m_player.getScore();}
 
-    //inline void addPointToScore(int point) { m_player.addPointToScore(point); }
-    int getScore();
     friend class GameRendering;
 };

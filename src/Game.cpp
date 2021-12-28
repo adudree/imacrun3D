@@ -148,17 +148,15 @@ void Game::playerMoves(SDL_Event& e)
 
     if (e.key.keysym.sym == SDLK_z) {
         if (m_player.getPosition().y <= -0.5 && !m_player.m_isJumping) 
+        {
             m_player.jump();
+            std::cout << "JUMP " << m_player.getPosition() << std::endl;
+        }
     }
 
     if (e.key.keysym.sym == SDLK_s) {
         m_player.bendDown();
     }
-}
-
-void Game::draw(glm::mat4 proj, glm::mat4 mv)
-{
-    m_player.draw(proj, mv);
 }
 
 
@@ -215,8 +213,3 @@ void Game::turnLeft()
     }
 }
 
-
-int Game::getScore()
-{
-    return m_player.getScore();
-}

@@ -123,7 +123,8 @@ void Player::jump()
         case 'S': m_jumpInitialZ = m_position.z; break;
         case 'O':
         case 'E': m_jumpInitialZ = m_position.x; break;
-    }        
+    }
+    m_jumpInitialY = m_position.y;
 }
 
 void Player::bendDown()
@@ -147,16 +148,17 @@ void Player::updateJump()
     {
         default:
         case 'N': z = m_position.z - m_jumpInitialZ; break;
-        case 'O': z = m_position.x - m_jumpInitialZ; break;
-        case 'S': z = m_position.z + m_jumpInitialZ; break;
-        case 'E': z = m_position.x + m_jumpInitialZ; break;
+        case 'E': z = m_position.x - m_jumpInitialZ; break;
+        case 'S': z = m_jumpInitialZ - m_position.z; break;
+        case 'O': z = m_jumpInitialZ - m_position.x; break;
     }
+
 
     if (m_isJumping) {
         m_position.y = (g * z * z) / (2 * v0 * v0 * cos(alpha) * cos(alpha)) - (tan(alpha) * z) - 1;
-        if (m_position.y > -0.9999f) {
-            m_isJumping    = false;
-            m_position.y = -1.0f;
+        if (m_position.y > m_jumpInitialY) {
+            m_position.y = m_jumpInitialY;
+            m_isJumping = false;
         }
     }
 }
