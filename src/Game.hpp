@@ -2,8 +2,10 @@
 
 #include <SDL2/SDL.h>
 #include <iostream>
+#include <vector>
 #include "Map.hpp"
 #include "Player.hpp"
+#include "Coin.hpp"
 
 class Game {
 private:
@@ -11,6 +13,7 @@ private:
 
     Player m_player;
     Map    m_map;
+    std::vector<std::unique_ptr<Coin>> m_coins;
 
     glm::vec2 m_initPlayerPosition = glm::vec2(0);
     glm::vec2 m_playerPosition     = glm::vec2(0);
@@ -49,4 +52,7 @@ public:
     void playerMoves(SDL_Event& e);
 
     void draw(glm::mat4 proj, glm::mat4 mv); 
+
+    //inline void addPointToScore(int point) { m_player.addPointToScore(point); }
+    int getScore();
 };

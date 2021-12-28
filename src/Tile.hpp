@@ -17,8 +17,8 @@ protected:
     GLfloat m_posX;
     GLfloat m_posY;
 
-    GLfloat m_width;
-    GLfloat m_height;
+    GLfloat m_width  = tilesW;
+    GLfloat m_height = tilesL;
 
     VBO<ShapeVertex> m_vbo;
     IBO              m_ibo;
@@ -31,10 +31,13 @@ protected:
     void                     buildVAO();
 
     void setTexture();
+    void setTexture(std::string link);
 
 public:
-    Tile(GLfloat posX, GLfloat posY, GLfloat width, GLfloat height, GLuint texture)
-        : m_posX(posX), m_posY(posY), m_width(width), m_height(height), m_vbo(buildVertices()), m_ibo(buildIndices()), m_vao(), m_texture(texture)
+    Tile(GLfloat posX, GLfloat posY, GLuint texture)
+        : m_posX(posX), m_posY(posY), 
+          m_vbo(buildVertices()), m_ibo(buildIndices()), m_vao(), 
+          m_texture(texture)
     {
         buildVAO();
     }
@@ -42,9 +45,6 @@ public:
     ~Tile() = default;
 
     void drawTile();
-
-    inline GLint getWidth() const { return m_width; }
-    inline GLint getHeight() const { return m_height; }
 
     inline GLuint getVBO() const { return *m_vbo; }
     inline GLuint getIBO() const { return *m_ibo; }
@@ -54,3 +54,5 @@ public:
 
     glm::vec2 getActiveTile(glm::vec3& playerPosition) const;
 };
+
+

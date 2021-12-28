@@ -1,9 +1,9 @@
 
 #include "Tile.hpp"
 
-void Tile::setTexture()
+void Tile::setTexture(std::string link)
 {
-    std::unique_ptr<glimac::Image> image = glimac::loadImage("assets/textures/cardinale.jpg");
+    std::unique_ptr<glimac::Image> image = glimac::loadImage(link);
     createTexture(m_texture, image);
 }
 
@@ -72,3 +72,5 @@ void Tile::drawTile()
 
     glBindVertexArray(0);
 }
+
+

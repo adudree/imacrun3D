@@ -2,7 +2,7 @@
 
 // IMPORTANT : les fonctions dans ce fichier sont à trier //
 
-void createTiles(Game& game, std::vector<std::unique_ptr<Tile>>& tiles, const GLfloat& w, const GLfloat& h)
+void createTiles(Game& game, std::vector<std::unique_ptr<Tile>>& tiles)
 {
     std::vector<GLuint> texturesMap(2); // 2 = nb textures
 
@@ -16,19 +16,20 @@ void createTiles(Game& game, std::vector<std::unique_ptr<Tile>>& tiles, const GL
 
     for (int i = 0; i < map.getDimensions()[0]; i++) {
         for (int j = 0; j < map.getDimensions()[1]; j++) {
-            switch (map.getTypeTile(glm::vec2(i, j))) {
+            switch (map.getTypeTile(glm::vec2(i, j))) 
+            {
             case 'P':
-                game.setPlayerPosition(glm::vec2(i * w, j * h));
-                tiles.push_back(std::make_unique<Tile>(i * w, j * h, w, h, texturesMap[0]));
+                game.setPlayerPosition(glm::vec2(i * tilesW, j * tilesL));
+                tiles.push_back(std::make_unique<Tile>(i * tilesW, j * tilesL, texturesMap[0]));
                 break;
 
             case 'E':
             case 'S':
-                tiles.push_back(std::make_unique<Tile>(i * w, j * h, w, h, texturesMap[0]));
+                tiles.push_back(std::make_unique<Tile>(i * tilesW, j * tilesL, texturesMap[0]));
                 break;
 
             case 'H':
-                tiles.push_back(std::make_unique<Hole>(i * w, j * h, w, h, texturesMap[1]));
+                tiles.push_back(std::make_unique<Hole>(i * tilesW, j * tilesL, texturesMap[1]));
                 break;
 
             case 'W':

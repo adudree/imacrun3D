@@ -1,21 +1,3 @@
-/* 
-
-Contrôle de la caméra
-
-Le jeu doit contenir deux types de caméra :
-
-— une caméra centrée sur l’explorateur, qui permet de tourner autour et de zoomer à l’aide de la
-souris ;
-
-— une caméra permettant de voir à travers les yeux de l’explorateur et offrant la possibilité de tourner
-la tête à l’aide de la souris (attention, nous ne sommes pas dans l’Exorciste, les déplacements de
-la tête doivent être limités).
- 
-À tout moment, le joueur peut changer de vue en appuyant sur la touche C et bloquer la caméra dans
-une configuration idéale pour jouer avec la touche L.
-
-*/
-
 #include "CameraThirdPerson.hpp"
 #include <cmath>
 #include "glm/gtx/polar_coordinates.hpp"

@@ -1,6 +1,9 @@
 #include "Game.hpp"
 
-Game::Game() {}
+Game::Game() 
+{
+    createCoins(m_map, m_coins);
+}
 
 void Game::initGame()
 {
@@ -9,6 +12,7 @@ void Game::initGame()
     m_player.setPosition(glm::vec3(m_initPlayerPosition[0], -.5f, m_initPlayerPosition[1]));
     m_player.setSpeed(m_speed);
     m_player.setOrientation('N');
+    m_player.setScore(0);
 
     m_gameOver = false;
     m_isPaused = false;
@@ -32,6 +36,17 @@ void Game::runGame()
         if (m_player.m_isFalling) {
             m_gameOver = true;
             endGame();
+        }
+
+        // j'ai pas réussi à le passer en fonction dans autre fichier, à voir
+        for (size_t i = 0; i < m_coins.size(); i++)
+        {
+            if (m_coins[i]->isCollision(m_player.getPosition())) 
+            {
+                m_player.addPointToScore(m_coins[i]->getNbPoint());
+                m_coins.erase(m_coins.begin() + i);
+                m_coins.shrink_to_fit();
+            }
         }
     }
 }
@@ -198,4 +213,10 @@ void Game::turnLeft()
     default:
         break;
     }
+}
+
+
+int Game::getScore()
+{
+    return m_player.getScore();
 }

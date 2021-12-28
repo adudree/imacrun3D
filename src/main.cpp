@@ -34,6 +34,8 @@ int main()
     GLint            HEIGHT = 800;
     SDLWindowManager windowManager(WIDTH, HEIGHT, "IMAC RUN 3D");
 
+    glEnable(GL_DEPTH_TEST);
+    
     // mouse
 
     const auto openMenu = [&]() {
@@ -51,14 +53,15 @@ int main()
 
     // program + shaders
 
+    // POUR LES TILES = GAMERENDERING
     Program program = loadProgram("assets/shaders/3D.vs.glsl", "assets/shaders/tex3D.fs.glsl");
 
-    glEnable(GL_DEPTH_TEST);
 
     Game game;
 
     // ================ MATRIX ================ //
 
+    // POUR LES TILES = GAMERENDERING
     program.use();
     GLint locMVPMatrix    = glGetUniformLocation(program.getGLId(), "uMVPMatrix");
     GLint locMVMatrix     = glGetUniformLocation(program.getGLId(), "uMVMatrix");
@@ -71,27 +74,22 @@ int main()
 
     ProjMatrix = glm::perspective(70.f, float(WIDTH) / float(HEIGHT), 0.1f, 100.0f);
 
-    // ================ PLAYER ================ //
-
-    //Player Jean;
-
     // ================ SKYBOX ================ //
 
+    // POUR GAMERENDERING.CPP
     Skybox skybox;
 
     // ================= MAP ================== //
 
+    Map map = game.getMap();
+
+    // POUR GAMERENDERING.CPP
     std::vector<std::unique_ptr<Tile>> tiles;
-
-    createTiles(game, tiles, tilesW, tilesL);
-
-    // ================= COIN ================= //
-
-    Coin coin;
-    coin.setPosition(game.getMap(), 1, 1);
+    createTiles(game, tiles);
 
     // ================ CAMERA ================ //
 
+    //POUR GAMERENDERING.CPP
     CameraThirdPerson cameraThirdPerson;
     CameraFirstPerson cameraFirstPerson;
     ICamera*          camera         = &cameraFirstPerson;
@@ -103,10 +101,12 @@ int main()
 
     bool done = false;
     while (!done) {
+
         // ============ RENDERING CODE =========== //
 
         // matrices et compagnie
 
+        //GAMERENDERING.CPP
         MVMatrix     = camera->computeMatrix(game.getPlayerPosition());
         MVMatrix     = glm::translate(MVMatrix, glm::vec3(0, 0.2f, 0));
         NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
@@ -115,15 +115,13 @@ int main()
         game.draw(ProjMatrix, MVMatrix);
 
         /**************************************************************
-         * ******Test de coin pour Clémence ;) 
+         * ****** Test de coin pour Clémence ;) 
          * ************
          * *********************
         **************************************** * *******************/
-        coin.draw(ProjMatrix, MVMatrix);
-        // coin.touchCoin(game.m_player);
 
         // valeurs uniformes
-
+        // GAMERENDERING.CPP
         program.use();
         glUniformMatrix4fv(locMVPMatrix, 1, GL_FALSE, glm::value_ptr(ProjMatrix * MVMatrix));
         glUniformMatrix4fv(locMVMatrix, 1, GL_FALSE, glm::value_ptr(MVMatrix));
@@ -136,15 +134,14 @@ int main()
             tiles[i]->drawTile();
         }
 
-        game.runGame();
 
-        // draw coin
+        game.runGame();
 
         // coin.draw();
 
         windowManager.swapBuffers();
 
-        // events
+        // events : SELON SI AFFICHAGE OU NON 
 
         SDL_Event e;
         while (windowManager.pollEvent(e)) {
@@ -164,8 +161,6 @@ int main()
                 }
 
                 // =========== CAMERA =========== //
-                if (e.key.keysym.sym == SDLK_d) {
-                }
 
                 if (e.key.keysym.sym == SDLK_c) {
                     if (camera == &cameraFirstPerson) {
