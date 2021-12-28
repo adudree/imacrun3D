@@ -5,6 +5,7 @@
 #include <glimac/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include "Tile.hpp"
+#include "Wall.hpp"
 #include "ICamera.hpp"
 #include "Surcouche.hpp"
 
@@ -12,8 +13,9 @@ class GameRendering
 {
     private:
     glimac::Program m_tilesProgram = glimac::loadProgram("assets/shaders/3D.vs.glsl", "assets/shaders/tex3D.fs.glsl");
-
-    std::vector<std::unique_ptr<Tile>> m_tiles; 
+   
+    std::vector<std::unique_ptr<Tile>> m_tiles;
+    std::vector<std::unique_ptr<Wall>> m_walls;  
 
     Skybox m_skybox;
 
@@ -28,4 +30,5 @@ class GameRendering
         void mainRendering(Game &game, ICamera* camera);
 
         void drawTiles(); 
+        void drawWalls();
 };

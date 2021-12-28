@@ -2,7 +2,7 @@
 
 // IMPORTANT : les fonctions dans ce fichier sont à trier //
 
-void createTiles(Game& game, std::vector<std::unique_ptr<Tile>>& tiles)
+void createTiles(Game& game, std::vector<std::unique_ptr<Tile>>& tiles, std::vector<std::unique_ptr<Wall>>& walls)
 {
     std::vector<GLuint> texturesMap(2); // 2 = nb textures
 
@@ -16,8 +16,7 @@ void createTiles(Game& game, std::vector<std::unique_ptr<Tile>>& tiles)
 
     for (int i = 0; i < map.getDimensions()[0]; i++) {
         for (int j = 0; j < map.getDimensions()[1]; j++) {
-            switch (map.getTypeTile(glm::vec2(i, j))) 
-            {
+            switch (map.getTypeTile(glm::vec2(i, j))) {
             case 'P':
                 game.setPlayerPosition(glm::vec2(i * tilesW, j * tilesL));
                 tiles.push_back(std::make_unique<Tile>(i * tilesW, j * tilesL, texturesMap[0]));
@@ -33,7 +32,12 @@ void createTiles(Game& game, std::vector<std::unique_ptr<Tile>>& tiles)
                 break;
 
             case 'W':
-                // créer une tuile "wall" [A FAIRE]
+                if ((j+i) % 2 == 0) {
+                    walls.push_back(std::make_unique<Wall>(i * tilesW, j * tilesL, "assets/models/wall/asteroide.obj"));
+                }
+                else {
+                    walls.push_back(std::make_unique<Wall>(i * tilesW, j * tilesL, "assets/models/wall/asteroide2.obj"));
+                }
                 break;
 
             case 'A':

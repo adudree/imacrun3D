@@ -5,5 +5,6 @@
 #include "Hole.hpp"
 #include "Tile.hpp"
 #include "Coin.hpp"
+#include "Wall.hpp"
 
-void createTiles(Game& game, std::vector<std::unique_ptr<Tile>>& tiles);
+void createTiles(Game& game, std::vector<std::unique_ptr<Tile>>& tiles, std::vector<std::unique_ptr<Wall>>& walls);
