@@ -55,4 +55,5 @@ public:
 
     //inline void addPointToScore(int point) { m_player.addPointToScore(point); }
     int getScore();
+    friend class GameRendering;
 };

@@ -21,6 +21,7 @@
 #include "Surcouche.hpp"
 #include "Tile.hpp"
 #include "VAO.hpp"
+#include "GameRendering.hpp"
 
 using namespace glimac;
 
@@ -36,7 +37,7 @@ int main()
 
     glEnable(GL_DEPTH_TEST);
     
-    // mouse
+    // mouse & menu
 
     const auto openMenu = [&]() {
         SDL_ShowCursor(SDL_ENABLE);
@@ -51,51 +52,19 @@ int main()
     bool isMenuOpen = false;
     closeMenu();
 
-    // program + shaders
-
-    // POUR LES TILES = GAMERENDERING
-    Program program = loadProgram("assets/shaders/3D.vs.glsl", "assets/shaders/tex3D.fs.glsl");
-
+    // Game & gameRenderer 
 
     Game game;
+    GameRendering gameRenderer(game); 
 
-    // ================ MATRIX ================ //
+    game.initGame();
+    //Camera
 
-    // POUR LES TILES = GAMERENDERING
-    program.use();
-    GLint locMVPMatrix    = glGetUniformLocation(program.getGLId(), "uMVPMatrix");
-    GLint locMVMatrix     = glGetUniformLocation(program.getGLId(), "uMVMatrix");
-    GLint locNormalMatrix = glGetUniformLocation(program.getGLId(), "uNormalMatrix");
-    GLint locTexture      = glGetUniformLocation(program.getGLId(), "uTexture");
-
-    glm::mat4 ProjMatrix;
-    glm::mat4 MVMatrix;
-    glm::mat4 NormalMatrix;
-
-    ProjMatrix = glm::perspective(70.f, float(WIDTH) / float(HEIGHT), 0.1f, 100.0f);
-
-    // ================ SKYBOX ================ //
-
-    // POUR GAMERENDERING.CPP
-    Skybox skybox;
-
-    // ================= MAP ================== //
-
-    Map map = game.getMap();
-
-    // POUR GAMERENDERING.CPP
-    std::vector<std::unique_ptr<Tile>> tiles;
-    createTiles(game, tiles);
-
-    // ================ CAMERA ================ //
-
-    //POUR GAMERENDERING.CPP
     CameraThirdPerson cameraThirdPerson;
     CameraFirstPerson cameraFirstPerson;
     ICamera*          camera         = &cameraFirstPerson;
     bool              isCameraLocked = false;
 
-    game.initGame();
 
     // ================= LOOP ================= //
 
@@ -104,40 +73,8 @@ int main()
 
         // ============ RENDERING CODE =========== //
 
-        // matrices et compagnie
-
-        //GAMERENDERING.CPP
-        MVMatrix     = camera->computeMatrix(game.getPlayerPosition());
-        MVMatrix     = glm::translate(MVMatrix, glm::vec3(0, 0.2f, 0));
-        NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
-
-        skybox.render(ProjMatrix, MVMatrix);
-        game.draw(ProjMatrix, MVMatrix);
-
-        /**************************************************************
-         * ****** Test de coin pour Clémence ;) 
-         * ************
-         * *********************
-        **************************************** * *******************/
-
-        // valeurs uniformes
-        // GAMERENDERING.CPP
-        program.use();
-        glUniformMatrix4fv(locMVPMatrix, 1, GL_FALSE, glm::value_ptr(ProjMatrix * MVMatrix));
-        glUniformMatrix4fv(locMVMatrix, 1, GL_FALSE, glm::value_ptr(MVMatrix));
-        glUniformMatrix4fv(locNormalMatrix, 1, GL_FALSE, glm::value_ptr(NormalMatrix));
-        glUniform1i(locTexture, 0);
-
-        // draw tiles
-
-        for (size_t i = 0; i < tiles.size(); i++) {
-            tiles[i]->drawTile();
-        }
-
-
         game.runGame();
-
-        // coin.draw();
+        gameRenderer.mainRendering(game, camera);
 
         windowManager.swapBuffers();
 

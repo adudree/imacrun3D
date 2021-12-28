@@ -79,17 +79,3 @@ void createCoins(Map &map, std::vector<std::unique_ptr<Coin>>& coins)
         }
     }
 }
-
-// void updateCoins(glm::vec3 &pos, std::vector<std::unique_ptr<Coin>>& coins)
-// {
-//     //int nbPointsToAdd = 0;    
-//     for (size_t i = 0; i < coins.size(); i++)
-//     {
-//         if (coins[i]->isCollision(pos)) {
-//             //nbPointsToAdd = coins[i]->getNbPoint();
-//             coins.erase(coins.begin() + i);
-//             coins.shrink_to_fit();
-//         }
-//     }
-//     //return nbPointsToAdd;
-// }
