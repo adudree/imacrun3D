@@ -10,6 +10,24 @@ target_link_libraries(${PROJECT_NAME} glimac::glimac)
 add_subdirectory(third-party/assimp)
 target_link_libraries(${PROJECT_NAME} assimp)
 
+
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/CMake)
+
+find_package(SDL2 REQUIRED)
+find_package(SDL2_ttf REQUIRED)
+find_package(OpenGL REQUIRED)
+
+include_directories(${SDL2_INCLUDE_DIR}
+                    ${SDL2_TTF_INCLUDE_DIR}
+                    ${OPENGL_INCLUDE_DIR})
+
+target_link_libraries(  ${PROJECT_NAME} 
+                        ${SDL2_LIBRARY}
+                        ${SDL2_TTF_LIBRARIES}
+                        ${OPENGL_LIBRARIES} 
+                        )
+
+
 file(GLOB_RECURSE SRC_FILES CONFIGURE_DEPENDS src/*.cpp)
 target_sources(${PROJECT_NAME} PRIVATE ${SRC_FILES})
 
@@ -29,3 +47,6 @@ function(copyFolder FOLDER_NAME)
 endfunction()
 
 copyFolder(assets)
+
+
+

@@ -22,11 +22,13 @@
 #include "Tile.hpp"
 #include "VAO.hpp"
 #include "GameRendering.hpp"
+#include "SDL2/SDL_ttf.h"
 
 using namespace glimac;
 
 int main()
 {
+
     // ============ INITIALIZATION =========== //
 
     // window
