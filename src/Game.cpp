@@ -148,10 +148,7 @@ void Game::playerMoves(SDL_Event& e)
 
     if (e.key.keysym.sym == SDLK_z) {
         if (m_player.getPosition().y <= -0.5 && !m_player.m_isJumping) 
-        {
             m_player.jump();
-            std::cout << "JUMP " << m_player.getPosition() << std::endl;
-        }
     }
 
     if (e.key.keysym.sym == SDLK_s) {
