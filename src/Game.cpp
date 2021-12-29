@@ -1,6 +1,6 @@
 #include "Game.hpp"
 
-Game::Game() 
+Game::Game()
 {
     createCoins(m_map, m_coins);
 }
@@ -14,13 +14,13 @@ void Game::initGame()
     m_player.setOrientation('N');
     m_player.setScore(0);
 
-    m_gameOver = false;
-    m_isPaused = false;
-    m_isEnded = false;
-    m_isOnVirage = false; 
+    m_gameOver           = false;
+    m_isPaused           = false;
+    m_isEnded            = false;
+    m_isOnVirage         = false;
     m_player.m_isFalling = false;
     m_player.m_isJumping = false;
-    m_isRunning = true;
+    m_isRunning          = true;
 }
 
 void Game::runGame()
@@ -39,10 +39,8 @@ void Game::runGame()
         }
 
         // j'ai pas réussi à le passer en fonction dans autre fichier, à voir
-        for (size_t i = 0; i < m_coins.size(); i++)
-        {
-            if (m_coins[i]->isCollision(m_player.getPosition())) 
-            {
+        for (size_t i = 0; i < m_coins.size(); i++) {
+            if (m_coins[i]->isCollision(m_player.getPosition())) {
                 m_player.addPointToScore(m_coins[i]->getNbPoint());
                 m_coins.erase(m_coins.begin() + i);
                 m_coins.shrink_to_fit();
@@ -84,10 +82,9 @@ glm::vec2 Game::getActiveTile()
 
 void Game::tilesConditions(char& tile)
 {
-    m_isOnVirage = false; 
+    m_isOnVirage = false;
 
     switch (tile) {
-
     case '-':
         m_player.fall();
         break;
@@ -98,9 +95,9 @@ void Game::tilesConditions(char& tile)
         break;
 
     case 'V':
-        m_isOnVirage = true; 
+        m_isOnVirage = true;
         break;
-    
+
     case 'W':
         m_player.setSpeed(0);
         break;
@@ -118,16 +115,16 @@ void Game::tilesConditions(char& tile)
 void Game::playerMoves(SDL_Event& e)
 {
     float refPosition = 0;
-    if (m_player.getOrientation() == 'N' || m_player.getOrientation() == 'S') refPosition = m_playerPosition[0]; 
-    else refPosition = m_playerPosition[1];
+    if (m_player.getOrientation() == 'N' || m_player.getOrientation() == 'S')
+        refPosition = m_playerPosition[0];
+    else
+        refPosition = m_playerPosition[1];
 
     if (e.key.keysym.sym == SDLK_d) {
-        if ( m_player.canMoveRight(refPosition) &&  !m_isOnVirage)
-        {
+        if (m_player.canMoveRight(refPosition) && !m_isOnVirage) {
             m_player.moveRight();
         }
-        if (m_isOnVirage)
-        {
+        if (m_isOnVirage) {
             turnRight();
         }
 
@@ -135,19 +132,16 @@ void Game::playerMoves(SDL_Event& e)
     }
 
     if (e.key.keysym.sym == SDLK_q) {
-
-
         if (m_player.canMoveLeft(refPosition) && !m_isOnVirage)
             m_player.moveLeft();
-        if (m_isOnVirage)
-        {    
+        if (m_isOnVirage) {
             turnLeft();
         }
         m_isOnVirage = false;
     }
 
     if (e.key.keysym.sym == SDLK_z) {
-        if (m_player.getPosition().y <= -0.5 && !m_player.m_isJumping) 
+        if (m_player.getPosition().y <= -0.5 && !m_player.m_isJumping)
             m_player.jump();
     }
 
@@ -156,11 +150,9 @@ void Game::playerMoves(SDL_Event& e)
     }
 }
 
-
 void Game::turnRight()
 {
-    switch (m_player.getOrientation())
-    {
+    switch (m_player.getOrientation()) {
     case 'N':
         m_player.setOrientation('E');
         m_player.setPosition(glm::vec3(m_player.getPosition().x, -.5f, getActiveTile().y * tilesL));
@@ -177,17 +169,15 @@ void Game::turnRight()
         m_player.setOrientation('N');
         m_player.setPosition(glm::vec3(getActiveTile().x * tilesW, -.5f, m_player.getPosition().z));
         break;
-    
+
     default:
         break;
     }
 }
-
 
 void Game::turnLeft()
 {
-    switch (m_player.getOrientation())
-    {
+    switch (m_player.getOrientation()) {
     case 'N':
         m_player.setOrientation('O');
         m_player.setPosition(glm::vec3(m_player.getPosition().x, -.5f, getActiveTile().y * tilesL));
@@ -204,9 +194,8 @@ void Game::turnLeft()
         m_player.setOrientation('N');
         m_player.setPosition(glm::vec3(getActiveTile().x * tilesW, -.5f, m_player.getPosition().z));
         break;
-    
+
     default:
         break;
     }
 }
-
