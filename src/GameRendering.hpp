@@ -30,7 +30,7 @@ public:
 
     void mainRendering(Game& game);
 
-        void drawTiles(); 
-        void drawWalls();
-        void drawCoins();
+    void drawTiles(); 
+    void drawWalls();
+    void drawCoins();
 };

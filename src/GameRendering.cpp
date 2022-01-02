@@ -48,7 +48,7 @@ void GameRendering::drawCoins()
     }
 }
 
-void GameRendering::mainRendering(Game& game, ICamera* camera)
+void GameRendering::mainRendering(Game& game)
 {
     if (game.m_player.getPosition() == glm::vec3(game.m_initPlayerPosition[0], -.5f, game.m_initPlayerPosition[1])) {
         for (size_t i = 0; i < m_coins.size(); i++) {
@@ -57,7 +57,7 @@ void GameRendering::mainRendering(Game& game, ICamera* camera)
         }
     }
     else {
-        m_globalMvMatrix     = camera->computeMatrix(game.getPlayerPosition());
+        m_globalMvMatrix     = game.getCamera().computeMatrix(game.getPlayerPosition());
         m_globalMvMatrix     = glm::translate(m_globalMvMatrix, glm::vec3(0, 0.2f, 0));
         m_globalNormalMatrix = glm::transpose(glm::inverse(m_globalMvMatrix));
 
