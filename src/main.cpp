@@ -9,26 +9,23 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "CameraFirstPerson.hpp"
-#include "CameraThirdPerson.hpp"
 #include "Coin.hpp"
 #include "Game.hpp"
+#include "GameRendering.hpp"
 #include "Map.hpp"
 #include "Model.hpp"
 #include "Player.hpp"
+#include "SDL2/SDL_ttf.h"
 #include "Skybox.hpp"
 #include "Sphere.hpp"
 #include "Surcouche.hpp"
 #include "Tile.hpp"
 #include "VAO.hpp"
-#include "GameRendering.hpp"
-#include "SDL2/SDL_ttf.h"
 
 using namespace glimac;
 
 int main()
 {
-
     // ============ INITIALIZATION =========== //
 
     // window
@@ -38,7 +35,7 @@ int main()
     SDLWindowManager windowManager(WIDTH, HEIGHT, "IMAC RUN 3D");
 
     glEnable(GL_DEPTH_TEST);
-    
+
     // mouse & menu
 
     const auto openMenu = [&]() {
@@ -54,36 +51,34 @@ int main()
     bool isMenuOpen = false;
     closeMenu();
 
-    // Game & gameRenderer 
+    // Game & gameRenderer
 
-    Game game;
-    GameRendering gameRenderer(game); 
+    Game          game;
+    GameRendering gameRenderer(game);
 
     game.initGame();
-    //Camera
-
-    CameraThirdPerson cameraThirdPerson;
-    CameraFirstPerson cameraFirstPerson;
-    ICamera*          camera         = &cameraFirstPerson;
-    bool              isCameraLocked = false;
-
 
     // ================= LOOP ================= //
 
     bool done = false;
     while (!done) {
-
         // ============ RENDERING CODE =========== //
 
         game.runGame();
-        gameRenderer.mainRendering(game, camera);
+        gameRenderer.mainRendering(game);
 
         windowManager.swapBuffers();
 
-        // events : SELON SI AFFICHAGE OU NON 
+        // events : SELON SI AFFICHAGE OU NON
 
         SDL_Event e;
         while (windowManager.pollEvent(e)) {
+            // ========= MOUVEMENT ========== //
+
+            if (game.m_isRunning && !isMenuOpen) {
+                game.onEvent(e);
+            }
+
             switch (e.type) {
             case SDL_QUIT:
                 done = true;
@@ -92,27 +87,6 @@ int main()
             case SDL_KEYDOWN:
                 if (e.key.keysym.sym == SDLK_x)
                     done = true;
-
-                // ========= MOUVEMENT ========== //
-
-                if (game.m_isRunning) {
-                    game.playerMoves(e);
-                }
-
-                // =========== CAMERA =========== //
-
-                if (e.key.keysym.sym == SDLK_c) {
-                    if (camera == &cameraFirstPerson) {
-                        camera = &cameraThirdPerson;
-                    }
-                    else {
-                        camera = &cameraFirstPerson;
-                    }
-                }
-
-                if (e.key.keysym.sym == SDLK_l) {
-                    isCameraLocked = !isCameraLocked;
-                }
 
                 // =========== MENU ============ //
                 if (e.key.keysym.sym == SDLK_SPACE) {
@@ -134,27 +108,6 @@ int main()
                     }
                 }
                 // le menu s'ouvre
-
-                break;
-
-            case SDL_MOUSEWHEEL:
-                if (camera == &cameraThirdPerson) {
-                    if (e.wheel.y > 0) {
-                        cameraThirdPerson.zoom_avant();
-                    }
-
-                    if (e.wheel.y < 0) {
-                        cameraThirdPerson.zoom_arriere();
-                    }
-                }
-
-                break;
-
-            case SDL_MOUSEMOTION:
-                if (!isCameraLocked && !isMenuOpen) {
-                    camera->variationPan(e.motion.xrel);
-                    camera->variationTilt(e.motion.yrel);
-                }
 
                 break;
 

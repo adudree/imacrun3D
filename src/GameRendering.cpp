@@ -1,10 +1,9 @@
 #include "GameRendering.hpp"
 
-GameRendering::GameRendering(Game &game)
+GameRendering::GameRendering(Game& game)
 {
     createTiles(game, m_tiles, m_walls); // dans surcouche
     m_globalProjMatrix = glm::perspective(70.f, float(800) / float(800), 0.1f, 100.0f);
-
 }
 
 void GameRendering::drawTiles()
@@ -14,8 +13,8 @@ void GameRendering::drawTiles()
     GLint locNormalMatrix = glGetUniformLocation(m_tilesProgram.getGLId(), "uNormalMatrix");
     GLint locTexture      = glGetUniformLocation(m_tilesProgram.getGLId(), "uTexture");
 
-    glm::mat4 ProjMatrix = m_globalProjMatrix;
-    glm::mat4 MVMatrix = m_globalMvMatrix;
+    glm::mat4 ProjMatrix   = m_globalProjMatrix;
+    glm::mat4 MVMatrix     = m_globalMvMatrix;
     glm::mat4 NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
 
     m_tilesProgram.use();
@@ -33,7 +32,7 @@ void GameRendering::drawTiles()
 
 void GameRendering::drawWalls()
 {
-/*     GLint locMVPMatrix    = glGetUniformLocation(m_walls[0]->getWallProgramID(), "uMVPMatrix");
+    /*     GLint locMVPMatrix    = glGetUniformLocation(m_walls[0]->getWallProgramID(), "uMVPMatrix");
     GLint locMVMatrix     = glGetUniformLocation(m_walls[0]->getWallProgramID(), "uMVMatrix");
     GLint locNormalMatrix = glGetUniformLocation(m_walls[0]->getWallProgramID(), "uNormalMatrix");
     GLint locTexture      = glGetUniformLocation(m_walls[0]->getWallProgramID(), "uTexture");
@@ -50,17 +49,14 @@ void GameRendering::drawWalls()
  */
     // draw walls
 
-    for (size_t i = 0; i < m_walls.size(); i++) {   
-        
-        
-         m_walls[i]->draw(m_globalProjMatrix, m_globalMvMatrix);
+    for (size_t i = 0; i < m_walls.size(); i++) {
+        m_walls[i]->draw(m_globalProjMatrix, m_globalMvMatrix);
     }
 }
 
-
-void GameRendering::mainRendering(Game &game, ICamera* camera)
+void GameRendering::mainRendering(Game& game)
 {
-    m_globalMvMatrix     = camera->computeMatrix(game.getPlayerPosition());
+    m_globalMvMatrix     = game.getCamera().computeMatrix(game.getPlayerPosition());
     m_globalMvMatrix     = glm::translate(m_globalMvMatrix, glm::vec3(0, 0.2f, 0));
     m_globalNormalMatrix = glm::transpose(glm::inverse(m_globalMvMatrix));
 
