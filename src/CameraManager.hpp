@@ -12,4 +12,5 @@ private:
 public:
     void     onEvent(const SDL_Event& e);
     ICamera& getCamera() { return *camera; };
+    void     turnCameras(float variation);
 };

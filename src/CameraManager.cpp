@@ -43,3 +43,9 @@ void CameraManager::onEvent(const SDL_Event& e)
         break;
     }
 }
+
+void CameraManager::turnCameras(float variation)
+{
+    cameraThirdPerson.turnPan(variation);
+    cameraFirstPerson.turnPan(variation);
+}

@@ -182,6 +182,8 @@ void Game::turnRight()
     default:
         break;
     }
+
+    m_cameraManager.turnCameras(M_PI / 2);
 }
 
 void Game::turnLeft()
@@ -207,4 +209,5 @@ void Game::turnLeft()
     default:
         break;
     }
+    m_cameraManager.turnCameras(-M_PI / 2);
 }

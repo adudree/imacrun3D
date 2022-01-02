@@ -10,6 +10,7 @@ public:
     //mouvement camera
     void variationPan(float variation) override;
     void variationTilt(float variation) override;
+    void turnPan(float variation);
     void zoom_avant();
     void zoom_arriere();
 

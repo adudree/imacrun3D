@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SDL2/SDL.h>
+#include <cmath>
 #include <iostream>
 #include <vector>
 #include "CameraManager.hpp"
