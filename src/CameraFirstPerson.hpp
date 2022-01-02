@@ -16,7 +16,7 @@ private:
     float m_pan  = 0.f;
     float m_tilt = 0.3f;
 
-    float m_vitesseRotation = 0.002f;
+    static constexpr float m_vitesseRotation = 0.002f;
 
     float m_offsetPan;
 

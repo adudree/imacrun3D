@@ -19,8 +19,8 @@ private:
     float m_tilt = 0.3f;
     float m_zoom = 10.f;
 
-    float m_vitesseRotation = 0.02f;
-    float m_vitesseZoom     = 0.8f;
+    static constexpr float m_vitesseRotation = 0.02f;
+    static constexpr float m_vitesseZoom     = 0.8f;
 
     bool canTiltHaut();
     bool canTiltBas();
