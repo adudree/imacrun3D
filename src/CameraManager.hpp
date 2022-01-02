@@ -10,7 +10,8 @@ private:
     bool              isCameraLocked = false;
 
 public:
-    void     onEvent(const SDL_Event& e);
-    ICamera& getCamera() { return *camera; };
-    void     turnCameras(float variation);
+    void               onEvent(const SDL_Event& e);
+    ICamera&           getCamera() { return *camera; };
+    CameraFirstPerson& getCameraFirstPerson() { return cameraFirstPerson; };
+    void               turnCameras(float variation);
 };

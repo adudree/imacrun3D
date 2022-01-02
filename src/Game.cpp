@@ -9,6 +9,8 @@ void Game::initGame()
     m_player.setOrientation('N');
     m_player.setScore(0);
 
+    m_cameraManager.getCameraFirstPerson().resetOffset();
+
     m_gameOver           = false;
     m_isPaused           = false;
     m_isEnded            = false;

@@ -50,3 +50,8 @@ void CameraFirstPerson::turnPan(float variation)
 {
     m_offsetPan += variation;
 }
+
+void CameraFirstPerson::resetOffset()
+{
+    m_offsetPan = 0;
+}

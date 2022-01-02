@@ -11,6 +11,7 @@ public:
     void variationPan(float variation) override;
     void variationTilt(float variation) override;
     void turnPan(float variation);
+    void resetOffset();
 
 private:
     float m_pan  = 0.f;
