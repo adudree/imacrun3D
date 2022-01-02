@@ -8,6 +8,7 @@
 #include "Wall.hpp"
 #include "ICamera.hpp"
 #include "Surcouche.hpp"
+#include "Coin.hpp"
 
 class GameRendering
 {
@@ -16,6 +17,7 @@ class GameRendering
    
     std::vector<std::unique_ptr<Tile>> m_tiles;
     std::vector<std::unique_ptr<Wall>> m_walls;  
+    std::vector<std::unique_ptr<Coin>> m_coins;
 
     Skybox m_skybox;
 
@@ -31,4 +33,5 @@ class GameRendering
 
         void drawTiles(); 
         void drawWalls();
+        void drawCoins();
 };

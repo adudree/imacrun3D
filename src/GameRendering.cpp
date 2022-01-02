@@ -1,10 +1,10 @@
 #include "GameRendering.hpp"
 
-GameRendering::GameRendering(Game &game)
+GameRendering::GameRendering(Game& game)
 {
     createTiles(game, m_tiles, m_walls); // dans surcouche
+    createCoins(game.m_map, m_coins);
     m_globalProjMatrix = glm::perspective(70.f, float(800) / float(800), 0.1f, 100.0f);
-
 }
 
 void GameRendering::drawTiles()
@@ -14,8 +14,8 @@ void GameRendering::drawTiles()
     GLint locNormalMatrix = glGetUniformLocation(m_tilesProgram.getGLId(), "uNormalMatrix");
     GLint locTexture      = glGetUniformLocation(m_tilesProgram.getGLId(), "uTexture");
 
-    glm::mat4 ProjMatrix = m_globalProjMatrix;
-    glm::mat4 MVMatrix = m_globalMvMatrix;
+    glm::mat4 ProjMatrix   = m_globalProjMatrix;
+    glm::mat4 MVMatrix     = m_globalMvMatrix;
     glm::mat4 NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
 
     m_tilesProgram.use();
@@ -33,39 +33,47 @@ void GameRendering::drawTiles()
 
 void GameRendering::drawWalls()
 {
-/*     GLint locMVPMatrix    = glGetUniformLocation(m_walls[0]->getWallProgramID(), "uMVPMatrix");
-    GLint locMVMatrix     = glGetUniformLocation(m_walls[0]->getWallProgramID(), "uMVMatrix");
-    GLint locNormalMatrix = glGetUniformLocation(m_walls[0]->getWallProgramID(), "uNormalMatrix");
-    GLint locTexture      = glGetUniformLocation(m_walls[0]->getWallProgramID(), "uTexture");
-
-    glm::mat4 ProjMatrix = m_globalProjMatrix;
-    glm::mat4 MVMatrix = m_globalMvMatrix;
-    glm::mat4 NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
-
-    m_wallsProgram.use();
-    glUniformMatrix4fv(locMVPMatrix, 1, GL_FALSE, glm::value_ptr(ProjMatrix * MVMatrix));
-    glUniformMatrix4fv(locMVMatrix, 1, GL_FALSE, glm::value_ptr(MVMatrix));
-    glUniformMatrix4fv(locNormalMatrix, 1, GL_FALSE, glm::value_ptr(NormalMatrix));
-    glUniform1i(locTexture, 0);
- */
-    // draw walls
-
-    for (size_t i = 0; i < m_walls.size(); i++) {   
-        
-        
-         m_walls[i]->draw(m_globalProjMatrix, m_globalMvMatrix);
+    for (size_t i = 0; i < m_walls.size(); i++) {
+        m_walls[i]->draw(m_globalProjMatrix, m_globalMvMatrix);
     }
 }
 
-
-void GameRendering::mainRendering(Game &game, ICamera* camera)
+void GameRendering::drawCoins()
 {
-    m_globalMvMatrix     = camera->computeMatrix(game.getPlayerPosition());
-    m_globalMvMatrix     = glm::translate(m_globalMvMatrix, glm::vec3(0, 0.2f, 0));
-    m_globalNormalMatrix = glm::transpose(glm::inverse(m_globalMvMatrix));
+    for (size_t i = 0; i < m_coins.size(); i++) {
 
-    m_skybox.render(m_globalProjMatrix, m_globalMvMatrix);
-    drawTiles();
-    drawWalls();
-    game.m_player.draw(m_globalProjMatrix, m_globalMvMatrix); // fonction amie
+        if (!(m_coins[i]->getIsCollected())) {
+            m_coins[i]->draw(m_globalProjMatrix, m_globalMvMatrix);
+        }
+    }
+}
+
+void GameRendering::mainRendering(Game& game, ICamera* camera)
+{
+    if (game.m_player.getPosition() == glm::vec3(game.m_initPlayerPosition[0], -.5f, game.m_initPlayerPosition[1])) {
+        for (size_t i = 0; i < m_coins.size(); i++) {
+            m_coins[i]->setIsCollected(false);
+            m_coins[i]->resetRotateFloat();
+        }
+    }
+    else {
+        m_globalMvMatrix     = camera->computeMatrix(game.getPlayerPosition());
+        m_globalMvMatrix     = glm::translate(m_globalMvMatrix, glm::vec3(0, 0.2f, 0));
+        m_globalNormalMatrix = glm::transpose(glm::inverse(m_globalMvMatrix));
+
+        m_skybox.render(m_globalProjMatrix, m_globalMvMatrix);
+        drawTiles();
+        drawWalls();
+        drawCoins();
+        game.m_player.draw(m_globalProjMatrix, m_globalMvMatrix); // fonction amie
+
+        for (size_t i = 0; i < m_coins.size(); i++) {
+            if (m_coins[i]->isCollision(game.m_player.getPosition())) {
+                game.m_player.addPointToScore(m_coins[i]->getNbPoint());
+                m_coins[i]->setIsCollected(true);
+/*                 m_coins.erase(m_coins.begin() + i);
+                m_coins.shrink_to_fit(); */
+            }
+        }
+    }
 }

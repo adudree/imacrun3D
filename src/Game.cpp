@@ -1,10 +1,5 @@
 #include "Game.hpp"
 
-Game::Game()
-{
-    createCoins(m_map, m_coins);
-}
-
 void Game::initGame()
 {
     // set player & map
@@ -36,15 +31,6 @@ void Game::runGame()
         if (m_player.m_isFalling) {
             m_gameOver = true;
             endGame();
-        }
-
-        // j'ai pas réussi à le passer en fonction dans autre fichier, à voir
-        for (size_t i = 0; i < m_coins.size(); i++) {
-            if (m_coins[i]->isCollision(m_player.getPosition())) {
-                m_player.addPointToScore(m_coins[i]->getNbPoint());
-                m_coins.erase(m_coins.begin() + i);
-                m_coins.shrink_to_fit();
-            }
         }
     }
 }

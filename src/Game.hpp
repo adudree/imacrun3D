@@ -26,7 +26,7 @@ public:
     bool m_isEnded    = false;
     bool m_isOnVirage = false;
 
-    Game();
+    Game(){};
     ~Game() = default;
 
     // Game states
