@@ -5,7 +5,7 @@
 
 glm::mat4 CameraFirstPerson::computeMatrix(const glm::vec3& playerPosition) const
 {
-    return glm::lookAt(playerPosition, playerPosition + glm::euclidean(glm::vec2{m_tilt, m_pan}), {0.f, -1.f, 0.f});
+    return glm::lookAt(playerPosition, playerPosition + glm::euclidean(glm::vec2{m_tilt, m_pan + m_offsetPan}), {0.f, -1.f, 0.f});
 }
 
 // Fonctions mouvements caméra
@@ -44,4 +44,9 @@ bool CameraFirstPerson::canTiltHaut()
 bool CameraFirstPerson::canTiltBas()
 {
     return m_tilt < M_PI / 4;
+}
+
+void CameraFirstPerson::turnPan(float variation)
+{
+    m_offsetPan += variation;
 }

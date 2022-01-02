@@ -1,8 +1,10 @@
 #pragma once
 
 #include <SDL2/SDL.h>
+#include <cmath>
 #include <iostream>
 #include <vector>
+#include "CameraManager.hpp"
 #include "Coin.hpp"
 #include "Map.hpp"
 #include "Player.hpp"
@@ -17,6 +19,8 @@ private:
 
     glm::vec2 m_initPlayerPosition = glm::vec2(0);
     glm::vec2 m_playerPosition     = glm::vec2(0);
+
+    CameraManager m_cameraManager;
 
 public:
     bool m_isRunning = false;
@@ -49,9 +53,12 @@ public:
     glm::vec2 getActiveTile();
     void      tilesConditions(char& tile);
 
-    void playerMoves(SDL_Event& e);
+    void onEvent(SDL_Event& e);
 
     inline int getScore() const { return m_player.getScore(); }
 
     friend class GameRendering;
+
+    // Camera
+    ICamera& getCamera() { return m_cameraManager.getCamera(); };
 };

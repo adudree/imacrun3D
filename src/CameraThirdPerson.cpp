@@ -42,3 +42,8 @@ bool CameraThirdPerson::canTiltBas()
 {
     return m_tilt < M_PI / 4;
 }
+
+void CameraThirdPerson::turnPan(float variation)
+{
+    m_pan += variation;
+}

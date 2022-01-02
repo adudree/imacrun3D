@@ -98,41 +98,50 @@ void Game::tilesConditions(char& tile)
     }
 }
 
-void Game::playerMoves(SDL_Event& e)
+void Game::onEvent(SDL_Event& e)
 {
+    m_cameraManager.onEvent(e);
+
     float refPosition = 0;
-    if (m_player.getOrientation() == 'N' || m_player.getOrientation() == 'S')
-        refPosition = m_playerPosition[0];
-    else
-        refPosition = m_playerPosition[1];
+    switch (e.type) {
+    case SDL_KEYDOWN:
+        if (m_player.getOrientation() == 'N' || m_player.getOrientation() == 'S')
+            refPosition = m_playerPosition[0];
+        else
+            refPosition = m_playerPosition[1];
 
-    if (e.key.keysym.sym == SDLK_d) {
-        if (m_player.canMoveRight(refPosition) && !m_isOnVirage) {
-            m_player.moveRight();
+        if (e.key.keysym.sym == SDLK_d) {
+            if (m_player.canMoveRight(refPosition) && !m_isOnVirage) {
+                m_player.moveRight();
+            }
+            if (m_isOnVirage) {
+                turnRight();
+            }
+
+            m_isOnVirage = false;
         }
-        if (m_isOnVirage) {
-            turnRight();
+
+        if (e.key.keysym.sym == SDLK_q) {
+            if (m_player.canMoveLeft(refPosition) && !m_isOnVirage)
+                m_player.moveLeft();
+            if (m_isOnVirage) {
+                turnLeft();
+            }
+            m_isOnVirage = false;
         }
 
-        m_isOnVirage = false;
-    }
-
-    if (e.key.keysym.sym == SDLK_q) {
-        if (m_player.canMoveLeft(refPosition) && !m_isOnVirage)
-            m_player.moveLeft();
-        if (m_isOnVirage) {
-            turnLeft();
+        if (e.key.keysym.sym == SDLK_z) {
+            if (m_player.getPosition().y <= -0.5 && !m_player.m_isJumping)
+                m_player.jump();
         }
-        m_isOnVirage = false;
-    }
 
-    if (e.key.keysym.sym == SDLK_z) {
-        if (m_player.getPosition().y <= -0.5 && !m_player.m_isJumping)
-            m_player.jump();
-    }
+        if (e.key.keysym.sym == SDLK_s) {
+            m_player.bendDown();
+        }
+        break;
 
-    if (e.key.keysym.sym == SDLK_s) {
-        m_player.bendDown();
+    default:
+        break;
     }
 }
 
@@ -159,6 +168,8 @@ void Game::turnRight()
     default:
         break;
     }
+
+    m_cameraManager.turnCameras(M_PI / 2);
 }
 
 void Game::turnLeft()
@@ -184,4 +195,5 @@ void Game::turnLeft()
     default:
         break;
     }
+    m_cameraManager.turnCameras(-M_PI / 2);
 }
