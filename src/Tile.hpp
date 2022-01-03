@@ -54,5 +54,3 @@ public:
 
     glm::vec2 getActiveTile(glm::vec3& playerPosition) const;
 };
-
-

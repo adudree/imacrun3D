@@ -72,5 +72,3 @@ void Tile::drawTile()
 
     glBindVertexArray(0);
 }
-
-

@@ -41,7 +41,6 @@ void GameRendering::drawWalls()
 void GameRendering::drawCoins()
 {
     for (size_t i = 0; i < m_coins.size(); i++) {
-
         if (!(m_coins[i]->getIsCollected())) {
             m_coins[i]->draw(m_globalProjMatrix, m_globalMvMatrix);
         }
@@ -71,7 +70,7 @@ void GameRendering::mainRendering(Game& game)
             if (m_coins[i]->isCollision(game.m_player.getPosition())) {
                 game.m_player.addPointToScore(m_coins[i]->getNbPoint());
                 m_coins[i]->setIsCollected(true);
-/*                 m_coins.erase(m_coins.begin() + i);
+                /*                 m_coins.erase(m_coins.begin() + i);
                 m_coins.shrink_to_fit(); */
             }
         }
