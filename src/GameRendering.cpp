@@ -2,7 +2,7 @@
 
 GameRendering::GameRendering(Game& game)
 {
-    createTiles(game, m_tiles, m_walls, m_arc); // dans surcouche
+    createTiles(game, m_tiles, m_walls, m_arch); // dans surcouche
     createCoins(game.m_map, m_coins);
     m_globalProjMatrix = glm::perspective(70.f, float(800) / float(800), 0.1f, 100.0f);
 }
@@ -38,10 +38,10 @@ void GameRendering::drawWalls()
     }
 }
 
-void GameRendering::drawArc()
+void GameRendering::drawArch()
 {
-    for (size_t i = 0; i < m_arc.size(); i++) {
-        m_arc[i]->draw(m_globalProjMatrix, m_globalMvMatrix);
+    for (size_t i = 0; i < m_arch.size(); i++) {
+        m_arch[i]->draw(m_globalProjMatrix, m_globalMvMatrix);
     }
 }
 
@@ -70,7 +70,7 @@ void GameRendering::mainRendering(Game& game)
         m_skybox.render(m_globalProjMatrix, m_globalMvMatrix);
         drawTiles();
         drawWalls();
-        drawArc();
+        drawArch();
         drawCoins();
         game.m_player.draw(m_globalProjMatrix, m_globalMvMatrix); // fonction amie
 

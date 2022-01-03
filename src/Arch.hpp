@@ -8,7 +8,7 @@
 #include "Model.hpp"
 #include "glimac/glm.hpp"
 
-class Arc {
+class Arch {
 private:
     Model           m_model;
     glm::vec3       m_position;
@@ -20,9 +20,9 @@ private:
     float           m_randomRotateZ       = float(std::rand());
 
 public:
-    Arc(GLfloat posTileX, GLfloat posTileY, std::string type)
+    Arch(GLfloat posTileX, GLfloat posTileY, std::string type)
         : m_model(type), m_position(glm::vec3(posTileX, -1.5, posTileY)), m_pathModel(type){};
-    ~Arc() = default;
+    ~Arch() = default;
 
     inline const glm::vec3 getPosition() const { return m_position; }
     inline void            setPosition(glm::vec3 pos) { m_position = pos; }

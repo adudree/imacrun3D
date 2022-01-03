@@ -1,6 +1,6 @@
-#include "Arc.hpp"
+#include "Arch.hpp"
 
-void Arc::draw(const glm::mat4& projMatrix, const glm::mat4& mvMatrix)
+void Arch::draw(const glm::mat4& projMatrix, const glm::mat4& mvMatrix)
 {
     GLint locMVPMatrix    = glGetUniformLocation(m_program.getGLId(), "uMVPMatrix");
     GLint locMVMatrix     = glGetUniformLocation(m_program.getGLId(), "uMVMatrix");
