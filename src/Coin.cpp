@@ -25,8 +25,17 @@ void Coin::draw(const glm::mat4& projMatrix, const glm::mat4& mvMatrix)
     m_rotateFloat += 0.7;
     glm::mat4 modMatrix =
         glm::translate(glm::mat4(1), m_position) *
-        glm::rotate(glm::mat4(1.), glm::radians(m_rotateFloat), glm::vec3(0., 1., 0.)) *
-        glm::scale(glm::mat4(1.), glm::vec3(0.5, 0.5, 0.5));
+        glm::rotate(glm::mat4(1.), glm::radians(m_rotateFloat), glm::vec3(0., 1., 0.)); 
+        
+    if (m_point == 1)
+    {
+       modMatrix*=glm::scale(glm::mat4(1.), glm::vec3(0.5, 0.5, 0.5));
+
+    }else
+    {
+       modMatrix*=glm::scale(glm::mat4(1.), glm::vec3(1., 1., 1.));
+    }
+    
 
     m_program.use();
     glUniformMatrix4fv(locModelMatrix, 1, GL_FALSE, glm::value_ptr(modMatrix));
@@ -42,14 +51,18 @@ void createCoins(const Map& map, std::vector<std::unique_ptr<Coin>>& coins)
     for (int i = 0; i < map.getDimensions()[0]; i++) {
         for (int j = 0; j < map.getDimensions()[1]; j++) {
             float hCoin = 0;
+            int hPoint = 1;
             switch (map.getTypeTile(glm::vec2(i, j))) {
             case 'S': hCoin = -0.9; break;
-            case 'H': hCoin = -2.2f; break;
+            case 'H': 
+                hCoin = -2.2f;
+                hPoint = 3; 
+            break;
             case 'A': hCoin = -0.6f; break;
             default: break;
             }
             if (hCoin != 0)
-                coins.push_back(std::make_unique<Coin>(glm::vec3(i * tilesW, hCoin, j * tilesL)));
+                coins.push_back(std::make_unique<Coin>(glm::vec3(i * tilesW, hCoin, j * tilesL), hPoint));
         }
     }
 }

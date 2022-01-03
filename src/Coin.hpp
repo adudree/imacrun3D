@@ -16,8 +16,8 @@ private:
     glimac::Program m_program = glimac::loadProgram("assets/shaders/Model.vs.glsl", "assets/shaders/Model.fs.glsl");
 
 public:
-    explicit Coin(const glm::vec3& pos)
-        : m_point(1), m_position(pos), m_model("assets/models/coin/coin.obj") {}
+    explicit Coin(const glm::vec3& pos, const int point)
+        : m_point(point), m_position(pos), m_model("assets/models/coin/coin.obj") {}
     Coin(const Coin&) = default;
     Coin& operator=(const Coin&) = default;
     ~Coin()                      = default;
