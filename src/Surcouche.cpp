@@ -41,7 +41,7 @@ void createTiles(Game& game, std::vector<std::unique_ptr<Tile>>& tiles, std::vec
 
             case 'A':
                 tiles.push_back(std::make_unique<Tile>(i * tilesW, j * tilesL, texturesMap[0]));
-                arch.push_back(std::make_unique<Arch>(i * tilesW, j * tilesL, "assets/models/wall/asteroide2.obj"));
+                arch.push_back(std::make_unique<Arch>(i * tilesW, j * tilesL, "assets/models/wall/asteroideArch.obj"));
                 break;
 
             default:

@@ -12,7 +12,8 @@ void Arch::draw(const glm::mat4& projMatrix, const glm::mat4& mvMatrix)
     glm::mat4 MVMatrix   = mvMatrix;
 
     glm::mat4 NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
-    glm::mat4 modMatrix    = glm::translate(glm::mat4(1), m_position) * glm::rotate(glm::mat4(1.), glm::radians(130.0f), glm::vec3(m_randomRotateX, m_randomRotateY, m_randomRotateZ)) * glm::scale(glm::mat4(1.), glm::vec3(m_randomModifierScale));
+    glm::mat4 modMatrix    = glm::translate(glm::mat4(1), m_position) * glm::rotate(glm::mat4(1.), glm::radians(90.0f), glm::vec3(0., 1., 0.1)) 
+                            * glm::scale(glm::mat4(1.), glm::vec3(1.2));
 
     m_program.use();
     glUniformMatrix4fv(locModelMatrix, 1, GL_FALSE, glm::value_ptr(modMatrix));
