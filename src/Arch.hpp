@@ -16,11 +16,6 @@ private:
     std::string     m_pathModel;
     glimac::Program m_program = glimac::loadProgram("assets/shaders/Model.vs.glsl", "assets/shaders/Model.fs.glsl");
 
-    float m_randomModifierScale = float((std::rand() % 6) + 4) / 10;
-    float m_randomRotateX       = float(std::rand());
-    float m_randomRotateY       = float(std::rand());
-    float m_randomRotateZ       = float(std::rand());
-
 public:
     Arch(GLfloat posTileX, GLfloat posTileY, const std::string& type)
         : m_model(type), m_position(glm::vec3(posTileX, -1., posTileY)), m_pathModel(type){};
