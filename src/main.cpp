@@ -1,26 +1,8 @@
-#include <GL/glew.h>
-#include <array>
-#include <fstream>
-#include <glimac/FilePath.hpp>
-#include <glimac/Image.hpp>
 #include <glimac/Program.hpp>
 #include <glimac/SDLWindowManager.hpp>
-#include <glimac/glm.hpp>
-#include <iostream>
-#include <string>
-#include <vector>
-#include "Coin.hpp"
 #include "Game.hpp"
 #include "GameRendering.hpp"
-#include "Map.hpp"
-#include "Model.hpp"
-#include "Player.hpp"
 #include "SDL2/SDL_ttf.h"
-#include "Skybox.hpp"
-#include "Sphere.hpp"
-#include "Surcouche.hpp"
-#include "Tile.hpp"
-#include "VAO.hpp"
 
 using namespace glimac;
 
@@ -28,7 +10,7 @@ int main()
 {
     // ============ INITIALIZATION =========== //
 
-    // window
+    // Window
 
     GLint            WIDTH  = 800;
     GLint            HEIGHT = 800;
@@ -36,7 +18,7 @@ int main()
 
     glEnable(GL_DEPTH_TEST);
 
-    // mouse & menu
+    // Menu
 
     const auto openMenu = [&]() {
         SDL_ShowCursor(SDL_ENABLE);
@@ -51,7 +33,7 @@ int main()
     bool isMenuOpen = false;
     closeMenu();
 
-    // Game & gameRenderer
+    // Game & CameRenderer
 
     Game          game;
     GameRendering gameRenderer(game);
@@ -68,8 +50,6 @@ int main()
         gameRenderer.mainRendering(game);
 
         windowManager.swapBuffers();
-
-        // events : SELON SI AFFICHAGE OU NON
 
         SDL_Event e;
         while (windowManager.pollEvent(e)) {
@@ -88,16 +68,13 @@ int main()
                 if (e.key.keysym.sym == SDLK_x)
                     done = true;
 
-                // =========== MENU ============ //
-                if (e.key.keysym.sym == SDLK_SPACE) {
-                    // temporaire : reset la partie
+                if (e.key.keysym.sym == SDLK_SPACE)
                     game.initGame();
-                }
 
+                // ============= MENU ============== //
                 if (e.key.keysym.sym == SDLK_ESCAPE) {
                     isMenuOpen      = !isMenuOpen;
                     game.m_isPaused = !game.m_isPaused;
-
                     game.pauseGame();
 
                     if (isMenuOpen) {
@@ -107,8 +84,6 @@ int main()
                         closeMenu();
                     }
                 }
-                // le menu s'ouvre
-
                 break;
 
             default:
@@ -116,6 +91,5 @@ int main()
             }
         }
     }
-
     return EXIT_SUCCESS;
 }
