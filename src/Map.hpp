@@ -16,7 +16,7 @@ private:
     std::vector<std::vector<char>> m_coords;
     int                            m_nbLines;
     int                            m_nbCols;
-    std::string                    filename = "assets/maps/map2.imac";
+    std::string                    filename = "assets/maps/map3.imac";
 
 public:
     Map();
