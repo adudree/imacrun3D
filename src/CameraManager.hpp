@@ -6,12 +6,12 @@ class CameraManager {
 private:
     CameraThirdPerson cameraThirdPerson;
     CameraFirstPerson cameraFirstPerson;
-    ICamera*          camera         = &cameraFirstPerson;
+    ICamera*          camera         = &cameraThirdPerson;
     bool              isCameraLocked = false;
 
 public:
-    void               onEvent(const SDL_Event& e);
-    ICamera&           getCamera() { return *camera; };
     CameraFirstPerson& getCameraFirstPerson() { return cameraFirstPerson; };
+    ICamera&           getCamera() { return *camera; };
+    void               onEvent(const SDL_Event& e);
     void               turnCameras(float variation);
 };

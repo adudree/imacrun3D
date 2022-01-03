@@ -2,7 +2,6 @@
 
 void CameraManager::onEvent(const SDL_Event& e)
 {
-    // =========== CAMERA =========== //
     switch (e.type) {
     case SDL_KEYDOWN:
         if (e.key.keysym.sym == SDLK_c) {
@@ -13,7 +12,6 @@ void CameraManager::onEvent(const SDL_Event& e)
                 camera = &cameraFirstPerson;
             }
         }
-
         if (e.key.keysym.sym == SDLK_l) {
             isCameraLocked = !isCameraLocked;
         }
@@ -29,7 +27,6 @@ void CameraManager::onEvent(const SDL_Event& e)
                 cameraThirdPerson.zoom_arriere();
             }
         }
-
         break;
 
     case SDL_MOUSEMOTION:
@@ -37,8 +34,8 @@ void CameraManager::onEvent(const SDL_Event& e)
             camera->variationPan(e.motion.xrel);
             camera->variationTilt(e.motion.yrel);
         }
-
         break;
+
     default:
         break;
     }
