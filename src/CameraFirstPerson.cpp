@@ -16,7 +16,7 @@ void CameraFirstPerson::variationPan(float variation)
 {
     if ((canPanRight() && variation > 0) ||
         (canPanLeft() && variation < 0)) {
-        m_pan += variation * m_vitesseRotation;
+        m_pan += variation * m_rotationSpeed;
     }
 }
 
@@ -24,7 +24,7 @@ void CameraFirstPerson::variationTilt(float variation)
 {
     if ((canTiltUp() && variation < 0) ||
         (canTiltDown() && variation > 0)) {
-        m_tilt += variation * m_vitesseRotation;
+        m_tilt += variation * m_rotationSpeed;
     }
 }
 

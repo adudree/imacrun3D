@@ -20,11 +20,11 @@ void CameraManager::onEvent(const SDL_Event& e)
     case SDL_MOUSEWHEEL:
         if (camera == &cameraThirdPerson) {
             if (e.wheel.y > 0) {
-                cameraThirdPerson.zoom_avant();
+                cameraThirdPerson.zoomIn();
             }
 
             if (e.wheel.y < 0) {
-                cameraThirdPerson.zoom_arriere();
+                cameraThirdPerson.zoomOut();
             }
         }
         break;

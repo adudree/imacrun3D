@@ -12,25 +12,25 @@ glm::mat4 CameraThirdPerson::computeMatrix(const glm::vec3& playerPosition) cons
 
 void CameraThirdPerson::variationPan(float variation)
 {
-    m_pan += variation * m_vitesseRotation;
+    m_pan += variation * m_rotationSpeed;
 }
 
 void CameraThirdPerson::variationTilt(float variation)
 {
     if ((canTiltHaut() && variation < 0) ||
         (canTiltBas() && variation > 0)) {
-        m_tilt += variation * m_vitesseRotation;
+        m_tilt += variation * m_rotationSpeed;
     }
 }
 
-void CameraThirdPerson::zoom_avant()
+void CameraThirdPerson::zoomIn()
 {
-    m_zoom *= m_vitesseZoom;
+    m_zoom *= m_zoomSpeed;
 }
 
-void CameraThirdPerson::zoom_arriere()
+void CameraThirdPerson::zoomOut()
 {
-    m_zoom /= m_vitesseZoom;
+    m_zoom /= m_zoomSpeed;
 }
 
 bool CameraThirdPerson::canTiltHaut()
