@@ -2,7 +2,7 @@
 
 void Game::initGame()
 {
-    // set player & map
+    // Set player & map & camera
 
     m_player.setPosition(glm::vec3(m_initPlayerPosition[0], -.5f, m_initPlayerPosition[1]));
     m_player.setSpeed(m_speed);
@@ -29,7 +29,7 @@ void Game::runGame()
         char actTile     = m_map.getTypeTile(m_playerPosition);
         tilesConditions(actTile);
 
-        // défaite
+        // Defeat
         if (m_player.m_isFalling) {
             m_gameOver = true;
             endGame();
@@ -52,11 +52,11 @@ void Game::endGame()
     m_isRunning = false;
 
     if (!m_gameOver) {
-        // conditions de partie gagnée
+        // Win condition
         std::cout << "C'est gagné, bravo !" << std::endl;
     }
     else {
-        // conditions de partie perdue
+        // Lose condition
         std::cout << "Oh le loser..." << std::endl;
     }
 
@@ -68,7 +68,7 @@ glm::vec2 Game::getActiveTile()
     return glm::vec2(round(m_player.getPosition().x / tilesW), round(m_player.getPosition().z / tilesL));
 }
 
-void Game::tilesConditions(char& tile)
+void Game::tilesConditions(const char& tile)
 {
     m_isOnVirage = false;
 
@@ -84,9 +84,9 @@ void Game::tilesConditions(char& tile)
 
     case 'A':
         if (!m_player.m_isDown) {
+            m_gameOver = true;
             endGame();
         }
-
         break;
 
     case 'V':
@@ -126,7 +126,6 @@ void Game::onEvent(SDL_Event& e)
             if (m_isOnVirage) {
                 turnRight();
             }
-
             m_isOnVirage = false;
         }
 
@@ -174,11 +173,9 @@ void Game::turnRight()
         m_player.setOrientation('N');
         m_player.setPosition(glm::vec3(getActiveTile().x * tilesW, -.5f, m_player.getPosition().z));
         break;
-
     default:
         break;
     }
-
     m_cameraManager.turnCameras(M_PI / 2);
 }
 
@@ -201,7 +198,6 @@ void Game::turnLeft()
         m_player.setOrientation('N');
         m_player.setPosition(glm::vec3(getActiveTile().x * tilesW, -.5f, m_player.getPosition().z));
         break;
-
     default:
         break;
     }

@@ -23,12 +23,11 @@ private:
     CameraManager m_cameraManager;
 
 public:
-    bool m_isRunning = false;
-
+    bool m_isRunning  = false;
+    bool m_isOnVirage = false;
     bool m_gameOver   = false;
     bool m_isPaused   = false;
     bool m_isEnded    = false;
-    bool m_isOnVirage = false;
 
     Game(){};
     ~Game() = default;
@@ -42,20 +41,20 @@ public:
     void turnLeft();
     void turnRight();
 
+    // Getter
     inline glm::vec3 getPlayerPosition() { return m_player.getPosition(); }
     inline char      getOrientation() { return m_player.getOrientation(); }
     inline Map       getMap() { return m_map; }
+    inline int       getScore() const { return m_player.getScore(); }
 
+    // Setter
     inline void setPlayerPosition(glm::vec2 pos) { m_initPlayerPosition = pos; }
     inline void setSpeed(float speed) { m_speed = speed; }
 
     // Map & Player relation
     glm::vec2 getActiveTile();
-    void      tilesConditions(char& tile);
-
-    void onEvent(SDL_Event& e);
-
-    inline int getScore() const { return m_player.getScore(); }
+    void      tilesConditions(const char& tile);
+    void      onEvent(SDL_Event& e);
 
     friend class GameRendering;
 
