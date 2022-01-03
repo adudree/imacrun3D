@@ -1,26 +1,14 @@
 #include "Coin.hpp"
 
-/* A FAIRE
-
-    INITIALISATION
-    - Placer les pièces sur les tuiles simples
-        - Si pièce simple alors position pièce centre de la tuile
-    - Dessiner les pièces (sphère puis forme pièce) OK
-
-    BOUCLE
-    - Contact entre joueur et pièce
-        - Détection de la collision VERIF
-        - Disparition pièce VERIF
-        - Ajout point au score du joueur VERIF
-
-*/
-
-/* CONSIGNES
-Différentes valeurs de pièces
-Position des pièces dans le fichier de la map ?
-Lorsque l’explorateur passe sur une pièce, celle-ci disparaı̂t et le score du joueur est augmenté de la
-valeur de la pièce (que vous déterminerez).
-*/
+bool Coin::isCollision(const glm::vec3& posPlayer)
+{
+    return (posPlayer.z <= (m_position.z + 0.5f)) &&
+           (posPlayer.z >= (m_position.z - 0.5f)) &&
+           (posPlayer.x <= (m_position.x + 0.5f)) &&
+           (posPlayer.x >= (m_position.x - 0.5f)) &&
+           (posPlayer.y <= (m_position.y + 0.5f)) &&
+           (posPlayer.y >= (m_position.y - 0.5f));
+}
 
 void Coin::draw(const glm::mat4& projMatrix, const glm::mat4& mvMatrix)
 {
@@ -49,38 +37,15 @@ void Coin::draw(const glm::mat4& projMatrix, const glm::mat4& mvMatrix)
     m_model.Draw(m_program);
 }
 
-bool Coin::isCollision(const glm::vec3& posPlayer) // A OPTIMISER !!!
-{
-    if ((posPlayer.z <= (m_position.z + 0.5f)) &&
-        (posPlayer.z >= (m_position.z - 0.5f)) &&
-        (posPlayer.x <= (m_position.x + 0.5f)) &&
-        (posPlayer.x >= (m_position.x - 0.5f)) &&
-        (posPlayer.y <= (m_position.y + 0.5f)) &&
-        (posPlayer.y >= (m_position.y - 0.5f))) {
-        m_isCollected = true;
-        return true;
-    }
-    else {
-        return false;
-    }
-
-    /*     return  (posPlayer.z <= (m_position.z + 0.5f)) &&
-                (posPlayer.z >= (m_position.z - 0.5f)) &&
-                (posPlayer.x <= (m_position.x + 0.5f)) &&
-                (posPlayer.x >= (m_position.x - 0.5f)) &&
-                (posPlayer.y <= (m_position.y + 0.5f)) &&
-                (posPlayer.y >= (m_position.y - 0.5f)); */
-}
-
-void createCoins(Map& map, std::vector<std::unique_ptr<Coin>>& coins)
+void createCoins(const Map& map, std::vector<std::unique_ptr<Coin>>& coins)
 {
     for (int i = 0; i < map.getDimensions()[0]; i++) {
         for (int j = 0; j < map.getDimensions()[1]; j++) {
             float hCoin = 0;
             switch (map.getTypeTile(glm::vec2(i, j))) {
-            case 'S': hCoin = -0.7; break;
-            case 'H': hCoin = -1.0f; break;
-            case 'A': hCoin = -0.2f; break;
+            case 'S': hCoin = -0.9; break;
+            case 'H': hCoin = -2.2f; break;
+            case 'A': hCoin = -0.7f; break;
             default: break;
             }
             if (hCoin != 0)
