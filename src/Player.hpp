@@ -34,10 +34,12 @@ public:
         : m_model("assets/models/player/StarSparrow.obj") {}
     ~Player() = default;
 
+    // Getter
     inline const glm::vec3 getPosition() const { return m_position; }
     inline char            getOrientation() const { return m_orientation; }
     inline int             getScore() const { return m_score; }
 
+    // Setter
     inline void setPosition(const glm::vec3& pos) { m_position = pos; }
     inline void setSpeed(const float& speed) { m_speed = speed; }
     inline void setOrientation(const char& o) { m_orientation = o; }
@@ -46,18 +48,18 @@ public:
 
     void draw(const glm::mat4& projMatrix, const glm::mat4& mvMatrix); // chargement + affichage obj 3D
 
-    void update();
-    void moveLeft();
-    void moveRight();
-    void jump();
-    void down();
-
-    void verticalInitialize();
-
-    void updateMovement();
-
-    void fall();
-
     bool canMoveRight(float tilePosition);
     bool canMoveLeft(float tilePosition);
+    void moveRight();
+    void moveLeft();
+
+    glm::mat4 rotatePlayer(glm::mat4& matrice, const float& alpha);
+
+    void verticalInitialize();
+    void jump();
+    void down();
+    void fall();
+    void updateMovement();
+
+    void update();
 };

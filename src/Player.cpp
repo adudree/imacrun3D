@@ -1,10 +1,5 @@
 #include "Player.hpp"
 
-glm::mat4 rotatePlayer(glm::mat4& matrice, const float& alpha)
-{
-    return glm::rotate(matrice, alpha * glm::radians(90.0f), glm::vec3(0., -1., 0.));
-}
-
 void Player::draw(const glm::mat4& projMatrix, const glm::mat4& mvMatrix)
 {
     GLint locMVPMatrix    = glGetUniformLocation(m_program.getGLId(), "uMVPMatrix");
@@ -42,6 +37,8 @@ void Player::draw(const glm::mat4& projMatrix, const glm::mat4& mvMatrix)
     m_model.Draw(m_program);
 }
 
+// Movement
+
 void Player::moveForward()
 {
     switch (m_orientation) {
@@ -52,6 +49,8 @@ void Player::moveForward()
     case 'E': m_position.x += m_speed * 0.1; break;
     }
 }
+
+// Right and Left not in a turn
 
 bool Player::canMoveRight(float tilePosition)
 {
@@ -97,13 +96,14 @@ void Player::moveLeft()
     }
 }
 
-void Player::fall()
-{
-    if (m_position.y > 1) // axe vertical inversé
-        m_isFalling = true;
+// Right and Left in a turn
 
-    m_position.y += m_speed * 0.1;
+glm::mat4 Player::rotatePlayer(glm::mat4& matrice, const float& alpha)
+{
+    return glm::rotate(matrice, alpha * glm::radians(90.0f), glm::vec3(0., -1., 0.));
 }
+
+// Vertical movement
 
 void Player::verticalInitialize()
 {
@@ -127,6 +127,14 @@ void Player::down()
 {
     m_isDown = true;
     verticalInitialize();
+}
+
+void Player::fall()
+{
+    if (m_position.y > 1) // Inverted axe
+        m_isFalling = true;
+
+    m_position.y += m_speed * 0.1;
 }
 
 void Player::updateMovement()
@@ -168,6 +176,8 @@ void Player::updateMovement()
         }
     }
 }
+
+// Final movement
 
 void Player::update()
 {
