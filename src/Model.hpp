@@ -1,4 +1,5 @@
 #pragma once
+
 #include <assimp/postprocess.h> // Post processing flags
 #include <assimp/scene.h>       // Output data structure
 #include <stb/stb_image.h>
@@ -15,7 +16,7 @@
 
 class Model {
 public:
-    Model(std::string path)
+    Model(const std::string& path)
     {
         loadModel(path);
     }
@@ -29,5 +30,5 @@ private:
     void                     loadModel(std::string path);
     void                     processNode(aiNode* node, const aiScene* scene);
     Mesh                     processMesh(aiMesh* mesh, const aiScene* scene);
-    std::vector<TextureMesh> loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName);
+    std::vector<TextureMesh> loadMaterialTextures(aiMaterial* mat, aiTextureType type, const std::string& typeName);
 };
