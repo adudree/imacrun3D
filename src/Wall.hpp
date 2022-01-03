@@ -20,10 +20,8 @@ private:
     float           m_randomRotateZ       = float(std::rand());
 
 public:
-    Wall(GLfloat posTileX, GLfloat posTileY, std::string type)
-        : m_model(type), m_position(glm::vec3(posTileX, -0.5, posTileY)), m_pathModel(type){
-                                                                              //std::cout << m_randomModifierPosition << std::endl;
-                                                                          };
+    Wall(GLfloat posTileX, GLfloat posTileY, const std::string& type)
+        : m_model(type), m_position(glm::vec3(posTileX, -0.5, posTileY)), m_pathModel(type){};
     ~Wall() = default;
 
     inline const glm::vec3 getPosition() const { return m_position; }
