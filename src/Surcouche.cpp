@@ -22,6 +22,10 @@ void createTiles(Game& game, std::vector<std::unique_ptr<Tile>>& tiles, std::vec
                 tiles.push_back(std::make_unique<Tile>(i * tilesW, j * tilesL, texturesMap[0]));
                 break;
 
+            case 'A':
+                tiles.push_back(std::make_unique<Tile>(i * tilesW, j * tilesL, texturesMap[0]));
+                walls.push_back(std::make_unique<Wall>(i * tilesW, j * tilesL, "assets/models/wall/asteroide.obj"));
+                break;
             case 'E':
             case 'V':
             case 'S':
@@ -39,10 +43,6 @@ void createTiles(Game& game, std::vector<std::unique_ptr<Tile>>& tiles, std::vec
                 else {
                     walls.push_back(std::make_unique<Wall>(i * tilesW, j * tilesL, "assets/models/wall/asteroide2.obj"));
                 }
-                break;
-
-            case 'A':
-                // créer une tuile "arch" [A FAIRE]
                 break;
 
             case 'L':

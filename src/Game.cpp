@@ -82,6 +82,13 @@ void Game::tilesConditions(char& tile)
             m_player.fall();
         break;
 
+    case 'A':
+        if (!m_player.m_isDown) {
+            endGame();
+        }
+
+        break;
+
     case 'V':
         m_isOnVirage = true;
         break;
