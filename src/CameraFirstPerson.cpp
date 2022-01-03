@@ -1,6 +1,5 @@
 #include "CameraFirstPerson.hpp"
 #include <cmath>
-#include <iostream>
 #include "glm/gtx/polar_coordinates.hpp"
 
 // Camera direction
