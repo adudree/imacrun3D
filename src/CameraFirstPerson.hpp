@@ -6,20 +6,16 @@
 class CameraFirstPerson : public ICamera {
 public:
     glm::mat4 computeMatrix(const glm::vec3& playerPosition) const override;
-
-    //mouvement camera
-    void variationPan(float variation) override;
-    void variationTilt(float variation) override;
-    void turnPan(float variation);
-    void resetOffset();
+    void      variationPan(float variation) override;
+    void      variationTilt(float variation) override;
+    void      turnPan(float variation);
+    void      resetOffset();
 
 private:
-    float m_pan  = 0.f;
-    float m_tilt = 0.3f;
-
+    float                  m_pan             = 0.f;
+    float                  m_tilt            = 0.3f;
+    float                  m_offsetPan       = 0.0f;
     static constexpr float m_vitesseRotation = 0.002f;
-
-    float m_offsetPan;
 
     bool canPanGauche();
     bool canPanDroite();
