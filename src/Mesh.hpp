@@ -21,13 +21,12 @@ struct TextureMesh {
 
 class Mesh {
 public:
-    // mesh data
+    // Mesh data
     std::vector<Vertex>       m_vertices;
     std::vector<unsigned int> m_indices;
     std::vector<TextureMesh>  m_textures;
 
-    Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<TextureMesh> textures);
-    //void Draw(glimac::Program& program);
+    Mesh(const std::vector<Vertex> vertices, const std::vector<unsigned int> indices, const std::vector<TextureMesh> textures);
     void Draw(glimac::Program& program);
 
 private:
