@@ -73,6 +73,7 @@ void GameRendering::mainRendering(Game& game)
         drawArch();
         drawCoins();
         game.m_player.draw(m_globalProjMatrix, m_globalMvMatrix); // fonction amie
+        game.m_enemy.draw(m_globalProjMatrix, m_globalMvMatrix, game.m_player.m_modMatrix);
 
         for (size_t i = 0; i < m_coins.size(); i++) {
             if (m_coins[i]->isCollision(game.m_player.getPosition())) {

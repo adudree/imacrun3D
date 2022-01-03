@@ -12,7 +12,7 @@ void Player::draw(const glm::mat4& projMatrix, const glm::mat4& mvMatrix)
     glm::mat4 MVMatrix   = mvMatrix;
 
     glm::mat4 NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
-    glm::mat4 modMatrix =
+    m_modMatrix =
         glm::translate(glm::mat4(1), m_position) *
         glm::rotate(glm::mat4(1.), glm::radians(180.0f), glm::vec3(0., 0., 1.)) *
         glm::scale(glm::mat4(1.), glm::vec3(0.1, 0.1, 0.1));
@@ -26,10 +26,10 @@ void Player::draw(const glm::mat4& projMatrix, const glm::mat4& mvMatrix)
     case 'O': alpha = 3; break;
     }
 
-    modMatrix = rotatePlayer(modMatrix, alpha);
+    m_modMatrix = rotatePlayer(m_modMatrix, alpha);
 
     m_program.use();
-    glUniformMatrix4fv(locModelMatrix, 1, GL_FALSE, glm::value_ptr(modMatrix));
+    glUniformMatrix4fv(locModelMatrix, 1, GL_FALSE, glm::value_ptr(m_modMatrix));
     glUniformMatrix4fv(locMVPMatrix, 1, GL_FALSE, glm::value_ptr(ProjMatrix * MVMatrix));
     glUniformMatrix4fv(locMVMatrix, 1, GL_FALSE, glm::value_ptr(MVMatrix));
     glUniformMatrix4fv(locNormalMatrix, 1, GL_FALSE, glm::value_ptr(NormalMatrix));

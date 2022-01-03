@@ -8,6 +8,7 @@ void Game::initGame()
     m_player.setSpeed(m_speed);
     m_player.setOrientation('N');
     m_player.setScore(0);
+    m_enemy.setPosition(glm::vec3(m_player.getPosition()));
 
     m_cameraManager.getCameraFirstPerson().resetOffset();
 
@@ -24,6 +25,7 @@ void Game::runGame()
 {
     if (m_isRunning && !m_gameOver) {
         m_player.update();
+        m_enemy.update(m_player.getPosition());
 
         m_playerPosition = getActiveTile();
         char actTile     = m_map.getTypeTile(m_playerPosition);
