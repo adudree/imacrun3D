@@ -138,7 +138,8 @@ void Game::onEvent(SDL_Event& e)
         }
 
         if (e.key.keysym.sym == SDLK_s) {
-            m_player.bendDown();
+            if (m_player.getPosition().y >= -0.5 && !m_player.m_isDown)
+                m_player.down();
         }
         break;
 
