@@ -6,7 +6,6 @@
 #include <vector>
 #include "CameraManager.hpp"
 #include "Coin.hpp"
-#include "Map.hpp"
 #include "Player.hpp"
 
 class Game {
