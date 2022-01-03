@@ -14,7 +14,7 @@ int main()
 
     GLint            WIDTH  = 800;
     GLint            HEIGHT = 800;
-    SDLWindowManager windowManager(WIDTH, HEIGHT, "IMAC RUN 3D");
+    SDLWindowManager windowManager(WIDTH, HEIGHT, "SPACE RUN 3D");
 
     glEnable(GL_DEPTH_TEST);
 
