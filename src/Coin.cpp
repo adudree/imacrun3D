@@ -45,7 +45,7 @@ void createCoins(const Map& map, std::vector<std::unique_ptr<Coin>>& coins)
             switch (map.getTypeTile(glm::vec2(i, j))) {
             case 'S': hCoin = -0.9; break;
             case 'H': hCoin = -2.2f; break;
-            case 'A': hCoin = -0.7f; break;
+            case 'A': hCoin = -0.6f; break;
             default: break;
             }
             if (hCoin != 0)
