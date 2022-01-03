@@ -23,7 +23,7 @@ private:
 
 public:
     Arch(GLfloat posTileX, GLfloat posTileY, const std::string& type)
-        : m_model(type), m_position(glm::vec3(posTileX, -1.5, posTileY)), m_pathModel(type){};
+        : m_model(type), m_position(glm::vec3(posTileX, -1., posTileY)), m_pathModel(type){};
     ~Arch() = default;
 
     inline glm::vec3 getPosition() const { return m_position; }
