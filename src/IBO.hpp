@@ -5,7 +5,7 @@
 
 class IBO {
 private:
-    GLuint m_ibo; // NOLINT
+    GLuint m_ibo;
 
 public:
     explicit IBO(const std::vector<uint32_t>& indices)
