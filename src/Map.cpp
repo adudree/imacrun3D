@@ -2,9 +2,8 @@
 
 Map::Map()
 {
-    std::ifstream fichier(filename, std::ios::in);
-    std::string   ligne;
-
+    std::ifstream                  fichier(filename, std::ios::in);
+    std::string                    ligne;
     std::vector<std::vector<char>> tab;
 
     int j = 0;
