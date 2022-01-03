@@ -8,7 +8,7 @@
 template<typename VertexData>
 class VAO {
 private:
-    GLuint m_vao; // NOLINT
+    GLuint m_vao;
 
 public:
     VAO()
