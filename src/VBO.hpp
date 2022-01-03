@@ -6,7 +6,7 @@
 template<typename VertexData>
 class VBO {
 private:
-    GLuint m_vbo; // NOLINT
+    GLuint m_vbo;
 
 public:
     explicit VBO(const std::vector<VertexData>& vertices)
