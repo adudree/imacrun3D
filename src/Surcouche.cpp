@@ -1,10 +1,8 @@
 #include "Surcouche.hpp"
 
-// IMPORTANT : les fonctions dans ce fichier sont à trier //
-
 void createTiles(Game& game, std::vector<std::unique_ptr<Tile>>& tiles, std::vector<std::unique_ptr<Wall>>& walls, std::vector<std::unique_ptr<Arch>>& arch)
 {
-    std::vector<GLuint> texturesMap(2); // 2 = nb textures
+    std::vector<GLuint> texturesMap(2);
 
     std::unique_ptr<glimac::Image> simple = glimac::loadImage("assets/textures/cardinale.jpg");
     std::unique_ptr<glimac::Image> hole   = glimac::loadImage("assets/textures/hole.png");
@@ -22,10 +20,6 @@ void createTiles(Game& game, std::vector<std::unique_ptr<Tile>>& tiles, std::vec
                 tiles.push_back(std::make_unique<Tile>(i * tilesW, j * tilesL, texturesMap[0]));
                 break;
 
-            case 'A':
-                tiles.push_back(std::make_unique<Tile>(i * tilesW, j * tilesL, texturesMap[0]));
-                arch.push_back(std::make_unique<Arch>(i * tilesW, j * tilesL, "assets/models/wall/asteroide2.obj"));
-                break;
             case 'E':
             case 'V':
             case 'S':
@@ -45,12 +39,9 @@ void createTiles(Game& game, std::vector<std::unique_ptr<Tile>>& tiles, std::vec
                 }
                 break;
 
-            case 'L':
-                // créer une tuile "leftHole" [A FAIRE]
-                break;
-
-            case 'R':
-                // créer une tuile "rightHole" [A FAIRE]
+            case 'A':
+                tiles.push_back(std::make_unique<Tile>(i * tilesW, j * tilesL, texturesMap[0]));
+                arch.push_back(std::make_unique<Arch>(i * tilesW, j * tilesL, "assets/models/wall/asteroide2.obj"));
                 break;
 
             default:
