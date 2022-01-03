@@ -31,7 +31,7 @@ unsigned int Skybox::loadCubemap(const std::array<const char*, 6>& texturesPaths
 
 void Skybox::render(const glm::mat4& projMatrix, const glm::mat4& mvMatrix)
 {
-    glClearColor(1., 0., 1, 1);
+    glClearColor(0.04, 0.04, 0.4, 1);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glDepthMask(GL_FALSE);
     m_skyboxProgram.use();
