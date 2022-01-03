@@ -25,6 +25,8 @@ private:
     void moveForward();
 
 public:
+    glm::mat4 m_modMatrix;
+
     bool m_isJumping       = false;
     bool m_isDown          = false;
     bool m_isFalling       = false;

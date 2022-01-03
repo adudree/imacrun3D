@@ -7,12 +7,14 @@
 #include "CameraManager.hpp"
 #include "Coin.hpp"
 #include "Player.hpp"
+#include "Enemy.hpp"
 
 class Game {
 private:
     float m_speed = 0.5;
 
     Player                             m_player;
+    Enemy m_enemy;
     Map                                m_map;
     std::vector<std::unique_ptr<Coin>> m_coins;
 
@@ -56,7 +58,6 @@ public:
     void      onEvent(SDL_Event& e);
 
     friend class GameRendering;
-
     // Camera
     ICamera& getCamera() { return m_cameraManager.getCamera(); };
 };
