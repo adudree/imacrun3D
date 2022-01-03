@@ -2,6 +2,7 @@
 #include <glimac/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <iostream>
+#include "Arc.hpp"
 #include "Coin.hpp"
 #include "Game.hpp"
 #include "ICamera.hpp"
@@ -16,6 +17,7 @@ private:
 
     std::vector<std::unique_ptr<Tile>> m_tiles;
     std::vector<std::unique_ptr<Wall>> m_walls;
+    std::vector<std::unique_ptr<Arc>>  m_arc;
     std::vector<std::unique_ptr<Coin>> m_coins;
 
     Skybox m_skybox;
@@ -32,5 +34,6 @@ public:
 
     void drawTiles();
     void drawWalls();
+    void drawArc();
     void drawCoins();
 };

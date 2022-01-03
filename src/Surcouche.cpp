@@ -2,7 +2,7 @@
 
 // IMPORTANT : les fonctions dans ce fichier sont à trier //
 
-void createTiles(Game& game, std::vector<std::unique_ptr<Tile>>& tiles, std::vector<std::unique_ptr<Wall>>& walls)
+void createTiles(Game& game, std::vector<std::unique_ptr<Tile>>& tiles, std::vector<std::unique_ptr<Wall>>& walls, std::vector<std::unique_ptr<Arc>>& arc)
 {
     std::vector<GLuint> texturesMap(2); // 2 = nb textures
 
@@ -24,7 +24,7 @@ void createTiles(Game& game, std::vector<std::unique_ptr<Tile>>& tiles, std::vec
 
             case 'A':
                 tiles.push_back(std::make_unique<Tile>(i * tilesW, j * tilesL, texturesMap[0]));
-                walls.push_back(std::make_unique<Wall>(i * tilesW, j * tilesL, "assets/models/wall/asteroide.obj"));
+                arc.push_back(std::make_unique<Arc>(i * tilesW, j * tilesL, "assets/models/wall/asteroide2.obj"));
                 break;
             case 'E':
             case 'V':
