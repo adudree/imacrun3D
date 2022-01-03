@@ -59,7 +59,7 @@ void Game::endGame()
     }
     else {
         // Lose condition
-        std::cout << "Oh le loser..." << std::endl;
+        std::cout << "Encore raté..." << std::endl;
     }
 
     initGame();
