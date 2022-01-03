@@ -17,8 +17,8 @@ private:
     float                  m_offsetPan       = 0.0f;
     static constexpr float m_vitesseRotation = 0.002f;
 
-    bool canPanGauche();
-    bool canPanDroite();
-    bool canTiltHaut();
-    bool canTiltBas();
+    bool canPanLeft();
+    bool canPanRight();
+    bool canTiltUp();
+    bool canTiltDown();
 };

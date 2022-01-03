@@ -14,16 +14,16 @@ glm::mat4 CameraFirstPerson::computeMatrix(const glm::vec3& playerPosition) cons
 
 void CameraFirstPerson::variationPan(float variation)
 {
-    if ((canPanDroite() && variation > 0) ||
-        (canPanGauche() && variation < 0)) {
+    if ((canPanRight() && variation > 0) ||
+        (canPanLeft() && variation < 0)) {
         m_pan += variation * m_vitesseRotation;
     }
 }
 
 void CameraFirstPerson::variationTilt(float variation)
 {
-    if ((canTiltHaut() && variation < 0) ||
-        (canTiltBas() && variation > 0)) {
+    if ((canTiltUp() && variation < 0) ||
+        (canTiltDown() && variation > 0)) {
         m_tilt += variation * m_vitesseRotation;
     }
 }
@@ -42,22 +42,22 @@ void CameraFirstPerson::resetOffset()
 
 // Test to block the camera
 
-bool CameraFirstPerson::canPanGauche()
+bool CameraFirstPerson::canPanLeft()
 {
     return m_pan > -M_PI / 2;
 }
 
-bool CameraFirstPerson::canPanDroite()
+bool CameraFirstPerson::canPanRight()
 {
     return m_pan < M_PI / 2;
 }
 
-bool CameraFirstPerson::canTiltHaut()
+bool CameraFirstPerson::canTiltUp()
 {
     return m_tilt > -M_PI / 4;
 }
 
-bool CameraFirstPerson::canTiltBas()
+bool CameraFirstPerson::canTiltDown()
 {
     return m_tilt < M_PI / 4;
 }
